@@ -9,7 +9,7 @@ const Header = () => {
                 <p>This is where the logo will go</p>
             </div>
             <div>
-                <h1>Title</h1>
+                <h1 className="text-blue-500">Title</h1>
             </div>
 
         </header>
