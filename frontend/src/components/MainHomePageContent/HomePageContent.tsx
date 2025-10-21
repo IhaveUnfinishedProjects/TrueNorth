@@ -3,12 +3,9 @@ import RectangleHolder from "./RectangleHolder.js";
 import SVG1 from "../../assets/CreateGoal.svg?react";
 import SVG2 from "../../assets/ViewGoal.svg?react";
 import SVG3 from "../../assets/TrackGoal.svg?react";
+import "../../index.css";
 
-interface HomePageProps {
-    height: number;
-}
-
-const HomePageContent: React.FC<HomePageProps> = ({ height }) => {
+const HomePageContent: React.FC<{}> = () => {
 
     const createGoalHeader: string = "Create Goal";
     const createGoalString: string = "Start your journey by creating some clear goals, and define some actionable steps to reach them.";
@@ -23,14 +20,12 @@ const HomePageContent: React.FC<HomePageProps> = ({ height }) => {
     const trackGoalLink:    string = "https://www.youtube.com/";
     return (
 
-        <main className="min-h-screen bg-[url('/src/assets/background.svg')] bg-cover" style={{ marginTop: `${height * 2}` }}>
-            <div className="flex flex-col items-center py-30 space-y-14">
-                <h1 className="mb-0 w-5/8 pl-3 text-start text-[#413737] text-3xl font-bold" >Welcome, User</h1>
-                <RectangleHolder title={createGoalHeader} details={createGoalString} link={createGoalLink} SvgImage={SVG1} />
-                <RectangleHolder title={viewGoalHeader} details={viewGoalString} link={viewGoalLink} SvgImage={SVG2} />
-                <RectangleHolder title={trackGoalHeader} details={trackGoalString} link={trackGoalLink} SvgImage={SVG3} />
-            </div>
-        </main>
+        <div className="flex flex-col items-center py-5 space-y-14">
+            <h1 className="mb-0 w-5/8 pl-3 text-start" >Welcome back, User</h1>
+            <RectangleHolder title={createGoalHeader} details={createGoalString} link={createGoalLink} SvgImage={SVG1} />
+            <RectangleHolder title={viewGoalHeader} details={viewGoalString} link={viewGoalLink} SvgImage={SVG2} />
+            <RectangleHolder title={trackGoalHeader} details={trackGoalString} link={trackGoalLink} SvgImage={SVG3} />
+        </div>
     );
 }
 

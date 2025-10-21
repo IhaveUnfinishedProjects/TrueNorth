@@ -2,6 +2,7 @@ import React from "react";
 import Logo from "../../assets/logo.svg?react";
 import { useRef } from "react";
 import { useHeaderDetails } from '../../hooks/useHeaderDetails.js';
+import { Link } from "react-router";
 
 interface HeaderProps {
     onHeightMeasured: (details: {height : number}) => void;
@@ -21,10 +22,10 @@ const Header:React.FC<HeaderProps> = ( { onHeightMeasured }) => {
             </div>
 
             <nav className="flex gap-5 items-center">
-                <a href="#">Home</a>
-                <a href="#">Goals</a>
-                <a href="#">Reviews</a>
-                <a href="#">+ New Goal</a>
+                <Link to="/"><button>Home</button></Link>
+                <Link to="/"><button>Goals</button></Link>
+                <Link to="/"><button>Review</button></Link>
+                <Link to="/CreateGoal"><button>+ New Goal</button></Link>
             </nav>
         </header>
     )
