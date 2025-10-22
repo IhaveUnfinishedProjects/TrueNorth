@@ -1,11 +1,15 @@
 import '../../index.css';
 import BackButton from '../../assets/backButton.svg?react';
-import InputField from './InputField.js';
+import InputField from './support/InputField.js';
+import ConfirmationComponent from './support/ConfirmationComponent.js';
+import { useState } from 'react';
 
 const GoalCreation = () => {
 
+    const [isBackComponentOpen, setIsBackComponentOpen] = useState(false);
+
     const backButtonClicked = () => {
-        console.log("Svg back button clicked!");
+        setIsBackComponentOpen(true);
     }
 
     return (
@@ -43,7 +47,10 @@ const GoalCreation = () => {
             <div className = "w-[95%]">
                 <InputField />
             </div>
+
+            { isBackComponentOpen && <ConfirmationComponent onClose={() => setIsBackComponentOpen(false)} />}
         </div>
+
     );
 }
 

@@ -1,5 +1,5 @@
 import React from "react";
-import RectangleHolder from "./RectangleHolder.js";
+import RectangleHolder from "./support/RectangleHolder.js";
 import SVG1 from "../../assets/CreateGoal.svg?react";
 import SVG2 from "../../assets/ViewGoal.svg?react";
 import SVG3 from "../../assets/TrackGoal.svg?react";
