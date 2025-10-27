@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import type { ChangeEvent } from 'react';
-import "../../index.css";
+import "@root/index.css";
 
 
 const InputField = () => {

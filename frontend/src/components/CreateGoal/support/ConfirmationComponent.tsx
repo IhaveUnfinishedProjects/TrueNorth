@@ -1,5 +1,8 @@
 import { Link } from "react-router";
 import ReactDOM, { createPortal } from 'react-dom';
+import "@root/index.css";
+
+
 interface ConfirmationProps {
     onClose: () => void;
 }

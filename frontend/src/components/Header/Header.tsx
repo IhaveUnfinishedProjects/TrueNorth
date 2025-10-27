@@ -1,8 +1,10 @@
 import React from "react";
-import Logo from "../../assets/logo.svg?react";
 import { useRef } from "react";
-import { useHeaderDetails } from '../../hooks/useHeaderDetails.js';
 import { Link } from "react-router";
+
+import '@root/index.css';
+import Logo from "../../assets/logo.svg?react";
+import { useHeaderDetails } from '../../hooks/useHeaderDetails.js';
 
 interface HeaderProps {
     onHeightMeasured: (details: {height : number}) => void;

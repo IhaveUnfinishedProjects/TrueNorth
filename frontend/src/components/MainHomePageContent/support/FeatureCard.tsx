@@ -1,5 +1,5 @@
 import React from "react";
-import "../../index.css";
+import "@root/index.css";
 
 interface RectangleProps {
     title: string;
@@ -8,7 +8,7 @@ interface RectangleProps {
     SvgImage: React.FC<React.SVGProps<SVGSVGElement>>;
 }
 
-const RectangleHolder: React.FC<RectangleProps> = ({ title, details, link, SvgImage }) => {
+const FeatureCard: React.FC<RectangleProps> = ({ title, details, link, SvgImage }) => {
     return (
 
         /* This acts as the rectangle card container. */
@@ -47,4 +47,4 @@ const RectangleHolder: React.FC<RectangleProps> = ({ title, details, link, SvgIm
     );
 }
 
-export default RectangleHolder;
+export default FeatureCard;

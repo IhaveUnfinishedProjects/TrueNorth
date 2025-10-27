@@ -1,30 +1,64 @@
 import React from "react";
-import RectangleHolder from "./support/RectangleHolder.js";
-import SVG1 from "../../assets/CreateGoal.svg?react";
-import SVG2 from "../../assets/ViewGoal.svg?react";
-import SVG3 from "../../assets/TrackGoal.svg?react";
-import "../../index.css";
+import "@root/index.css";
+import SVG1 from "@assets/CreateGoal.svg?react";
+import SVG2 from "@assets/ViewGoal.svg?react";
+import SVG3 from "@assets/TrackGoal.svg?react";
+import FeatureCard from "@root/components/MainHomePageContent/support/FeatureCard.js";
+
+/* 
+    The page is dedicated to returning the content for home page feature cards.
+    It defines the content data type, sets it statically, and passes it into 
+    <FeatureCard {*props*} /> to render the card itself. 
+*/
 
 const HomePageContent: React.FC<{}> = () => {
 
-    const createGoalHeader: string = "Create Goal";
-    const createGoalString: string = "Start your journey by creating some clear goals, and define some actionable steps to reach them.";
-    const createGoalLink:   string = "https://www.youtube.com/";
+    // Provides type definitions for a FeatureCards data structure. 
+    type featureCardData = {
+        title: string;
+        details: string;
+        link: string;
+        SvgImage: React.FC<React.SVGProps<SVGSVGElement>>;
+    }
 
-    const viewGoalHeader:   string = "View Goal";
-    const viewGoalString:   string = "View your current goal, and the next actionable steps you need to take to move toward your desired outcome.";
-    const viewGoalLink:     string = "https://www.youtube.com/";
+    // Contains the data objects for all FeatureCards
+    const featureCardData: featureCardData[] = [
+        {
+            title: "Create Goal",
+            details: "Start your journey by creating some clear goals, and define some actionable steps to reach them.",
+            link: "https://www.youtube.com/",
+            SvgImage: SVG1
+        },
+        {
+            title: "View Goal",
+            details: "View your current goal, and the next actionable steps you need to take to move toward your desired outcome.",
+            link: "https://www.youtube.com/",
+            SvgImage: SVG2
+        },
+        {
+            title: "Track Goal",
+            details: "Reflect on the progress you've made in order to refine the direction of your goals, and improve your strategies.",
+            link: "https://www.youtube.com/",
+            SvgImage: SVG3
+        },
+    ]
 
-    const trackGoalHeader:  string = "Track Goal";
-    const trackGoalString:  string = "Reflect on the progress you've made in order to refine the direction of your goals, and improve your strategies.";
-    const trackGoalLink:    string = "https://www.youtube.com/";
     return (
 
+        // Maps the FeatureCardData array & passes it's items as props to the <FeatureCard /> component
+        // to be rendered. 
         <div className="flex flex-col items-center py-5 space-y-14">
             <h1 className="mb-0 w-5/8 pl-3 text-start" >Welcome back, User</h1>
-            <RectangleHolder title={createGoalHeader} details={createGoalString} link={createGoalLink} SvgImage={SVG1} />
-            <RectangleHolder title={viewGoalHeader} details={viewGoalString} link={viewGoalLink} SvgImage={SVG2} />
-            <RectangleHolder title={trackGoalHeader} details={trackGoalString} link={trackGoalLink} SvgImage={SVG3} />
+            {featureCardData.map((data, index) => (
+                <FeatureCard 
+                    key={index}
+
+                    title={data.title}
+                    details={data.details}
+                    link={data.link}
+                    SvgImage={data.SvgImage}
+                />
+            ))}
         </div>
     );
 }

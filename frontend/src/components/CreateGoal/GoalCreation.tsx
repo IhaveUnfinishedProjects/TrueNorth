@@ -1,8 +1,8 @@
-import '../../index.css';
-import BackButton from '../../assets/backButton.svg?react';
-import InputField from './support/InputField.js';
-import ConfirmationComponent from './support/ConfirmationComponent.js';
 import { useState } from 'react';
+import "@root/index.css";
+import InputField from './support/InputField.js';
+import BackButton from '../../assets/backButton.svg?react';
+import ConfirmationComponent from './support/ConfirmationComponent.js';
 
 const GoalCreation = () => {
 
