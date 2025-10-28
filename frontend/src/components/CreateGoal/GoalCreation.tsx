@@ -1,13 +1,19 @@
 import { useState } from 'react';
 import "@root/index.css";
+import BackButton from '@assets/backButton.svg?react';
 import InputField from './support/InputField.js';
-import BackButton from '../../assets/backButton.svg?react';
 import ConfirmationComponent from './support/ConfirmationComponent.js';
+
+/*
+    This function is responsible for rendering the new goal creation component.
+    It uses <InputField /> to display the text boxes for the user to type, and 
+    manages a back button / back button modal with <ConfirmationComponent />
+*/
 
 const GoalCreation = () => {
 
+    // A hook to display / hide the ConfirmationComponent for returning to home page.
     const [isBackComponentOpen, setIsBackComponentOpen] = useState(false);
-
     const backButtonClicked = () => {
         setIsBackComponentOpen(true);
     }
@@ -27,23 +33,20 @@ const GoalCreation = () => {
                 border-2 
                 rounded-2xl
             `}
-        >
-
-            <div className="flex flex-row my-5 w-10/10 pl-0">
-                {/* Contains header & back button */}
+        >   
+            {/* Contains header & back button */}
+            <div className="flex flex-row my-5 w-[100%]">
                 
-                <button onClick={backButtonClicked} className="flex items-center justify-center bg-white rounded-full h-8 w-8">
-                    <BackButton className="" />
+                <button onClick={backButtonClicked} 
+                    className="flex items-center justify-center bg-white rounded-full h-8 w-8"> 
+                    <BackButton /> 
                 </button>
 
                 <h2 className="mx-auto">Create New Goal</h2>
-
-                <div style={{ width: '24px' }} className="flex-shrink-0 invisible">
-                    {/*This div is a spacer*/}
-                </div>
-
+                <div style={{ width: '24px' }} className="flex-shrink-0 invisible"> {/*This div acts as a right hand spacer*/} </div>
             </div>
-
+            
+            {/* Contains the input fields*/}
             <div className = "w-[95%]">
                 <InputField />
             </div>

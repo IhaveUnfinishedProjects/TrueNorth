@@ -1,8 +1,17 @@
 import React, { useState } from 'react';
 import "@root/index.css";
 
+/* 
+    Renders and returns the input fields for GoalCreation
+*/
 
 const InputField = () => {
+
+    /* 
+        This section defines the input field input types & 
+        stores them when they change. Additionally handles the
+        submit 
+    */
 
     type InputValues = {
         goalName: string,
@@ -35,56 +44,71 @@ const InputField = () => {
         console.log("Form was submitted:", inputValues);
     }
 
+    /* 
+        This section defines the types for which the <Input /> field
+        takes, and stores an array of the fields the input fields will
+        take so we can map them. 
+    */ 
+
+    type InputFieldData = {
+        type: 'text'| 'date';
+        name: keyof InputValues;
+        placeholder: string;
+        required: boolean;
+        h3: string;
+    }
+
+    const InputFieldData: InputFieldData[] = [
+        {
+            type: "text",
+            name: "goalName",
+            placeholder: "e.g., Job Promotion",
+            required: true,
+            h3: "Goal Name"
+        },
+        {
+            type: "text",
+            name: "desiredAchievement",
+            placeholder: "e.g., Learn first aid",
+            required: true,
+            h3: "What do you want to achieve?"
+        },
+        {
+            type: "text",
+            name: "importance",
+            placeholder: "e.g., I enjoy helping people",
+            required: false,
+            h3: "Why is this important to you?"
+        },
+        {
+            type: "text",
+            name: "measurement",
+            placeholder: "e.g., Improve by 'x' amount weekly",
+            required: false,
+            h3: "How will you measure progress?"
+        },
+        {
+            type: "date",
+            name: "achievementDate",
+            placeholder: "achievementDate",
+            required: false,
+            h3: "When do you want to achieve this by?"
+        },
+    ]
+
     return (
         <form onSubmit={handleSubmit} className="flex flex-col">
-
-            <h3>Goal Name</h3>
-            <input
-                type="text"
-                name="goalName"
-                value={inputValues.goalName}
-                onChange={handleChange}
-                placeholder="e.g., Job Promotion"
-                required
-            />
-
-            <h3>What do you want to achieve?</h3>
-            <input
-                type="text"
-                name="desiredAchievement"
-                value={inputValues.desiredAchievement}
-                onChange={handleChange}
-                placeholder="e.g., Learn first aid"
-                required
-            />
-
-            <h3>Why is this important to you?</h3>
-            <input
-                type="text"
-                name="importance"
-                value={inputValues.importance}
-                onChange={handleChange}
-                placeholder="e.g., I enjoy helping people"
-            />
-
-            <h3>How will you measure progress?</h3>
-            <input
-                type="text"
-                name="measurement"
-                value={inputValues.measurement}
-                onChange={handleChange}
-                placeholder="e.g., Improve by 'x' amount weekly"
-            />
-
-            <h3>When do you want to achieve this by?</h3>
-            <input
-                type="date"
-                name="achievementDate"
-                value={inputValues.achievementDate}
-                onChange={handleChange}
-                placeholder="achievementDate"
-            />
-
+            {InputFieldData.map((data) => (
+                <>
+                    <h3>{data.h3}</h3>
+                    <input 
+                        key={data.name}
+                        {...data}
+                        value={String(inputValues[data.name])}
+                        onChange={handleChange}
+                    />
+                </>
+            ))}
             <button type = "submit" className="border-[1px] rounded-lg h-10 mb-10 text-white bg-[#3B82F6]">
                 + Create Goal
             </button>

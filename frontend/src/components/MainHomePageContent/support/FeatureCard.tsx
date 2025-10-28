@@ -1,6 +1,11 @@
 import React from "react";
 import "@root/index.css";
 
+/*
+    This file is responsible for taking FeatureCardData & rendering the 
+    content into the card.
+*/
+
 interface RectangleProps {
     title: string;
     details: string;
