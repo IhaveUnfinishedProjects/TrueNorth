@@ -2,7 +2,7 @@ import { useState } from 'react';
 import "@root/index.css";
 import BackButton from '@assets/backButton.svg?react';
 import InputField from './support/InputField.js';
-import ConfirmationComponent from './support/ConfirmationComponent.js';
+import ModalTemplate from './support/ModalTemplate.js'
 
 /*
     This function is responsible for rendering the new goal creation component.
@@ -17,6 +17,16 @@ const GoalCreation = () => {
     const backButtonClicked = () => {
         setIsBackComponentOpen(true);
     }
+
+    const modalButtons = [
+        {
+            text: "Yes",
+            route: "/"
+        },
+        {
+            text: "No"
+        }
+    ];
 
     return (
         <div 
@@ -51,7 +61,11 @@ const GoalCreation = () => {
                 <InputField />
             </div>
 
-            { isBackComponentOpen && <ConfirmationComponent onClose={() => setIsBackComponentOpen(false)} />}
+            { isBackComponentOpen && <ModalTemplate 
+                header = "Go back?"
+                buttons={modalButtons}
+                onClose={() => setIsBackComponentOpen(false)} 
+            />}
         </div>
 
     );
