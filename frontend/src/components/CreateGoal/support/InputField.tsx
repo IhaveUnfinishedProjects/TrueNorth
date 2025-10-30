@@ -18,7 +18,8 @@ const InputField = () => {
         desiredAchievement: string,
         importance: string,
         measurement: string,
-        achievementDate: Date
+        achievementDate: Date,
+        parent?: string
     }
 
     const [inputValues, setInputValues] = useState({
@@ -26,7 +27,8 @@ const InputField = () => {
         desiredAchievement:'',
         importance:'',
         measurement:'',
-        achievementDate:''
+        achievementDate:'',
+        parent:''
     });
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -99,17 +101,39 @@ const InputField = () => {
     const [isSubmitComponentOpen, setIsSubmitComponentOpen] = useState(false);
     const handleSubmit = (event: React.FormEvent) => {
         event.preventDefault();
+
+        // API call to the backend the data
+        console.log(inputValues);
+
+        // Recieve an id back from the backend
+        const parentId: string = Date.now().toString();
+        console.log("Recieved an id " + parentId);
+
+
+        // clear the content for the input field states & assign parent id
+        setInputValues({
+            goalName: '',
+            desiredAchievement: '',
+            importance: '',
+            measurement: '',
+            achievementDate: '',
+            parent: parentId,
+        });
+
+        console.log("Input values cleared: " + inputValues, "\nparent:", inputValues.parent);
+
+        // Confirm the component was submitted 
         setIsSubmitComponentOpen(true);
         console.log("Form was submitted:", inputValues);
     }
 
     const modalButtons = [
         {
-            text: "home",
+            text: "Add Sub-Goal",
             route: "/"
         },
         {
-            text: "also home",
+            text: "Add Steps",
             route: "/"
         }
 
@@ -118,16 +142,15 @@ const InputField = () => {
     return (
         <>
             <form onSubmit={handleSubmit} className="flex flex-col">
-                {InputFieldData.map((data) => (
-                    <>
+                {InputFieldData.map((data, index) => (
+                    <div key={index} className="flex-wrapper">
                         <h3>{data.h3}</h3>
                         <input 
-                            key={data.name}
                             {...data}
                             value={String(inputValues[data.name])}
                             onChange={handleChange}
                         />
-                    </>
+                    </div>
                 ))}
                 <button type = "submit" className="border-[1px] rounded-lg h-10 mb-10 text-white bg-[#3B82F6]">
                     + Create Goal

@@ -6,7 +6,7 @@ header {
     z-index: 1;
 }
 
-main {
+body {
     background-color: #F6E7CB;
     color: #413737;
     font-family: "Manrope", sans-serif;
