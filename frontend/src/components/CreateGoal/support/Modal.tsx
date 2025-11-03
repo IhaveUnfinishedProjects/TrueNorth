@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM, { createPortal } from 'react-dom';
 import { Link } from "react-router";
 import "@root/index.css";
-import "./ModalTemplateStyle.css";
+import "./Modal.css";
 import type { ModalButtonProps } from "@root/types/modalButtons.js";
 
 /*

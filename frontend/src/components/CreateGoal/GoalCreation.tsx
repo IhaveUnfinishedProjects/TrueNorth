@@ -4,6 +4,7 @@ import BackButton from '@assets/backButton.svg?react';
 import Input from './support/Input.js';
 import ModalTemplate from './support/Modal.js'
 import { submissionModalButtons } from "./support/Data.js";
+import { useToggleModal } from "@root/hooks/useToggleModal.js";
 
 /*
     This function is responsible for rendering the new goal creation component.
@@ -13,11 +14,8 @@ import { submissionModalButtons } from "./support/Data.js";
 
 const GoalCreation = () => {
 
-    // A hook to display / hide the ConfirmationComponent for returning to home page.
-    const [isBackComponentOpen, setIsBackComponentOpen] = useState(false);
-    const backButtonClicked = () => {
-        setIsBackComponentOpen(true);
-    }
+    // Custom hook to toggle modals. 
+    const { isOpen, onOpen, onClose } = useToggleModal();
 
     return (
         <div 
@@ -38,7 +36,7 @@ const GoalCreation = () => {
             {/* Contains header & back button */}
             <div className="flex flex-row my-5 w-[100%]">
                 
-                <button onClick={backButtonClicked} 
+                <button onClick={onOpen} 
                     className="flex items-center justify-center bg-white rounded-full h-8 w-8"> 
                     <BackButton /> 
                 </button>
@@ -52,10 +50,10 @@ const GoalCreation = () => {
                 <Input />
             </div>
 
-            { isBackComponentOpen && <ModalTemplate 
+            { isOpen && <ModalTemplate 
                 header = "Go back?"
                 buttons={submissionModalButtons}
-                onClose={() => setIsBackComponentOpen(false)} 
+                onClose={onClose}
             />}
         </div>
 
