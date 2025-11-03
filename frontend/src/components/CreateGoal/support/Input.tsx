@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import "@root/index.css";
 import ModalTemplate from './Modal.js';
-import type { InputFormData } from "./Data.js"
+import { type InputFormData, initialValues } from "./Data.js"
+import { useForm } from "@hooks/useFormData.js";
 
 /* 
     Renders and returns the input fields for GoalCreation
@@ -14,25 +15,8 @@ const Input = () => {
         stores them when they change.
     */
 
-    const [inputValues, setInputValues] = useState({
-        goalName:'',
-        desiredAchievement:'',
-        importance:'',
-        measurement:'',
-        achievementDate:'',
-        parent:''
-    });
-
-    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        // event.target.value is the text currently in the input box
-        const { name, value } = event.target;
-
-        setInputValues(prevData => ({
-            ...prevData,
-            [name]: value,
-        }));
-    };
-
+    // NOTE: MOVE TO TOP LEVEL COMPONENT
+    const { formValues, handleChange, resetForm } = useForm(initialValues);
 
     /* 
         This section defines the types for which the <Input /> field
@@ -95,7 +79,7 @@ const Input = () => {
         event.preventDefault();
 
         // API call to the backend the data
-        console.log(inputValues);
+        console.log(formValues);
 
         // Recieve an id back from the backend
         const parentId: string = Date.now().toString();
@@ -103,20 +87,13 @@ const Input = () => {
 
 
         // clear the content for the input field states & assign parent id
-        setInputValues({
-            goalName: '',
-            desiredAchievement: '',
-            importance: '',
-            measurement: '',
-            achievementDate: '',
-            parent: parentId,
-        });
+        resetForm;
 
-        console.log("Input values cleared: " + inputValues, "\nparent:", inputValues.parent);
+        console.log("Input values cleared: " + formValues, "\nparent:", formValues.parent);
 
         // Confirm the component was submitted 
         setIsSubmitComponentOpen(true);
-        console.log("Form was submitted:", inputValues);
+        console.log("Form was submitted:", formValues);
     }
 
     const modalButtons = [
@@ -139,7 +116,7 @@ const Input = () => {
                         <h3>{data.h3}</h3>
                         <input 
                             {...data}
-                            value={String(inputValues[data.name])}
+                            value={String(formValues[data.name])}
                             onChange={handleChange}
                         />
                     </div>

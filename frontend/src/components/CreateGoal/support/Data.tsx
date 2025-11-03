@@ -11,9 +11,19 @@ export type InputFormData = {
     desiredAchievement: string,
     importance: string,
     measurement: string,
-    achievementDate: Date,
+    achievementDate: string,
     parent?: string
 }
+
+export const initialValues: InputFormData = {
+    goalName:'',
+    desiredAchievement:'',
+    importance:'',
+    measurement:'',
+    achievementDate:'',
+    parent:''
+
+};
 
 export const submissionModalButtons = [
     {
