@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import "@root/index.css";
 import ModalTemplate from './Modal.js';
+import type { InputFormData } from "./Data.js"
 
 /* 
     Renders and returns the input fields for GoalCreation
@@ -12,15 +13,6 @@ const Input = () => {
         This section defines the input field input types & 
         stores them when they change.
     */
-
-    type InputValues = {
-        goalName: string,
-        desiredAchievement: string,
-        importance: string,
-        measurement: string,
-        achievementDate: Date,
-        parent?: string
-    }
 
     const [inputValues, setInputValues] = useState({
         goalName:'',
@@ -50,7 +42,7 @@ const Input = () => {
 
     type InputFieldData = {
         type: 'text'| 'date';
-        name: keyof InputValues;
+        name: keyof InputFormData;
         placeholder: string;
         required: boolean;
         h3: string;

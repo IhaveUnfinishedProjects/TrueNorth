@@ -6,6 +6,15 @@
     and the content for the <input/> tags. 
 */ 
 
+export type InputFormData = {
+    goalName: string,
+    desiredAchievement: string,
+    importance: string,
+    measurement: string,
+    achievementDate: Date,
+    parent?: string
+}
+
 export const submissionModalButtons = [
     {
         text: "Yes",
@@ -15,3 +24,8 @@ export const submissionModalButtons = [
         text: "No"
     }
 ];
+
+
+/* 
+    TYPE DECLARATIONS
+*/ 
