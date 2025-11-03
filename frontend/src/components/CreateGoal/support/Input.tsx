@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import "@root/index.css";
 import ModalTemplate from './Modal.js';
-import { type InputFormData, initialValues } from "./Data.js"
+import { type InputFormData, initialValues, backModalButtons } from "./Data.js"
 import { useForm } from "@hooks/useFormData.js";
 
 /* 
@@ -96,18 +96,6 @@ const Input = () => {
         console.log("Form was submitted:", formValues);
     }
 
-    const modalButtons = [
-        {
-            text: "Add Sub-Goal",
-            route: "/"
-        },
-        {
-            text: "Add Steps",
-            route: "/"
-        }
-
-    ]
-
     return (
         <>
             <form onSubmit={handleSubmit} className="flex flex-col">
@@ -128,7 +116,7 @@ const Input = () => {
             {isSubmitComponentOpen && <ModalTemplate 
                 header = "Create SubGoal?"
                 paragraph= 'Is this a goal made of smaller goals (like "Launch a Company"), or can you list the steps right away?'
-                buttons = {modalButtons}
+                buttons = {backModalButtons}
                 onClose={() => setIsSubmitComponentOpen(false)}
             />}
         </>

@@ -35,6 +35,18 @@ export const submissionModalButtons = [
     }
 ];
 
+export const backModalButtons = [
+        {
+            text: "Add Sub-Goal",
+            route: "/"
+        },
+        {
+            text: "Add Steps",
+            route: "/"
+        }
+
+    ]
+
 
 /* 
     TYPE DECLARATIONS
