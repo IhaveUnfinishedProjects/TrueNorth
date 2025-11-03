@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import "@root/index.css";
 import ModalTemplate from './Modal.js';
-import { type InputFormData, initialValues, backModalButtons } from "./Data.js"
+import { type InputFormData, type InputTagData , initialValues, backModalButtons, InputFieldData } from "./Data.js"
 import { useForm } from "@hooks/useFormData.js";
 
 /* 
@@ -9,67 +9,9 @@ import { useForm } from "@hooks/useFormData.js";
 */
 
 const Input = () => {
-
-    /* 
-        This section defines the input field input types & 
-        stores them when they change.
-    */
-
     // NOTE: MOVE TO TOP LEVEL COMPONENT
     const { formValues, handleChange, resetForm } = useForm(initialValues);
-
-    /* 
-        This section defines the types for which the <Input /> field
-        takes, and stores an array of the fields the input fields will
-        take so we can map them. 
-    */ 
-
-    type InputFieldData = {
-        type: 'text'| 'date';
-        name: keyof InputFormData;
-        placeholder: string;
-        required: boolean;
-        h3: string;
-    }
-
-    const InputFieldData: InputFieldData[] = [
-        {
-            type: "text",
-            name: "goalName",
-            placeholder: "e.g., Job Promotion",
-            required: true,
-            h3: "Goal Name"
-        },
-        {
-            type: "text",
-            name: "desiredAchievement",
-            placeholder: "e.g., Learn first aid",
-            required: true,
-            h3: "What do you want to achieve?"
-        },
-        {
-            type: "text",
-            name: "importance",
-            placeholder: "e.g., I enjoy helping people",
-            required: false,
-            h3: "Why is this important to you?"
-        },
-        {
-            type: "text",
-            name: "measurement",
-            placeholder: "e.g., Improve by 'x' amount weekly",
-            required: false,
-            h3: "How will you measure progress?"
-        },
-        {
-            type: "date",
-            name: "achievementDate",
-            placeholder: "achievementDate",
-            required: false,
-            h3: "When do you want to achieve this by?"
-        },
-    ]
-
+    
     /* 
         This section is dedicated to handling the form submission
     */
