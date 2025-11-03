@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import "@root/index.css";
-import ModalTemplate from './ModalTemplate.js';
+import ModalTemplate from './Modal.js';
 
 /* 
     Renders and returns the input fields for GoalCreation
 */
 
-const InputField = () => {
+const Input = () => {
 
     /* 
         This section defines the input field input types & 
@@ -166,4 +166,4 @@ const InputField = () => {
     );
 }
 
-export default InputField;
+export default Input;

@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import "@root/index.css";
 import BackButton from '@assets/backButton.svg?react';
-import InputField from './support/InputField.js';
-import ModalTemplate from './support/ModalTemplate.js'
+import Input from './support/Input.js';
+import ModalTemplate from './support/Modal.js'
+import { submissionModalButtons } from "./support/Data.js";
 
 /*
     This function is responsible for rendering the new goal creation component.
@@ -17,16 +18,6 @@ const GoalCreation = () => {
     const backButtonClicked = () => {
         setIsBackComponentOpen(true);
     }
-
-    const modalButtons = [
-        {
-            text: "Yes",
-            route: "/"
-        },
-        {
-            text: "No"
-        }
-    ];
 
     return (
         <div 
@@ -58,12 +49,12 @@ const GoalCreation = () => {
             
             {/* Contains the input fields*/}
             <div className = "w-[95%]">
-                <InputField />
+                <Input />
             </div>
 
             { isBackComponentOpen && <ModalTemplate 
                 header = "Go back?"
-                buttons={modalButtons}
+                buttons={submissionModalButtons}
                 onClose={() => setIsBackComponentOpen(false)} 
             />}
         </div>

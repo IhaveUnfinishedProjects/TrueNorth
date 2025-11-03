@@ -3,6 +3,7 @@ import ReactDOM, { createPortal } from 'react-dom';
 import { Link } from "react-router";
 import "@root/index.css";
 import "./ModalTemplateStyle.css";
+import type { ModalButtonProps } from "@root/types/modalButtons.js";
 
 /*
     This file is for creating dynamic models. 
@@ -11,15 +12,10 @@ import "./ModalTemplateStyle.css";
     & text to display.
 */
 
-interface ButtonProps {
-    text: string;
-    route?: string;
-}
-
 interface ModalProps {
     header: string;
     paragraph?: string;
-    buttons: ButtonProps[];
+    buttons: ModalButtonProps[];
     onClose: () => void;
 }
 
