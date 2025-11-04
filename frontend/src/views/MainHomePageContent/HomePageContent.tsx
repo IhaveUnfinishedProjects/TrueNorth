@@ -3,7 +3,7 @@ import "@root/index.css";
 import SVG1 from "@assets/CreateGoal.svg?react";
 import SVG2 from "@assets/ViewGoal.svg?react";
 import SVG3 from "@assets/TrackGoal.svg?react";
-import FeatureCard from "@root/components/MainHomePageContent/support/FeatureCard.js";
+import FeatureCard from "@root/views/MainHomePageContent/support/FeatureCard.js";
 
 /* 
     The page is dedicated to returning the content for home page feature cards.

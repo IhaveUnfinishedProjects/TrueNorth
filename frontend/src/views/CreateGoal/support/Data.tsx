@@ -6,7 +6,7 @@
     and the content for the <input/> tags. 
 */ 
 
-import { type InputFieldConfig } from "@root/types/inputTag.js";
+import { type InputFieldConfig } from "@root/types/InputTag.js";
 
 export const initialValues: InputFormData = {
     goalName:'',
@@ -17,17 +17,17 @@ export const initialValues: InputFormData = {
     parent:''
 };
 
-export const submissionModalButtons = [
+export const backModalButtons = [
     {
         text: "Yes",
         route: "/"
     },
     {
-        text: "No"
+        text: "No",
     }
 ];
 
-export const backModalButtons = [
+export const submissionModalButtons = [
     {
         text: "Add Sub-Goal",
         route: "/"

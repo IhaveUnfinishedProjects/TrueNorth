@@ -1,11 +1,12 @@
-import { useState } from 'react';
 import "@root/index.css";
 import BackButton from '@assets/backButton.svg?react';
-import Input from './support/Input.js';
-import ModalTemplate from './support/Modal.js'
+import Input from '../../components/Input/Input.js';
+import ModalTemplate from '../../components/Modal/Modal.js'
+import { Card } from "@root/components/Card/card.js";
 import { backModalButtons, initialValues, submissionModalButtons, InputFieldData} from "./support/Data.js";
 import { useToggleModal } from "@root/hooks/useToggleModal.js";
 import { useForm } from "@hooks/useFormData.js";
+import "./GoalCreation.css";
 
 /*
     This function is responsible for rendering the new goal creation component.
@@ -15,39 +16,25 @@ import { useForm } from "@hooks/useFormData.js";
 
 const GoalCreation = () => {
 
-    // Custom hook to toggle modals. 
-    const { isOpen, onOpen, onClose } = useToggleModal();
+    const { isOpen:isBackOpen, onOpen:onBackOpen, onClose:onBackClose } = useToggleModal();
+    const { isOpen:isSubmitOpen, onOpen:onSubmitOpen, onClose:onSubmitClose } = useToggleModal();
     const { formValues, handleChange, resetForm } = useForm(initialValues);
-    const [isSubmitComponentOpen, setIsSubmitComponentOpen] = useState(false);
 
     const handleSubmit = (event: React.FormEvent) => {
         // Mock API call to backend for parent id. 
         event.preventDefault();
         const parentId: string = Date.now().toString();
         resetForm;
-        setIsSubmitComponentOpen(true);
+        onSubmitOpen();
     }
 
     return (
-        <div 
-            className = {`
-                flex 
-                flex-col 
-                justify-around
-                w-1/2
-                h-200
-                mx-auto 
-                px-5
-                items-center 
-                bg-[#D9D9D9]
-                border-2 
-                rounded-2xl
-            `}
-        >   
+        <Card> 
+
             {/* Contains header & back button */}
             <div className="flex flex-row my-5 w-[100%]">
                 
-                <button onClick={onOpen} 
+                <button onClick={onBackOpen} 
                     className="flex items-center justify-center bg-white rounded-full h-8 w-8"> 
                     <BackButton /> 
                 </button>
@@ -66,20 +53,20 @@ const GoalCreation = () => {
                 </form>
             </div>
 
-            { isOpen && <ModalTemplate 
+            {/* Contains Modal Logic (Open & Close) */}
+            { isBackOpen && <ModalTemplate 
                 header = "Go back?"
-                buttons={submissionModalButtons}
-                onClose={onClose}
+                buttons={backModalButtons}
+                onClose={onBackClose}
             />}
 
-            {isSubmitComponentOpen && <ModalTemplate 
+            {isSubmitOpen && <ModalTemplate 
                 header = "Create SubGoal?"
                 paragraph= 'Is this a goal made of smaller goals (like "Launch a Company"), or can you list the steps right away?'
-                buttons = {backModalButtons}
-                onClose={() => setIsSubmitComponentOpen(false)}
+                buttons = {submissionModalButtons}
+                onClose={onSubmitClose}
             />}
-        </div>
-
+        </Card>
     );
 }
 

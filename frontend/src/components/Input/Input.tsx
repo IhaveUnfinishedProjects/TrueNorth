@@ -1,6 +1,6 @@
 import "@root/index.css";
 import type { ChangeEvent } from "react";
-import { type InputFieldConfig } from "@root/types/inputTag.js";
+import { type InputFieldConfig } from "@root/types/InputTag.js";
 
 /* 
     Renders and returns the input fields for GoalCreation
@@ -14,10 +14,10 @@ type InputProps<T> = {
 const Input = <T extends Record<string, any>> ({ formValues, handleChange, InputFieldData }: InputProps<T>) => {
     return (
         <>
-                {InputFieldData.map((data) => {
+                {InputFieldData.map((data, index) => {
                     const { name, ...inputProps } = data;
                     return(
-                    <div key={data.toString()} className="flex-wrapper">
+                    <div key={index} className="flex-wrapper">
                         <h3>{data.h3}</h3>
                         <input 
                             {...data}
