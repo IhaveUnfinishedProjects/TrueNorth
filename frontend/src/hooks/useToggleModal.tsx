@@ -11,3 +11,5 @@ export function useToggleModal() {
 
     return { isOpen, onOpen, onClose };
 }
+
+export default useToggleModal;

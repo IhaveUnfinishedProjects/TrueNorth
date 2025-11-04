@@ -30,11 +30,11 @@ export const backModalButtons = [
 export const submissionModalButtons = [
     {
         text: "Add Sub-Goal",
-        route: "/"
+        route: "/CreateGoal"
     },
     {
         text: "Add Steps",
-        route: "/"
+        route: "/PlanGoal"
     }
 ]
 

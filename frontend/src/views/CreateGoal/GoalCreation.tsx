@@ -1,13 +1,11 @@
 import "@root/index.css";
-import BackButton from '@assets/backButton.svg?react';
-import Input from '../../components/FormInput/Input.js';
 import ModalTemplate from '../../components/Modal/Modal.js'
 import { Card } from "@root/components/Card/card.js";
 import { backModalButtons, initialValues, submissionModalButtons, InputFieldData} from "./support/Data.js";
 import { useToggleModal } from "@root/hooks/useToggleModal.js";
 import { useForm } from "@hooks/useFormData.js";
 import CardHeader from "@root/components/Card/Header/header.js";
-import Form from "@root/components/FormInput/Form.js";
+import Form from "@root/views/CreateGoal/support/Form.js";
 import "./GoalCreation.css";
 
 /*
@@ -26,7 +24,7 @@ const GoalCreation = () => {
         // Mock API call to backend for parent id. 
         event.preventDefault();
         const parentId: string = Date.now().toString();
-        resetForm;
+        resetForm();
         onSubmitOpen();
     }
 

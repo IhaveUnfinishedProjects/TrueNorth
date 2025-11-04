@@ -1,6 +1,8 @@
 import Header from './views/Header/Header.js';
 import HomePageContent from "./views/MainHomePageContent/HomePageContent.js";
 import GoalCreation from './views/CreateGoal/GoalCreation.js';
+import GoalPlanning from './views/PlanGoal/GoalPlanning.js';
+
 import { useState } from "react";
 import { Routes, Route, Link } from 'react-router';
 
@@ -15,6 +17,7 @@ function App() {
                 <Routes>
                     <Route path="/" element={<HomePageContent />} />
                     <Route path="/CreateGoal" element={<GoalCreation />} />
+                    <Route path="/PlanGoal" element={<GoalPlanning />} />
                 </Routes>
             </main>
         </>
