@@ -3,8 +3,9 @@ import "@root/index.css";
 import BackButton from '@assets/backButton.svg?react';
 import Input from './support/Input.js';
 import ModalTemplate from './support/Modal.js'
-import { submissionModalButtons } from "./support/Data.js";
+import { backModalButtons, initialValues, submissionModalButtons} from "./support/Data.js";
 import { useToggleModal } from "@root/hooks/useToggleModal.js";
+import { useForm } from "@hooks/useFormData.js";
 
 /*
     This function is responsible for rendering the new goal creation component.
@@ -16,6 +17,16 @@ const GoalCreation = () => {
 
     // Custom hook to toggle modals. 
     const { isOpen, onOpen, onClose } = useToggleModal();
+    const { formValues, handleChange, resetForm } = useForm(initialValues);
+    const [isSubmitComponentOpen, setIsSubmitComponentOpen] = useState(false);
+
+    const handleSubmit = (event: React.FormEvent) => {
+        // Mock API call to backend for parent id. 
+        event.preventDefault();
+        const parentId: string = Date.now().toString();
+        resetForm;
+        setIsSubmitComponentOpen(true);
+    }
 
     return (
         <div 
@@ -47,13 +58,25 @@ const GoalCreation = () => {
             
             {/* Contains the input fields*/}
             <div className = "w-[95%]">
-                <Input />
+                <form onSubmit={handleSubmit} className="flex flex-col">
+                    <Input formValues={formValues} handleChange={handleChange}/>
+                    <button type = "submit" className="border-[1px] rounded-lg h-10 mb-10 text-white bg-[#3B82F6]">
+                        + Create Goal
+                    </button>
+                </form>
             </div>
 
             { isOpen && <ModalTemplate 
                 header = "Go back?"
                 buttons={submissionModalButtons}
                 onClose={onClose}
+            />}
+
+            {isSubmitComponentOpen && <ModalTemplate 
+                header = "Create SubGoal?"
+                paragraph= 'Is this a goal made of smaller goals (like "Launch a Company"), or can you list the steps right away?'
+                buttons = {backModalButtons}
+                onClose={() => setIsSubmitComponentOpen(false)}
             />}
         </div>
 

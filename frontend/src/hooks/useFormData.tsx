@@ -1,5 +1,9 @@
-import { initialValues } from "@root/components/CreateGoal/support/Data.js";
 import { useState, type ChangeEvent, useCallback } from "react";
+
+/* 
+    This hook is used to manage the state of form data that come from
+    <input> tags, handling the onChange and resetting of the form.  
+*/
 
 export function useForm<T extends Record<string, any>>(initialValues: T){
     const [formValues, setFormValues] = useState<T>(initialValues);

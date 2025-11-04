@@ -1,46 +1,18 @@
-import React, { useState } from 'react';
 import "@root/index.css";
-import ModalTemplate from './Modal.js';
-import { type InputFormData, type InputTagData , initialValues, backModalButtons, InputFieldData } from "./Data.js"
-import { useForm } from "@hooks/useFormData.js";
+import { InputFieldData } from "./Data.js"
+import type { ChangeEvent } from "react";
 
 /* 
     Renders and returns the input fields for GoalCreation
 */
+type InputProps<T> = {
+    formValues: T;
+    handleChange: (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
+};
 
-const Input = () => {
-    // NOTE: MOVE TO TOP LEVEL COMPONENT
-    const { formValues, handleChange, resetForm } = useForm(initialValues);
-    
-    /* 
-        This section is dedicated to handling the form submission
-    */
-
-    const [isSubmitComponentOpen, setIsSubmitComponentOpen] = useState(false);
-    const handleSubmit = (event: React.FormEvent) => {
-        event.preventDefault();
-
-        // API call to the backend the data
-        console.log(formValues);
-
-        // Recieve an id back from the backend
-        const parentId: string = Date.now().toString();
-        console.log("Recieved an id " + parentId);
-
-
-        // clear the content for the input field states & assign parent id
-        resetForm;
-
-        console.log("Input values cleared: " + formValues, "\nparent:", formValues.parent);
-
-        // Confirm the component was submitted 
-        setIsSubmitComponentOpen(true);
-        console.log("Form was submitted:", formValues);
-    }
-
+const Input = <T extends Record<string, any>> ({ formValues, handleChange }: InputProps<T>) => {
     return (
         <>
-            <form onSubmit={handleSubmit} className="flex flex-col">
                 {InputFieldData.map((data, index) => (
                     <div key={index} className="flex-wrapper">
                         <h3>{data.h3}</h3>
@@ -51,16 +23,6 @@ const Input = () => {
                         />
                     </div>
                 ))}
-                <button type = "submit" className="border-[1px] rounded-lg h-10 mb-10 text-white bg-[#3B82F6]">
-                    + Create Goal
-                </button>
-            </form>
-            {isSubmitComponentOpen && <ModalTemplate 
-                header = "Create SubGoal?"
-                paragraph= 'Is this a goal made of smaller goals (like "Launch a Company"), or can you list the steps right away?'
-                buttons = {backModalButtons}
-                onClose={() => setIsSubmitComponentOpen(false)}
-            />}
         </>
     );
 }

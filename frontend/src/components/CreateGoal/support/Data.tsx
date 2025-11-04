@@ -13,7 +13,6 @@ export const initialValues: InputFormData = {
     measurement:'',
     achievementDate:'',
     parent:''
-
 };
 
 export const submissionModalButtons = [
