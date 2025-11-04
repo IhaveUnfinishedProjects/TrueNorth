@@ -3,7 +3,7 @@ import "@root/index.css";
 import BackButton from '@assets/backButton.svg?react';
 import Input from './support/Input.js';
 import ModalTemplate from './support/Modal.js'
-import { backModalButtons, initialValues, submissionModalButtons} from "./support/Data.js";
+import { backModalButtons, initialValues, submissionModalButtons, InputFieldData} from "./support/Data.js";
 import { useToggleModal } from "@root/hooks/useToggleModal.js";
 import { useForm } from "@hooks/useFormData.js";
 
@@ -59,7 +59,7 @@ const GoalCreation = () => {
             {/* Contains the input fields*/}
             <div className = "w-[95%]">
                 <form onSubmit={handleSubmit} className="flex flex-col">
-                    <Input formValues={formValues} handleChange={handleChange}/>
+                    <Input formValues={formValues} handleChange={handleChange} InputFieldData={InputFieldData}/>
                     <button type = "submit" className="border-[1px] rounded-lg h-10 mb-10 text-white bg-[#3B82F6]">
                         + Create Goal
                     </button>

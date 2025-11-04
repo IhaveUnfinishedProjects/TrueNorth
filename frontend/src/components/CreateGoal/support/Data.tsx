@@ -6,6 +6,8 @@
     and the content for the <input/> tags. 
 */ 
 
+import { type InputFieldConfig } from "@root/types/inputTag.js";
+
 export const initialValues: InputFormData = {
     goalName:'',
     desiredAchievement:'',
@@ -36,7 +38,7 @@ export const backModalButtons = [
     }
 ]
 
-export const InputFieldData: InputTagData[] = [
+export const InputFieldData: InputFieldConfig<InputFormData>[] = [
     {
         type: "text",
         name: "goalName",
@@ -85,12 +87,4 @@ export type InputFormData = {
     measurement: string,
     achievementDate: string,
     parent?: string
-}
-
-export type InputTagData = {
-    type: 'text'| 'date';
-    name: keyof InputFormData;
-    placeholder: string;
-    required: boolean;
-    h3: string;
 }
