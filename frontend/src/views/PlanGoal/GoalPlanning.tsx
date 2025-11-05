@@ -8,7 +8,7 @@ import useArrayManipulation from "./support/useArrayManipulation.js";
 export const GoalPlanning = () => {
 
     const { isOpen:isBackOpen, onOpen:onBackOpen, onClose:onBackClose } = useToggleModal();
-    const { steps, push, remove, handleChange } = useArrayManipulation();
+    const { steps, push, remove, handleChange, staticStepId, handleStaticKeyDown } = useArrayManipulation();
 
     return (
         <>
@@ -18,9 +18,11 @@ export const GoalPlanning = () => {
 
                 <DynamicForm 
                     steps={steps} 
+                    staticStepId={staticStepId}
                     push={push} 
                     remove={remove}
                     handleChange={handleChange}
+                    handleStaticKeyDown={handleStaticKeyDown}
                 />
             </Card>
         </>
