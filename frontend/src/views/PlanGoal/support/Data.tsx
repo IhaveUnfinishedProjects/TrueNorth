@@ -1,0 +1,1 @@
+export type Step = {id: string, description: string};

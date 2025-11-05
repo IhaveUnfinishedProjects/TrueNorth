@@ -1,4 +1,3 @@
-
 import type { ChangeEvent } from "react";
 import { type InputFieldConfig } from "@root/types/InputTag.js";
 

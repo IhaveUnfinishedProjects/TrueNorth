@@ -5,6 +5,13 @@ import { type InputFieldConfig } from "@root/types/InputTag.js";
 /* 
     Renders and returns the input fields for GoalCreation
 */
+
+/*
+    PLEASE NOTE: 
+    This file is unused & being kept for now just in case. 
+    Will be deleted soon. 
+*/
+
 type InputProps<T> = {
     formValues: T;
     handleChange: (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;

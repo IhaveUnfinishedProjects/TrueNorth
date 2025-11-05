@@ -13,7 +13,7 @@ function App() {
     return (
         <>
             <Header onHeightMeasured={({height}) => setHeaderHeight(height)}/>
-            <main className="min-h-screen bg-[url('/src/icons/background.svg')] bg-cover pt-20" style={{ marginTop: `${headerHeight * 2}` }}>  
+            <main className="min-h-screen bg-[url('/src/icons/background.svg')] bg-cover" style={{ marginTop: `${headerHeight * 2}` }}>  
                 <Routes>
                     <Route path="/" element={<HomePageContent />} />
                     <Route path="/CreateGoal" element={<GoalCreation />} />

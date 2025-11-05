@@ -4,7 +4,7 @@ import { Card } from "@root/components/Card/card.js";
 import { backModalButtons, initialValues, submissionModalButtons, InputFieldData} from "./support/Data.js";
 import { useToggleModal } from "@root/hooks/useToggleModal.js";
 import { useForm } from "@hooks/useFormData.js";
-import CardHeader from "@root/components/Card/Header/header.js";
+import CardHeader from "@root/components/Card/Header/cardHeader.js";
 import Form from "@root/views/CreateGoal/support/Form.js";
 import "./GoalCreation.css";
 
