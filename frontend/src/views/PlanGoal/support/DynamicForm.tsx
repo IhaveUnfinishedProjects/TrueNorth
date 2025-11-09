@@ -1,6 +1,12 @@
 import { type ChangeEvent } from "react"
 import { type Step } from "./Data.js";
 import BinImage from "./Bin.js";
+import {
+    DragDropContext, 
+    Draggable, 
+    Droppable, 
+    type DropResult
+} from "@hello-pangea/dnd";
 
 interface DynamicFormProps {
     steps: Step[];
@@ -10,15 +16,18 @@ interface DynamicFormProps {
     handleChange: (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
     handleStaticKeyDown: (event: React.KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
     handleSubmit: (event: React.FormEvent) => void;
+    handleDragDrop: (result: DropResult) => void;
 }
 
 export const DynamicForm: React.FC<DynamicFormProps> = ({ 
         steps, 
         staticStepId, 
-        push, remove,
+        push, 
+        remove,
         handleChange, 
         handleStaticKeyDown, 
-        handleSubmit 
+        handleSubmit,
+        handleDragDrop 
     }) => {
 
     const staticStep = steps.find(step => step.id === staticStepId)
@@ -26,20 +35,47 @@ export const DynamicForm: React.FC<DynamicFormProps> = ({
 
     return(
         <form onSubmit={handleSubmit}>
-            {steps.length > 1 && <h3>First Step</h3>}
-            {dynamicSteps.map((data) => {
-                return (
-                    <div key={data.id} className="w-[100%] flex flex-row justify-between items-center">
-                        <input className="w-[90%]"
-                            name={data.id} 
-                            value={data.description}
-                            placeholder="Add a step here!"
-                            onChange={handleChange}
-                        />
-                        <BinImage step={data} remove={remove}/>
-                    </div>
-                );
-            })}
+            <DragDropContext onDragEnd={handleDragDrop}>
+                {steps.length > 1 && <h3>First Step</h3>}
+                <Droppable droppableId="ROOT">
+                    {(provided) => (
+                        <div 
+                            {...provided.droppableProps} 
+                            ref={provided.innerRef}
+                        >
+                            {dynamicSteps.map((data, index) => {
+                                return (
+                                    <Draggable 
+                                        draggableId={data.id} 
+                                        key={data.id} 
+                                        index={index}
+                                    >
+                                        {(provided) => (
+                                            <div 
+                                                ref={provided.innerRef}
+                                                {...provided.draggableProps}
+                                                {...provided.dragHandleProps}
+                                                key={data.id} 
+                                                className="w-[100%] flex flex-row justify-between items-center"
+                                            >
+                                                <input className="w-[90%]"
+                                                    name={data.id} 
+                                                    value={data.description}
+                                                    placeholder="Add a step here!"
+                                                    onChange={handleChange}
+                                                />
+                                                <BinImage step={data} remove={remove}/>
+                                            </div> 
+                                        )}
+                                    </Draggable>
+                                )
+                            })}
+                            {provided.placeholder}
+                        </div>
+                    )}
+
+                </Droppable>
+            </DragDropContext>
             
             <h3>New Step</h3>
             {staticStep && (

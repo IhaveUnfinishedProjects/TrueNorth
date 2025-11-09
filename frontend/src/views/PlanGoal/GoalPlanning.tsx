@@ -11,7 +11,7 @@ export const GoalPlanning = () => {
 
     const { isOpen:isBackOpen, onOpen:onBackOpen, onClose:onBackClose } = useToggleModal();
     const { isOpen:isSubmitOpen, onOpen:onSubmitOpen, onClose:onSubmitClose } = useToggleModal();
-    const { steps, push, remove, handleChange, staticStepId, handleStaticKeyDown } = useArrayManipulation();
+    const { steps, push, remove, handleChange, staticStepId, handleStaticKeyDown, handleDragDrop } = useArrayManipulation();
 
     const handleSubmit = (event: React.FormEvent) => {
         // Mock API call to backend
@@ -34,6 +34,7 @@ export const GoalPlanning = () => {
                     handleChange={handleChange}
                     handleStaticKeyDown={handleStaticKeyDown}
                     handleSubmit={handleSubmit}
+                    handleDragDrop={handleDragDrop}
                 />
             </Card>
 
