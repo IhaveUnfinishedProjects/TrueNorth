@@ -37,3 +37,18 @@ input {
     height: 50px;
     padding-left: 20px;
 }
+
+form {
+    display: flex;
+    flex-direction: column;
+    width: 95%;
+}
+
+.formButton {
+    border-width: 1px;
+    border-radius: 5px;
+    height: 3rem;
+    color: white;
+    background-color: #3B82F6;
+    margin-bottom: 2rem;
+}

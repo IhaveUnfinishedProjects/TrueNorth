@@ -10,8 +10,8 @@ type InputProps<T> = {
 
 export const Form = <T extends Record<string, any>> ({ formValues, handleChange, InputFieldData, handleSubmit }: InputProps<T>) => {
     return (
-        <div className = "w-[95%]">
-            <form onSubmit={handleSubmit} className="flex flex-col">
+        <>
+            <form onSubmit={handleSubmit}>
                 {InputFieldData.map((data, index) => {
                     const { name, ...inputProps } = data;
                     return(
@@ -25,11 +25,11 @@ export const Form = <T extends Record<string, any>> ({ formValues, handleChange,
                         />
                     </div>
                 )})}
-                <button type = "submit" className="border-[1px] rounded-lg h-10 mb-10 text-white bg-[#3B82F6]">
+                <button type = "submit" className="formButton">
                     + Create Goal
                 </button>
             </form>
-        </div>
+        </>
     );
 }
 

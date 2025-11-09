@@ -57,7 +57,7 @@ const Header:React.FC<HeaderProps> = ( { onHeightMeasured }) => {
     return(
         <header ref={headerRef} className="flex justify-between w-full p-5 mb-20 text-[#413737] border-b-2 bg-[#F5F5F5]">
             <div className="flex gap-3">
-                <Logo className=""/>
+                <Logo/>
                 <h1 className="flex items-center text-[24px] font-bold">TrueNorth</h1>
             </div>
 
