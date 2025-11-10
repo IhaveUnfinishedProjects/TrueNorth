@@ -9,7 +9,7 @@ interface BinImageProps {
 export const BinImage: React.FC<BinImageProps> = ({ step, remove }) => {
     return (
         <button className="contents" onClick={() => remove(step)}>
-            <BinSVG className="text-brown-900 w-6 h-6 mb-[2.6rem]"/>
+            <BinSVG className="text-brown-900 w-[1.4rem] h-[1.4rem]"/>
         </button>
     );
 }

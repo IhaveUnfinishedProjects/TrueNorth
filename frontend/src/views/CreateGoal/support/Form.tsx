@@ -18,6 +18,7 @@ export const Form = <T extends Record<string, any>> ({ formValues, handleChange,
                     <div key={index} className="flex-wrapper">
                         <h3>{data.h3}</h3>
                         <input 
+                            className="mb-[3rem]"
                             {...data}
                             name = {name.toString()}
                             value={String(formValues[data.name])}

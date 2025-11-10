@@ -8,7 +8,10 @@
     "paths": {
       "@root/*": ["*"],
       "@assets/*": ["assets/*"],
-      "@hooks/*": ["hooks/*"]
+      "@hooks/*": ["hooks/*"],
+      "@components/*": ["components/*"],
+      "@types/*": ["types/*"],
+      "@views/*": ["views/*"],
     },
 
     // Environment Settings

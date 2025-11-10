@@ -1,3 +1,6 @@
+import type { DropResult } from "@hello-pangea/dnd";
+import type { ChangeEvent } from "react";
+
 export type Step = {id: string, description: string};
 
 export const staticStep = {
@@ -25,3 +28,14 @@ export const submissionModalButtons = [
         //route: "/PlanGoal"
     }
 ]
+
+export interface DynamicFormProps {
+    steps: Step[];
+    staticStepId: string;
+    push: (step: Step) => void;
+    remove: (step: Step) => void;
+    handleChange: (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
+    handleStaticKeyDown: (event: React.KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
+    handleSubmit: (event: React.FormEvent) => void;
+    handleDragDrop: (result: DropResult) => void;
+}

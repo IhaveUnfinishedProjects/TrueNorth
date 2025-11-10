@@ -1,24 +1,13 @@
-import { type ChangeEvent } from "react"
-import { type Step } from "./Data.js";
-import { RxDragHandleDots2 } from "react-icons/rx";
-import BinImage from "./Bin.js";
-import {
-    DragDropContext, 
-    Draggable, 
-    Droppable, 
-    type DropResult
-} from "@hello-pangea/dnd";
+import { DragDropContext, Droppable } from "@hello-pangea/dnd";
+import type { DynamicFormProps } from "./Data.js";
+import DraggableSteps from "./Draggable.js";
+import "./support.css";
 
-interface DynamicFormProps {
-    steps: Step[];
-    staticStepId: string;
-    push: (step: Step) => void;
-    remove: (step: Step) => void;
-    handleChange: (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
-    handleStaticKeyDown: (event: React.KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
-    handleSubmit: (event: React.FormEvent) => void;
-    handleDragDrop: (result: DropResult) => void;
-}
+/*
+    This component renders a form that manages and 
+    allows the drag-and-drop reordering of dynamic 
+    steps using the @hello-pangea/dnd library.
+*/
 
 export const DynamicForm: React.FC<DynamicFormProps> = ({ 
         steps, 
@@ -36,54 +25,45 @@ export const DynamicForm: React.FC<DynamicFormProps> = ({
 
     return(
         <form onSubmit={handleSubmit}>
+            {/* Initializes the drag and drop context for the entire list */}
             <DragDropContext onDragEnd={handleDragDrop}>
                 {steps.length > 1 && <h3>First Step</h3>}
+
+                {/* Defines the drop zone where steps can be reordered */}
                 <Droppable droppableId="ROOT">
                     {(provided) => (
-                        <div 
-                            {...provided.droppableProps} 
+                        <div
+                            /* Props required for the drop zone to function */
+                            {...provided.droppableProps}
                             ref={provided.innerRef}
                         >
+                            {/* Renders the dynamic (draggable) steps */}
                             {dynamicSteps.map((data, index) => {
                                 return (
-                                    <Draggable 
-                                        draggableId={data.id} 
-                                        key={data.id} 
+                                    // Custom component encapsulating the Draggable logic
+                                    <DraggableSteps
+                                        data={data}
                                         index={index}
-                                    >
-                                        {(provided) => (
-                                            <div 
-                                                ref={provided.innerRef}
-                                                {...provided.draggableProps}
-                                                key={data.id} 
-                                                className="w-[100%] flex flex-row justify-between items-center"
-                                            >
-                                                <div {...provided.dragHandleProps}>
-                                                    <RxDragHandleDots2 className="mb-[2.6rem]"/>
-                                                </div>
-
-                                                <input className="w-[90%]"
-                                                    name={data.id} 
-                                                    value={data.description}
-                                                    placeholder="Add a step here!"
-                                                    onChange={handleChange}
-                                                />
-                                                <BinImage step={data} remove={remove}/>
-                                            </div> 
-                                        )}
-                                    </Draggable>
+                                        handleChange={handleChange}
+                                        remove={remove}
+                                    />
                                 )
                             })}
+
+                            {/* Placeholder element required during dragging */}
                             {provided.placeholder}
                         </div>
                     )}
 
                 </Droppable>
             </DragDropContext>
-            
+
+            {/* Input for the new/static step (cannot be dragged) */}
+
             <h3>New Step</h3>
             {staticStep && (
-                <input 
+                <input
+                    className="mb-[2rem]"
                     key={staticStep.id}
                     name={staticStep.id}
                     value={staticStep.description}
@@ -101,4 +81,3 @@ export const DynamicForm: React.FC<DynamicFormProps> = ({
 }
 
 export default DynamicForm;
-

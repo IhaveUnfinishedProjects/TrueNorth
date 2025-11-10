@@ -1,4 +1,5 @@
 import BackButton from '@assets/backButton.svg?react';
+import "@components/Card/card.css";
 
 interface CardHeaderProps {
     onBackOpen: () => void;
@@ -6,10 +7,11 @@ interface CardHeaderProps {
 
 export const CardHeader: React.FC<CardHeaderProps> = ({ onBackOpen }) => {
     return (
-        <div className="flex flex-row my-5 w-[100%]">
+        <div className="cardHeader">
     
             <button onClick={onBackOpen} 
-                className="flex items-center justify-center bg-white rounded-full h-8 w-8"> 
+                className="backButton"
+            > 
                 <BackButton /> 
             </button>
 
