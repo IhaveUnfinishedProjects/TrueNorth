@@ -1,41 +1,36 @@
-import { useState, useEffect, type ChangeEvent, type KeyboardEvent } from "react";
+import { useState, type ChangeEvent } from "react";
 import { type Step, staticStep } from "./Data.js";
 import { type DropResult } from "@hello-pangea/dnd";
+
+/*
+    Reorders the array. Takes an item from an index and moves it to a new one
+*/
+const reorder = (list: Step[], startIndex: number, endIndex: number) => {
+    const result = Array.from(list);
+    const [removed] = result.splice(startIndex, 1);
+
+    if (removed){
+        console.log(list, startIndex, endIndex);
+        result.splice(endIndex, 0, removed);
+    }
+
+    return result;
+};
 
 export function useArrayManipulation() {
 
     const [steps, setSteps] = useState<Step[]>([staticStep]);
     const staticStepId = staticStep.id;
 
-    const push = (step: Step, stepArray?: Step[], index?: number) => {
-
-        if (stepArray && index){
-            return [
-                ...stepArray.slice(0, index),
-                step,
-                ...stepArray.slice(index)
-            ];
-        } 
-
+    // Pushes a new step to the end of the array.
+    const push = (step: Step) => {
         setSteps(prevSteps => [...prevSteps, step]);
     }
 
-    const remove = (step: Step, stepArray?: Step[]) => {
-
-        if (stepArray){
-            return stepArray.filter(curStep =>  curStep.id !== step.id)
-        }
-
+    // Removes a given step by id
+    const remove = (step: Step) => {
         const newSteps = steps.filter(curStep => curStep.id !== step.id);
         setSteps(newSteps);
-    };
-
-    const getStep = (id: string): Step | undefined => {
-        const targetStep = steps.find(step => step.id === id);
-
-        if (targetStep){
-            return targetStep;
-        }
     };
 
     function handleChange(event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
@@ -50,41 +45,29 @@ export function useArrayManipulation() {
 
     function handleDragDrop(result: DropResult) {
         const { source, destination } = result;
-        if (!destination || source.index === destination.index){
-            return;
-        }
 
-        const step = getStep(result.draggableId);
-        if (step) {
+        if (!destination || source.index === destination.index){ return; }
 
-            setSteps(prevSteps => {
-                const stepsAfterRemoval = remove(step, prevSteps); 
-                const finalSteps = push(step, stepsAfterRemoval, destination.index + 1);
-
-                if (finalSteps){
-                    return finalSteps;
-                } else {
-                    return prevSteps;
-                }
-            })
-        }
+        setSteps(prevSteps =>
+            reorder(prevSteps, source.index + 1, destination.index + 1)
+        );
     };
 
     function handleStaticKeyDown(event: React.KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>){
         if (event.key === 'Enter') {
 
-            // Create a new Step Object
+            // Creates a new Step Object
             event.preventDefault();
             const { name, value } = event.currentTarget;
             const newId = crypto.randomUUID();
             const newStep: Step = {id: newId, description: value};
 
-            // Clear the current value for the static step object 
+            // Clears the current description for the static step object 
             setSteps(prevSteps => {
                 const staticClearedSteps = prevSteps.map(data => 
                     data.id === name ? { ...data, description: ""} : data
                 );
-
+                
                 return [...staticClearedSteps, newStep];
             });
         }
