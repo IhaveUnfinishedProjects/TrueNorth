@@ -1,5 +1,6 @@
 import { type ChangeEvent } from "react"
 import { type Step } from "./Data.js";
+import { RxDragHandleDots2 } from "react-icons/rx";
 import BinImage from "./Bin.js";
 import {
     DragDropContext, 
@@ -54,10 +55,13 @@ export const DynamicForm: React.FC<DynamicFormProps> = ({
                                             <div 
                                                 ref={provided.innerRef}
                                                 {...provided.draggableProps}
-                                                {...provided.dragHandleProps}
                                                 key={data.id} 
                                                 className="w-[100%] flex flex-row justify-between items-center"
                                             >
+                                                <div {...provided.dragHandleProps}>
+                                                    <RxDragHandleDots2 className="mb-[2.6rem]"/>
+                                                </div>
+
                                                 <input className="w-[90%]"
                                                     name={data.id} 
                                                     value={data.description}
