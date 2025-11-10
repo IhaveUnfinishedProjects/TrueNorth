@@ -4,7 +4,7 @@ import useToggleModal from "@hooks/useToggleModal.js";
 import PlanningHeader from "./support/PlanningHeader.js";
 import DynamicForm from "./support/DynamicForm.js";
 import useArrayManipulation from "./support/useArrayManipulation.js";
-import ModalTemplate from "@root/components/Modal/Modal.js";
+import ModalTemplate from "@root/views/CreateGoal/support/Modal.js";
 import { backModalButtons, submissionModalButtons } from "./support/Data.js";
 
 export const GoalPlanning = () => {

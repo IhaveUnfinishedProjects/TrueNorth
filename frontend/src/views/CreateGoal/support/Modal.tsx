@@ -1,8 +1,9 @@
 import React from "react";
-import ReactDOM, { createPortal } from 'react-dom';
+import ReactDOM from 'react-dom';
 import { Link } from "react-router";
 import "@root/index.css";
-import "./Modal.css";
+import "@root/components/Modal/ModalWrapper.css";
+import ModalWrapper from "@root/components/Modal/ModalWrapper.js";
 import type { ModalButtonProps } from "@root/types/modalButtons.js";
 
 /*
@@ -22,8 +23,7 @@ interface ModalProps {
 const ModalTemplate:React.FC<ModalProps> = ({ header, paragraph, buttons, onClose }) => {
     return ReactDOM.createPortal(
         <>
-            <div className="overlay-styles"></div>
-            <div className="confirmation-style">
+            <ModalWrapper>
                 <h1>{header}</h1>
                 <p className="paragraph">{paragraph}</p>
                 
@@ -48,7 +48,7 @@ const ModalTemplate:React.FC<ModalProps> = ({ header, paragraph, buttons, onClos
                         }
                     })}
                 </div>
-            </div>
+            </ModalWrapper>
         </>,
         
         document.getElementById('root')!
