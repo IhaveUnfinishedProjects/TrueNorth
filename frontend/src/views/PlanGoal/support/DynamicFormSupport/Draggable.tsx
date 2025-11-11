@@ -1,8 +1,8 @@
 import { RxDragHandleDots2 } from "react-icons/rx";
 import { MdEventRepeat } from "react-icons/md";
 import { type DraggableProvided, Draggable } from "@hello-pangea/dnd";
-import BinImage from "./Bin.js";
-import type { Step } from "../Data.js";
+import BinImage from "./TrashIcon.js";
+import type { Step } from "../Constants.js";
 import type { ChangeEvent } from "react";
 
 interface DraggableProps {
