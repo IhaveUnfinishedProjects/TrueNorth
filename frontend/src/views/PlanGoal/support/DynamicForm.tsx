@@ -1,6 +1,6 @@
 import { DragDropContext, Droppable } from "@hello-pangea/dnd";
 import type { DynamicFormProps } from "./Data.js";
-import DraggableSteps from "./Draggable.js";
+import DraggableSteps from "./DynamicFormSupport/Draggable.js";
 import "./support.css";
 
 /*
@@ -17,7 +17,8 @@ export const DynamicForm: React.FC<DynamicFormProps> = ({
         handleChange, 
         handleStaticKeyDown, 
         handleSubmit,
-        handleDragDrop 
+        handleDragDrop,
+        onRepeatOpen 
     }) => {
 
     const staticStep = steps.find(step => step.id === staticStepId)
@@ -41,12 +42,15 @@ export const DynamicForm: React.FC<DynamicFormProps> = ({
                             {dynamicSteps.map((data, index) => {
                                 return (
                                     // Custom component encapsulating the Draggable logic
-                                    <DraggableSteps
-                                        data={data}
-                                        index={index}
-                                        handleChange={handleChange}
-                                        remove={remove}
-                                    />
+                                    <div key={data.id}>
+                                        <DraggableSteps
+                                            data={data}
+                                            index={index}
+                                            handleChange={handleChange}
+                                            remove={remove}
+                                            onRepeatOpen={onRepeatOpen}
+                                        />
+                                    </div>
                                 )
                             })}
 

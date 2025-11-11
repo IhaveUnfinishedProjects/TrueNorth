@@ -2,7 +2,7 @@ import { RxDragHandleDots2 } from "react-icons/rx";
 import { MdEventRepeat } from "react-icons/md";
 import { type DraggableProvided, Draggable } from "@hello-pangea/dnd";
 import BinImage from "./Bin.js";
-import type { Step } from "./Data.js";
+import type { Step } from "../Data.js";
 import type { ChangeEvent } from "react";
 
 interface DraggableProps {
@@ -10,10 +10,11 @@ interface DraggableProps {
     index: number;
     handleChange: (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
     remove: (step: Step) => void;
+    onRepeatOpen: () => void;
 };
 
 
-export const DraggableSteps = ({ data, index, handleChange, remove }: DraggableProps) => {
+export const DraggableSteps = ({data, index, handleChange, remove, onRepeatOpen }: DraggableProps) => {
     return (
         <Draggable 
             draggableId={data.id} 
@@ -38,7 +39,18 @@ export const DraggableSteps = ({ data, index, handleChange, remove }: DraggableP
                         onChange={handleChange}
                     />
 
-                    <MdEventRepeat className="absolute right-[2.5rem] top-1/2 transform -translate-y-1/2 h-[1.5rem] w-[1.5rem]"/>
+                    <MdEventRepeat 
+                        className="
+                            absolute 
+                            right-[2.5rem] 
+                            top-1/2 
+                            transform 
+                            -translate-y-1/2 
+                            h-[1.5rem] 
+                            w-[1.5rem]"
+                        
+                        onClick={onRepeatOpen}
+                    />
 
                     <BinImage step={data} remove={remove}/>
                 </div> 

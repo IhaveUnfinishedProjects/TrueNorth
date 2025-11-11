@@ -3,15 +3,19 @@ import CardHeader from "@root/components/Card/Header/cardHeader.js";
 import useToggleModal from "@hooks/useToggleModal.js";
 import PlanningHeader from "./support/PlanningHeader.js";
 import DynamicForm from "./support/DynamicForm.js";
-import useArrayManipulation from "./support/useArrayManipulation.js";
-import ModalTemplate from "@root/views/CreateGoal/support/Modal.js";
+import useArrayManipulation from "./support/DynamicFormSupport/useArrayManipulation.js";
+import ModalTemplate from "@root/components/Modal/GeneralModal.js";
+import useRadioButtons from "@root/hooks/useRadioButtons.js";
+import RepeatStepModal from "./support/DynamicFormSupport/ReapeatStepModal.js";
 import { backModalButtons, submissionModalButtons } from "./support/Data.js";
 
 export const GoalPlanning = () => {
 
     const { isOpen:isBackOpen, onOpen:onBackOpen, onClose:onBackClose } = useToggleModal();
     const { isOpen:isSubmitOpen, onOpen:onSubmitOpen, onClose:onSubmitClose } = useToggleModal();
+    const { isOpen:isRepeatOpen, onOpen:onRepeatOpen, onClose:onRepeatClose } = useToggleModal();
     const { steps, push, remove, handleChange, staticStepId, handleStaticKeyDown, handleDragDrop } = useArrayManipulation();
+    const { checkIsSelected, handleChange: handleRadioChange } = useRadioButtons();
 
     const handleSubmit = (event: React.FormEvent) => {
         // Mock API call to backend
@@ -35,6 +39,7 @@ export const GoalPlanning = () => {
                     handleStaticKeyDown={handleStaticKeyDown}
                     handleSubmit={handleSubmit}
                     handleDragDrop={handleDragDrop}
+                    onRepeatOpen={onRepeatOpen}
                 />
             </Card>
 
@@ -48,6 +53,12 @@ export const GoalPlanning = () => {
                 header="Something" 
                 buttons={submissionModalButtons} 
                 onClose={onSubmitClose}
+            />}
+
+            {isRepeatOpen && <RepeatStepModal 
+                days={["test", "testing", "another"]}
+                checkIsSelected={checkIsSelected}
+                handleChange={handleRadioChange}
             />}
         </>
     );

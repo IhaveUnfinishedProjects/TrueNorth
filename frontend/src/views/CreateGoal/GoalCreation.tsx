@@ -1,5 +1,5 @@
 import "@root/index.css";
-import ModalTemplate from './support/Modal.js'
+import ModalTemplate from '../../components/Modal/GeneralModal.js'
 import { Card } from "@root/components/Card/card.js";
 import { backModalButtons, initialValues, submissionModalButtons, InputFieldData} from "./support/Data.js";
 import { useToggleModal } from "@root/hooks/useToggleModal.js";

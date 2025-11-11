@@ -38,4 +38,5 @@ export interface DynamicFormProps {
     handleStaticKeyDown: (event: React.KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
     handleSubmit: (event: React.FormEvent) => void;
     handleDragDrop: (result: DropResult) => void;
+    onRepeatOpen: () => void;
 }
