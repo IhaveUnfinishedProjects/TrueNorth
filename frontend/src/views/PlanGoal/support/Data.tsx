@@ -40,3 +40,11 @@ export interface DynamicFormProps {
     handleDragDrop: (result: DropResult) => void;
     onRepeatOpen: () => void;
 }
+
+export const stepFrequency = [
+    "Daily",
+    "Weekly",
+    "Monthly",
+    "Yearly",
+    "Custom"
+]

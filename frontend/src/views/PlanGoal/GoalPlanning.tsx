@@ -6,8 +6,8 @@ import DynamicForm from "./support/DynamicForm.js";
 import useArrayManipulation from "./support/DynamicFormSupport/useArrayManipulation.js";
 import ModalTemplate from "@root/components/Modal/GeneralModal.js";
 import useRadioButtons from "@root/hooks/useRadioButtons.js";
-import RepeatStepModal from "./support/DynamicFormSupport/ReapeatStepModal.js";
-import { backModalButtons, submissionModalButtons } from "./support/Data.js";
+import RepeatStepModal from "./support/DynamicFormSupport/StepFrequencyModal.js";
+import { backModalButtons, submissionModalButtons, stepFrequency } from "./support/Data.js";
 
 export const GoalPlanning = () => {
 
@@ -56,9 +56,10 @@ export const GoalPlanning = () => {
             />}
 
             {isRepeatOpen && <RepeatStepModal 
-                days={["test", "testing", "another"]}
+                stepFrequency={stepFrequency}
                 checkIsSelected={checkIsSelected}
                 handleChange={handleRadioChange}
+                onRepeatClose={onRepeatClose}
             />}
         </>
     );

@@ -1,3 +1,6 @@
+/* 
+    Styling for the header area containing the "Plan Your Goal" text. 
+*/
 .PlanningHeaderDiv {
     display: flex;
     flex-direction: column;
@@ -9,6 +12,9 @@
     padding-bottom: 0.5rem;
 }
 
+/* 
+    Container for the draggable step input tags. 
+*/
 .inputTags {
     display: flex;
     flex-direction: row;
@@ -19,6 +25,9 @@
     position: relative;
 }
 
+/* 
+    Styles for the radio input and label wrapper. 
+*/
 .radioLabel {
     display: flex;
     flex-direction: row;
@@ -31,7 +40,20 @@
     border-width: 1px;
     margin-top: 0.5rem;
     border-radius: 10px;
-    height: 50px;
-
+    height: 2.5rem;
+    margin-bottom: 1rem;
     font-weight: bold;
+}
+
+.stepFrequencyModalButton {
+    border-style: solid;
+    border-width: 1px;
+    margin-top: 0.5rem;
+    border-radius: 10px;
+    height: 2.5rem;
+    width: 40%;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    background-color: #3B82F6;
+    color: white;
 }
