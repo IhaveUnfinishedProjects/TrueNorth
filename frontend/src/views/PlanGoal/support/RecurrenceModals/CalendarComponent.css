@@ -1,0 +1,99 @@
+/* GROUP */
+.react-aria-Group{
+    display: flex;
+    flex-direction: row;
+}
+
+
+/* POP OVER */
+.react-aria-Popover{
+    border: 1px solid black;
+    background-color: white;
+
+    border-radius: 10px;
+    box-shadow: 6px 6px 20px black;
+    
+}  
+
+/* DATE INPUT */
+.aria-Input {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    background-color: #d8dadc;
+    border-radius: 10px;
+    padding: 0.25rem;
+    color: #1E64D4;
+}
+
+/* HEADER */
+header{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    width: 100%;
+
+    border-bottom: 1px solid black;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+
+    padding: 0.5rem;
+}
+
+/* CALENDAR GRID */
+.CalendarGrid{
+    margin-left: 1rem;
+    margin-right: 1rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+/* CALENDAR CELL */
+.CalendarCell{
+    padding: 0.6rem;
+    margin: 0.25rem;
+    border-radius: 50%;
+    height: 2.5rem;
+    width: 2.5rem;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.CalendarCell[data-hovered] {
+    background-color: #d8dadc;
+}
+
+.CalendarCell[data-pressed] {
+    background-color: #c6c6c6;
+}
+
+.CalendarCell[data-selected] {
+    background-color: #B3D7EF;
+}
+
+.CalendarCell[data-today]{
+    background-color: #1E64D4;
+    color: white;
+}
+
+/* ARIA BUTTON */
+
+.aria-Button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 2.25rem;
+    aspect-ratio: 1 / 1;
+    border-radius: 50%;
+    background-color: #B3D7EF;
+}
+
+.aria-Button[data-hovered] {
+    background-color: #d8dadc;
+}
+
+.aria-Button[data-pressed] {
+    background-color: #c6c6c6;
+}
