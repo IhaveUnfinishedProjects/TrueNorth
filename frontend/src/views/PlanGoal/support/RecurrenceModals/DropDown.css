@@ -1,0 +1,17 @@
+.dropDownSelect{
+    border: 2px solid red;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.dropDownButton {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.dropDownPopover {
+    border: 2px solid pink;
+    background-color: white;
+}

@@ -27,7 +27,7 @@
 }
 
 /* HEADER */
-header{
+.calendarHeader{
     display: flex;
     flex-direction: row;
     justify-content: space-around;

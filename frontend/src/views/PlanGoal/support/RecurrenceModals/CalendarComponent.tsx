@@ -23,7 +23,7 @@ function CalendarComponent () {
             <Popover>
                 <Dialog>
                     <Calendar>
-                        <header>
+                        <header className="calendarHeader">
                             <Button className="aria-Button" slot="previous">
                                 <FaChevronLeft size={20} />
                             </Button>
