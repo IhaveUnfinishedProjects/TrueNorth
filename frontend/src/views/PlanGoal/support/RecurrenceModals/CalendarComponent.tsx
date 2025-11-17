@@ -10,8 +10,12 @@ function CalendarComponent () {
     const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 
     return(
-        <DatePicker defaultValue={today(userTimeZone)}>
-            <Group>
+        <DatePicker 
+            defaultValue={today(userTimeZone)} 
+            name={crypto.randomUUID()}
+            aria-label='Select a date'
+        >
+            <Group aria-label='Select a date'>
                 <DateInput className="aria-Input">
                     {(segment) => <DateSegment segment={segment} />}
                 </DateInput>

@@ -48,3 +48,9 @@ export const stepFrequency = [
     "Yearly",
     "Custom"
 ]
+
+/* Export this into the GoalPlanning & pass it into StepRecurrence */
+export const dropDownNums = Array.from({ length: 99 }, (_, i) => (i + 1).toString());
+export const defaultDropDownNum = "1";
+export const dropDownFrequencies = ["Days", "Weeks", "Months", "Years"];
+export const defaultDropDownFrequency = "Days";

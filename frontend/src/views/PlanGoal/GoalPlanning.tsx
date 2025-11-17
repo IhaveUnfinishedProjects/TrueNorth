@@ -7,7 +7,7 @@ import useArrayManipulation from "./support/DynamicFormSupport/useDynamicForm.js
 import ModalTemplate from "@root/components/Modal/GeneralModal.js";
 import useSelectDate from "@root/hooks/useSelectDate.js";
 import RepeatStepModal from "./support/RecurrenceModals/StepRecurrenceSelectionModal.js";
-import { backModalButtons, submissionModalButtons, stepFrequency } from "./support/Constants.js";
+import { backModalButtons, submissionModalButtons } from "./support/Constants.js";
 
 export const GoalPlanning = () => {
 

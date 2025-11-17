@@ -1,0 +1,11 @@
+.dropDownSelect{
+    width: 20%;
+}
+
+.dropDownInput {
+    width: 90%
+}
+
+.dropDownPopover {
+    background-color: white;
+}
