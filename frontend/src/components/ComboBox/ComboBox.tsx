@@ -14,7 +14,7 @@ interface DropDownProps {
         defaultString: contains the value of the default selection, which will act as a key
         for finding it's uuid. 
 */ 
-export const DropDown =({toDisplay, defaultString}: DropDownProps) => {
+export const ComboBoxComponent =({toDisplay, defaultString}: DropDownProps) => {
 
     const mapUuidNumbers = new Map<string, string>();
     for (const displayVal of toDisplay ){
@@ -48,4 +48,4 @@ export const DropDown =({toDisplay, defaultString}: DropDownProps) => {
     );
 }
 
-export default DropDown;
+export default ComboBoxComponent;

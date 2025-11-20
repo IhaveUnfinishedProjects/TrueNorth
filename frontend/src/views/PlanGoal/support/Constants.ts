@@ -54,3 +54,11 @@ export const dropDownNums = Array.from({ length: 99 }, (_, i) => (i + 1).toStrin
 export const defaultDropDownNum = "1";
 export const dropDownFrequencies = ["Days", "Weeks", "Months", "Years"];
 export const defaultDropDownFrequency = "Days";
+export const defaultTime = "12:00";
+export const defaultMeridian = "AM";
+export const timeIntervals = Array.from({ length: 24 }, (_, i) => {
+  const h = Math.floor(i / 2) + 1;
+  const m = (i % 2) * 30;
+  return `${h}:${m === 0 ? '00' : '30'}`;
+});
+export const meridian = ["AM", "PM"];

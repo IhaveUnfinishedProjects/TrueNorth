@@ -2,8 +2,8 @@ import ModalWrapper from "@components/Modal/ModalWrapper.js"
 import "@root/index.css";
 import "../support.css";
 import CalendarComponent from "./CalendarComponent.js";
-import DropDown from "@components/DropDown/DropDown.js";
-import { dropDownNums, defaultDropDownNum, dropDownFrequencies, defaultDropDownFrequency } from "../Constants.js";
+import ComboBox from "@root/components/ComboBox/ComboBox.js";
+import { dropDownNums, defaultDropDownNum, dropDownFrequencies, defaultDropDownFrequency, timeIntervals, meridian, defaultMeridian, defaultTime } from "../Constants.js";
 
 interface RepeatProps {
     onRepeatClose: () => void;
@@ -28,13 +28,15 @@ export const RepeatStepModal: React.FC<RepeatProps> = ({ onRepeatClose, selected
                 {/* Contains the repeat every x days/weeks/months */}
                 <div className="recurrenceRows">
                     <p>Repeat every</p>
-                    <DropDown toDisplay={dropDownNums} defaultString={defaultDropDownNum} />
-                    <DropDown toDisplay={dropDownFrequencies} defaultString={defaultDropDownFrequency} />
+                    <ComboBox toDisplay={dropDownNums} defaultString={defaultDropDownNum} />
+                    <ComboBox toDisplay={dropDownFrequencies} defaultString={defaultDropDownFrequency} />
                 </div>
 
                 {/* Allows the user to select an OPTIONAL time */}
                 <div className="recurrenceRows">
                     <p>Select time</p>
+                    <ComboBox toDisplay={timeIntervals} defaultString={defaultTime} />
+                    <ComboBox toDisplay={meridian} defaultString={defaultMeridian} />
                 </div>
             </form>
 
