@@ -3,7 +3,7 @@ import "@root/index.css";
 import "../support.css";
 import CalendarComponent from "./CalendarComponent.js";
 import ComboBox from "@root/components/ui/ComboBox/ComboBox.js";
-import { dropDownNums, defaultDropDownNum, dropDownFrequencies, defaultDropDownFrequency, timeIntervals, meridian, defaultMeridian, defaultTime } from "../Constants.js";
+import { dropDownNums, defaultDropDownNum, dropDownFrequencies, defaultDropDownFrequency, timeIntervals, meridian, defaultMeridian, defaultTime } from "../../../../features/goals/types/Constants.js";
 
 interface RepeatProps {
     onRepeatClose: () => void;

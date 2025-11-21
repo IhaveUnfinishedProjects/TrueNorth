@@ -1,6 +1,6 @@
 import { DragDropContext, Droppable } from "@hello-pangea/dnd";
-import type { DynamicFormProps } from "./Constants.js";
-import DraggableSteps from "./DynamicFormSupport/Draggable.js";
+import type { DynamicFormProps } from "../types/Constants.js";
+import DraggableSteps from "./DraggableStep.js";
 import "./support.css";
 
 /*

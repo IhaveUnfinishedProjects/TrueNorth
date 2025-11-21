@@ -1,11 +1,11 @@
 import "@root/index.css";
 import ModalTemplate from '../../components/ui/Modal/GeneralModal.js'
 import { Card } from "@root/components/ui/Card/card.js";
-import { backModalButtons, initialValues, submissionModalButtons, InputFieldData} from "./support/Data.js";
+import { backModalButtons, initialValues, submissionModalButtons, InputFieldData} from "../../features/goals/config.js";
 import { useToggleModal } from "@root/hooks/useToggleModal.js";
 import { useForm } from "@hooks/useFormData.js";
 import CardHeader from "@root/components/ui/Card/Header/cardHeader.js";
-import Form from "@root/views/CreateGoal/support/Form.js";
+import Form from "@root/features/goals/components/GoalCreationForm.js";
 import "./GoalCreation.css";
 
 /*

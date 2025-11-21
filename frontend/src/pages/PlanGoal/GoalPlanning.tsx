@@ -1,13 +1,13 @@
 import Card from "@root/components/ui/Card/card.js";
 import CardHeader from "@root/components/ui/Card/Header/cardHeader.js";
 import useToggleModal from "@hooks/useToggleModal.js";
-import PlanningHeader from "./support/PlanningHeader.js";
-import DynamicForm from "./support/DynamicForm.js";
-import useArrayManipulation from "./support/DynamicFormSupport/useDynamicForm.js";
+import PlanningHeader from "./components/PlanningHeader.js";
+import DynamicForm from "../../features/goals/components/GoalStepForm.js";
+import useArrayManipulation from "../../features/goals/hooks/useStepForm.js";
 import ModalTemplate from "@root/components/ui/Modal/GeneralModal.js";
 import useSelectDate from "@root/hooks/useSelectDate.js";
-import RepeatStepModal from "./support/RecurrenceModals/StepRecurrenceSelectionModal.js";
-import { backModalButtons, submissionModalButtons } from "./support/Constants.js";
+import RepeatStepModal from "../../features/goals/components/Reccurence/StepRecurrenceSelectionModal.js";
+import { backModalButtons, submissionModalButtons } from "../../features/goals/types/Constants.js";
 
 export const GoalPlanning = () => {
 

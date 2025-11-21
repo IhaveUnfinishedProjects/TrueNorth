@@ -1,5 +1,5 @@
 import { useState, type ChangeEvent } from "react";
-import { type Step, staticStep } from "../Constants.js";
+import { type Step, staticStep } from "../types/Constants.js";
 import { type DropResult } from "@hello-pangea/dnd";
 
 /*

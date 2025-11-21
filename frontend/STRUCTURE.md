@@ -24,9 +24,26 @@ frontend
 │   │           ├── GeneralModal.tsx
 │   │           ├── ModalWrapper.css
 │   │           └── ModalWrapper.tsx
+│   ├── features
+│   │   └── goals
+│   │       ├── components
+│   │       │   ├── Reccurence
+│   │       │   │   ├── CalendarComponent.css
+│   │       │   │   ├── CalendarComponent.tsx
+│   │       │   │   └── StepRecurrenceSelectionModal.tsx
+│   │       │   ├── DraggableStep.tsx
+│   │       │   ├── GoalCreationForm.tsx
+│   │       │   ├── GoalStepForm.tsx
+│   │       │   └── StepDeleteButton.tsx
+│   │       ├── hooks
+│   │       │   ├── useHeaderHeight.ts
+│   │       │   └── useStepForm.ts
+│   │       ├── types
+│   │       │   └── Constants.ts
+│   │       ├── config.ts
+│   │       └── index.ts
 │   ├── hooks
 │   │   ├── useFormData.ts
-│   │   ├── useHeaderHeight.ts
 │   │   ├── useSelectDate.ts
 │   │   └── useToggleModal.ts
 │   ├── icons
@@ -37,38 +54,25 @@ frontend
 │   │   ├── background.svg
 │   │   ├── logo.svg
 │   │   └── react.svg
+│   ├── layouts
+│   │   └── Header
+│   │       └── Header.tsx
+│   ├── pages
+│   │   ├── CreateGoal
+│   │   │   ├── GoalCreation.css
+│   │   │   └── GoalCreation.tsx
+│   │   ├── Home
+│   │   │   ├── components
+│   │   │   │   └── FeatureCard.tsx
+│   │   │   └── Home.tsx
+│   │   └── PlanGoal
+│   │       ├── components
+│   │       │   ├── PlanningHeader.tsx
+│   │       │   └── recurrence.css
+│   │       └── GoalPlanning.tsx
 │   ├── types
 │   │   ├── InputTag.tsx
 │   │   └── modalButtons.tsx
-│   ├── views
-│   │   ├── CreateGoal
-│   │   │   ├── support
-│   │   │   │   ├── Data.tsx
-│   │   │   │   ├── Form.tsx
-│   │   │   │   └── Input.tsx
-│   │   │   ├── GoalCreation.css
-│   │   │   └── GoalCreation.tsx
-│   │   ├── Header
-│   │   │   └── Header.tsx
-│   │   ├── MainHomePageContent
-│   │   │   ├── support
-│   │   │   │   └── FeatureCard.tsx
-│   │   │   └── HomePageContent.tsx
-│   │   └── PlanGoal
-│   │       ├── support
-│   │       │   ├── DynamicFormSupport
-│   │       │   │   ├── Draggable.tsx
-│   │       │   │   ├── TrashIcon.tsx
-│   │       │   │   └── useDynamicForm.ts
-│   │       │   ├── RecurrenceModals
-│   │       │   │   ├── CalendarComponent.css
-│   │       │   │   ├── CalendarComponent.tsx
-│   │       │   │   └── StepRecurrenceSelectionModal.tsx
-│   │       │   ├── Constants.ts
-│   │       │   ├── DynamicForm.tsx
-│   │       │   ├── PlanningHeader.tsx
-│   │       │   └── support.css
-│   │       └── GoalPlanning.tsx
 │   ├── App.css
 │   ├── App.tsx
 │   ├── index.css

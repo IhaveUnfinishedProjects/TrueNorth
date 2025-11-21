@@ -1,7 +1,7 @@
-import Header from './views/Header/Header.js';
-import HomePageContent from "./views/MainHomePageContent/HomePageContent.js";
-import GoalCreation from './views/CreateGoal/GoalCreation.js';
-import GoalPlanning from './views/PlanGoal/GoalPlanning.js';
+import Header from './layouts/Header/Header.js';
+import HomePageContent from "./pages/Home/Home.js";
+import GoalCreation from './pages/CreateGoal/GoalCreation.js';
+import GoalPlanning from './pages/PlanGoal/GoalPlanning.js';
 
 import { useState } from "react";
 import { Routes, Route, Link } from 'react-router';
