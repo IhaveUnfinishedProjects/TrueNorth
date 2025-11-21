@@ -4,7 +4,7 @@ import { Link } from "react-router";
 
 import '@root/index.css';
 import Logo from "@assets/logo.svg?react";
-import { useHeaderDetails } from '@root/features/goals/hooks/useHeaderHeight.js';
+import { useHeaderDetails } from '@root/hooks/useHeaderHeight.js';
 
 
 /*
