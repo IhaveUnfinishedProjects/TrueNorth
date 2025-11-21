@@ -1,5 +1,5 @@
 import BackButton from '@assets/backButton.svg?react';
-import "@components/Card/card.css";
+import '../card.css';
 
 interface CardHeaderProps {
     onBackOpen: () => void;

@@ -1,20 +1,14 @@
-import Card from "@root/components/ui/Card/card.js";
-import CardHeader from "@root/components/ui/Card/Header/cardHeader.js";
-import useToggleModal from "@hooks/useToggleModal.js";
+import { Card, CardHeader, ConfirmationModal } from "@components/ui/index.js";
+import { useToggleModal, useSelectDate } from "@hooks/index.js";
+import { GoalStepsForm, useStepForm, StepRecurrenceModal, createSubmissionButtons, createBackButtons } from "@features/goals/index.js";
 import PlanningHeader from "./components/PlanningHeader.js";
-import DynamicForm from "../../features/goals/components/GoalStepForm.js";
-import useArrayManipulation from "../../features/goals/hooks/useStepForm.js";
-import ModalTemplate from "@root/components/ui/Modal/GeneralModal.js";
-import useSelectDate from "@root/hooks/useSelectDate.js";
-import RepeatStepModal from "../../features/goals/components/Reccurence/StepRecurrenceSelectionModal.js";
-import { backModalButtons, submissionModalButtons } from "../../features/goals/types/Constants.js";
 
 export const GoalPlanning = () => {
 
     const { isOpen:isBackOpen, onOpen:onBackOpen, onClose:onBackClose } = useToggleModal();
     const { isOpen:isSubmitOpen, onOpen:onSubmitOpen, onClose:onSubmitClose } = useToggleModal();
     const { isOpen:isRepeatOpen, onOpen:onRepeatOpen, onClose:onRepeatClose } = useToggleModal();
-    const { steps, push, remove, handleChange, staticStepId, handleStaticKeyDown, handleDragDrop } = useArrayManipulation();
+    const { steps, push, remove, handleChange, staticStepId, handleStaticKeyDown, handleDragDrop } = useStepForm();
     const { selectedDate, handleChange: handleDateChange } = useSelectDate();
 
     const handleSubmit = (event: React.FormEvent) => {
@@ -30,7 +24,7 @@ export const GoalPlanning = () => {
             <Card>
                 <CardHeader onBackOpen={onBackOpen}/>
 
-                <DynamicForm 
+                <GoalStepsForm 
                     steps={steps} 
                     staticStepId={staticStepId}
                     push={push} 
@@ -43,19 +37,19 @@ export const GoalPlanning = () => {
                 />
             </Card>
 
-            {isBackOpen && <ModalTemplate 
+            {isBackOpen && <ConfirmationModal 
                 header="Go back?" 
-                buttons={backModalButtons} 
+                buttons={createBackButtons} 
                 onClose={onBackClose}
             />}
             
-            {isSubmitOpen && <ModalTemplate 
+            {isSubmitOpen && <ConfirmationModal 
                 header="Something" 
-                buttons={submissionModalButtons} 
+                buttons={createSubmissionButtons} 
                 onClose={onSubmitClose}
             />}
 
-            {isRepeatOpen && <RepeatStepModal 
+            {isRepeatOpen && <StepRecurrenceModal 
                 onRepeatClose={onRepeatClose}
                 selectedDate={selectedDate}
                 handleDateChange={handleDateChange}

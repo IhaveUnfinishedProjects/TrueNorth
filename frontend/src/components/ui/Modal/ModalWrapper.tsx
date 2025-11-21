@@ -1,4 +1,4 @@
-// ModalWrapper.tsx (or ModalTemplate.tsx for consistency)
+// ModalWrapper.tsx (or ConfirmationModal.tsx for consistency)
 import React, { type ReactNode } from "react";
 import ReactDOM from 'react-dom';
 import "@root/index.css";

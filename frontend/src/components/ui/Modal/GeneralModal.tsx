@@ -1,10 +1,10 @@
 import React from "react";
 import ReactDOM from 'react-dom';
 import { Link } from "react-router";
+import { ModalWrapper } from "@components/ui/index.js";
+import type { ModalButtonProps } from "@root/types/index.js";
 import "@root/index.css";
-import "@root/components/Modal/ModalWrapper.css";
-import ModalWrapper from "@root/components/ui/Modal/ModalWrapper.js";
-import type { ModalButtonProps } from "@root/types/modalButtons.js";
+import './ModalWrapper.css';
 
 /*
     This file is for creating dynamic modals. 
@@ -20,7 +20,7 @@ interface ModalProps {
     onClose: () => void;
 }
 
-const ModalTemplate:React.FC<ModalProps> = ({ header, paragraph, buttons, onClose }) => {
+const ConfirmationModal:React.FC<ModalProps> = ({ header, paragraph, buttons, onClose }) => {
     return ReactDOM.createPortal(
         <>
             <ModalWrapper>
@@ -55,4 +55,4 @@ const ModalTemplate:React.FC<ModalProps> = ({ header, paragraph, buttons, onClos
     );
 }
 
-export default ModalTemplate;
+export default ConfirmationModal;

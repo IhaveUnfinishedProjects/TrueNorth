@@ -7,6 +7,7 @@
 */ 
 
 import { type InputFieldConfig } from "@root/types/InputTag.js";
+import { type InputFormData } from "./types.js";
 
 export const initialValues: InputFormData = {
     goalName:'',
@@ -17,7 +18,7 @@ export const initialValues: InputFormData = {
     parent:''
 };
 
-export const backModalButtons = [
+export const createBackButtons = [
     {
         text: "Yes",
         route: "/"
@@ -27,7 +28,7 @@ export const backModalButtons = [
     }
 ];
 
-export const submissionModalButtons = [
+export const createSubmissionButtons = [
     {
         text: "Add Sub-Goal",
         route: "/CreateGoal"
@@ -35,6 +36,27 @@ export const submissionModalButtons = [
     {
         text: "Add Steps",
         route: "/PlanGoal"
+    }
+]
+
+export const planBackButtons = [
+    {
+        text: "Yes",
+        route: "/CreateGoal"
+    },
+    {
+        text: "No",
+    }
+];
+
+export const planSubmissionButtons = [
+    {
+        text: "Something",
+        //route: "/CreateGoal"
+    },
+    {
+        text: "Something",
+        //route: "/PlanGoal"
     }
 ]
 
@@ -76,15 +98,8 @@ export const InputFieldData: InputFieldConfig<InputFormData>[] = [
     },
 ]
 
-/* 
-    TYPE DECLARATIONS
-*/ 
-
-export type InputFormData = {
-    goalName: string,
-    desiredAchievement: string,
-    importance: string,
-    measurement: string,
-    achievementDate: string,
-    parent?: string
-}
+export const dropDownNums = Array.from({ length: 99 }, (_, i) => (i + 1).toString());
+export const defaultDropDownNum = "1";
+export const defaultDropDownFrequency = "Days";
+export const defaultTime = "12:00";
+export const defaultMeridian = "AM";

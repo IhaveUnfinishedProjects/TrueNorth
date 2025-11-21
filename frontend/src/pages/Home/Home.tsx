@@ -1,9 +1,7 @@
 import React from "react";
 import "@root/index.css";
-import SVG1 from "@assets/CreateGoal.svg?react";
-import SVG2 from "@assets/ViewGoal.svg?react";
-import SVG3 from "@assets/TrackGoal.svg?react";
-import FeatureCard from "@root/pages/MainHomePageContent/components/FeatureCard.js";
+import { CreateGoal, ViewGoal, TrackGoal } from '@assets/index.js';
+import FeatureCard from "./components/FeatureCard.js";
 
 /* 
     The page is dedicated to returning the content for home page feature cards.
@@ -27,19 +25,19 @@ const HomePageContent: React.FC<{}> = () => {
             title: "Create Goal",
             details: "Start your journey by creating some clear goals, and define some actionable steps to reach them.",
             link: "https://www.youtube.com/",
-            SvgImage: SVG1
+            SvgImage: CreateGoal
         },
         {
             title: "View Goal",
             details: "View your current goal, and the next actionable steps you need to take to move toward your desired outcome.",
             link: "https://www.youtube.com/",
-            SvgImage: SVG2
+            SvgImage: ViewGoal
         },
         {
             title: "Track Goal",
             details: "Reflect on the progress you've made in order to refine the direction of your goals, and improve your strategies.",
             link: "https://www.youtube.com/",
-            SvgImage: SVG3
+            SvgImage: TrackGoal
         },
     ]
 

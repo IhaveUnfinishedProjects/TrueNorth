@@ -1,5 +1,5 @@
 import { useState, type ChangeEvent } from "react";
-import { type Step, staticStep } from "../types/Constants.js";
+import { type Step, staticStep } from "../constants.js";
 import { type DropResult } from "@hello-pangea/dnd";
 
 /*
@@ -17,7 +17,7 @@ const reorder = (list: Step[], startIndex: number, endIndex: number) => {
     return result;
 };
 
-export function useArrayManipulation() {
+export function useStepForm() {
 
     const [steps, setSteps] = useState<Step[]>([staticStep]);
     const staticStepId = staticStep.id;
@@ -76,4 +76,4 @@ export function useArrayManipulation() {
     return { steps, push, remove, handleChange, staticStepId, handleStaticKeyDown, handleDragDrop };
 }
 
-export default useArrayManipulation;
+export default useStepForm;

@@ -2,7 +2,7 @@ import { RxDragHandleDots2 } from "react-icons/rx";
 import { MdEventRepeat } from "react-icons/md";
 import { type DraggableProvided, Draggable } from "@hello-pangea/dnd";
 import BinImage from "./StepDeleteButton.js";
-import type { Step } from "../types/Constants.js";
+import type { Step } from "../constants.js";
 import type { ChangeEvent } from "react";
 
 interface DraggableProps {

@@ -1,12 +1,8 @@
-import "@root/index.css";
-import ModalTemplate from '../../components/ui/Modal/GeneralModal.js'
-import { Card } from "@root/components/ui/Card/card.js";
-import { backModalButtons, initialValues, submissionModalButtons, InputFieldData} from "../../features/goals/config.js";
-import { useToggleModal } from "@root/hooks/useToggleModal.js";
-import { useForm } from "@hooks/useFormData.js";
-import CardHeader from "@root/components/ui/Card/Header/cardHeader.js";
-import Form from "@root/features/goals/components/GoalCreationForm.js";
+import { ConfirmationModal, Card, CardHeader } from '@components/ui/index.js';
+import { createBackButtons, createSubmissionButtons, initialValues, InputFieldData, Form} from "@features/goals/index.js";
+import { useToggleModal, useForm } from '@hooks/index.js';
 import "./GoalCreation.css";
+import "@root/index.css";
 
 /*
     This function is responsible for rendering the new goal creation component.
@@ -41,16 +37,16 @@ const GoalCreation = () => {
 
             {/* Contains Modal Logic (Open & Close) */}
             
-            { isBackOpen && <ModalTemplate 
+            { isBackOpen && <ConfirmationModal 
                 header = "Go back?"
-                buttons={backModalButtons}
+                buttons={createBackButtons}
                 onClose={onBackClose}
             />}
 
-            {isSubmitOpen && <ModalTemplate 
+            {isSubmitOpen && <ConfirmationModal 
                 header = "Create SubGoal?"
                 paragraph= 'Is this a goal made of smaller goals (like "Launch a Company"), or can you list the steps right away?'
-                buttons = {submissionModalButtons}
+                buttons = {createSubmissionButtons}
                 onClose={onSubmitClose}
             />}
         </Card>
