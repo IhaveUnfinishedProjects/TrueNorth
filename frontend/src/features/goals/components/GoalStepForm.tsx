@@ -1,7 +1,6 @@
 import { DragDropContext, Droppable} from "@hello-pangea/dnd";
 import type { DynamicFormProps } from "../index.js";
 import DraggableSteps from "./DraggableStep.js";
-//import "./support.css";
 
 /*
     This component renders a form that manages and 

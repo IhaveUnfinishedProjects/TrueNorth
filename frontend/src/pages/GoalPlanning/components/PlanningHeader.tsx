@@ -1,4 +1,4 @@
-//import "./support.css";
+import "./recurrence.css";
 
 export const PlanningHeader = () => {
     return (
