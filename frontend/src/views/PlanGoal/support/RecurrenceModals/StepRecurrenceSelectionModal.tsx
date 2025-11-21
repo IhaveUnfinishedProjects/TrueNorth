@@ -1,8 +1,8 @@
-import ModalWrapper from "@components/Modal/ModalWrapper.js"
+import ModalWrapper from "@root/components/ui/Modal/ModalWrapper.js"
 import "@root/index.css";
 import "../support.css";
 import CalendarComponent from "./CalendarComponent.js";
-import ComboBox from "@root/components/ComboBox/ComboBox.js";
+import ComboBox from "@root/components/ui/ComboBox/ComboBox.js";
 import { dropDownNums, defaultDropDownNum, dropDownFrequencies, defaultDropDownFrequency, timeIntervals, meridian, defaultMeridian, defaultTime } from "../Constants.js";
 
 interface RepeatProps {

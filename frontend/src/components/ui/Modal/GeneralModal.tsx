@@ -3,11 +3,11 @@ import ReactDOM from 'react-dom';
 import { Link } from "react-router";
 import "@root/index.css";
 import "@root/components/Modal/ModalWrapper.css";
-import ModalWrapper from "@root/components/Modal/ModalWrapper.js";
+import ModalWrapper from "@root/components/ui/Modal/ModalWrapper.js";
 import type { ModalButtonProps } from "@root/types/modalButtons.js";
 
 /*
-    This file is for creating dynamic models. 
+    This file is for creating dynamic modals. 
     It takes a <h1> string arg, <p> string (optional)
     and an array containing the buttons route destination 
     & text to display.
