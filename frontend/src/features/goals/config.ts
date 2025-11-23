@@ -97,9 +97,3 @@ export const InputFieldData: InputFieldConfig<InputFormData>[] = [
         h3: "When do you want to achieve this by?"
     },
 ]
-
-export const dropDownNums = Array.from({ length: 99 }, (_, i) => (i + 1).toString());
-export const defaultDropDownNum = "1";
-export const defaultDropDownFrequency = "Days";
-export const defaultTime = "12:00";
-export const defaultMeridian = "AM";

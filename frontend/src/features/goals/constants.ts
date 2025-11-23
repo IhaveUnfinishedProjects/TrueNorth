@@ -11,7 +11,7 @@ export const RECURRENCE_OPTIONS = [
     "Custom"
 ]
 
-export const DROP_DOWN_FREQUENCIES = [
+export const REPEATING_INTERVALS = [
     "Days", 
     "Weeks", 
     "Months", 
@@ -20,10 +20,12 @@ export const DROP_DOWN_FREQUENCIES = [
 
 
 /* Export this into the GoalPlanning & pass it into StepRecurrence */
-export const timeIntervals = Array.from({ length: 24 }, (_, i) => {
+export const TIME_OPTIONS = Array.from({ length: 24 }, (_, i) => {
   const h = Math.floor(i / 2) + 1;
   const m = (i % 2) * 30;
   return `${h}:${m === 0 ? '00' : '30'}`;
 });
 
-export const meridian = ["AM", "PM"];
+export const MERIDIAN_OPTIONS = ["AM", "PM"];
+
+export const REPEATING_FREQUENCY = Array.from({ length: 99 }, (_, i) => (i + 1).toString());

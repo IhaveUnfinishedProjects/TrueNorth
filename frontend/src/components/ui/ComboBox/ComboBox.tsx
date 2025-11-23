@@ -6,22 +6,15 @@ import "./DropDown.css"
 interface DropDownProps {
     toDisplay: string[];
     defaultString: string;
+    handleChange: (value: string) => void;
 }
-
-/*
-    args:
-        toDisplay: string[] --> Provides the options to display in the selection as strings.
-
-        defaultString: contains the value of the default selection, which will act as a key
-        for finding it's uuid. 
-*/ 
 
 /**
  * Uses a react-aria ComboBox that combines a text input with a drop down box.
  * @param toDisplay array for the drop down box.
  * @param defaultString deafault input box string
  */
-export const ComboBoxComponent =({toDisplay, defaultString}: DropDownProps) => {
+export const ComboBoxComponent =({toDisplay, defaultString, handleChange}: DropDownProps) => {
 
     const mapUuidNumbers = useMemo(() => {
         const map = new Map<string, string>();
@@ -35,6 +28,7 @@ export const ComboBoxComponent =({toDisplay, defaultString}: DropDownProps) => {
             defaultInputValue={ defaultString } 
             name={crypto.randomUUID()}
             aria-label='Select an option'
+            onInputChange={handleChange}
         >
             <Label></Label>
             <div className="flex">

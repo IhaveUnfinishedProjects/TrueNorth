@@ -3,6 +3,7 @@ export { default as GoalStepsForm } from './components/GoalStepForm.js';
 export { default as GoalCreationForm } from './components/GoalCreationForm.js';
 export { default as Form } from './components/GoalCreationForm.js';
 export { default as StepRecurrenceModal } from './components/Reccurence/StepRecurrenceModal.js'
+export { default as useComboBox } from './hooks/useComboBox.js';
 
 /* Exporting the main Hooks for pages*/
 export { default as useStepForm } from './hooks/useStepForm.js';

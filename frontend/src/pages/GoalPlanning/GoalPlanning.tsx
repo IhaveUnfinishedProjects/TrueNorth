@@ -1,5 +1,5 @@
 import { Card, CardHeader, ConfirmationModal } from "@components/ui/index.js";
-import { useToggleModal, useSelectDate } from "@hooks/index.js";
+import { useToggleModal } from "@hooks/index.js";
 import { GoalStepsForm, useStepForm, StepRecurrenceModal, createSubmissionButtons, createBackButtons } from "@features/goals/index.js";
 import PlanningHeader from "./components/PlanningHeader.js";
 
@@ -9,7 +9,6 @@ export const GoalPlanning = () => {
     const { isOpen:isSubmitOpen, onOpen:onSubmitOpen, onClose:onSubmitClose } = useToggleModal();
     const { isOpen:isRepeatOpen, onOpen:onRepeatOpen, onClose:onRepeatClose } = useToggleModal();
     const { steps, push, remove, handleChange, staticStepId, handleStaticKeyDown, handleDragDrop } = useStepForm();
-    const { selectedDate, handleChange: handleDateChange } = useSelectDate();
 
     const handleSubmit = (event: React.FormEvent) => {
         // Mock API call to backend
@@ -51,8 +50,6 @@ export const GoalPlanning = () => {
 
             {isRepeatOpen && <StepRecurrenceModal 
                 onRepeatClose={onRepeatClose}
-                selectedDate={selectedDate}
-                handleDateChange={handleDateChange}
             />}
         </>
     );

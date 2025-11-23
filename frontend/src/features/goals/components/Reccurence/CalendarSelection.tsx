@@ -1,8 +1,13 @@
 import {Button, Calendar, CalendarCell, CalendarGrid, DateInput, DatePicker, DateSegment, Dialog, Group, Heading, Popover} from 'react-aria-components';
-import { today } from '@internationalized/date'; 
+import type { CalendarDate, DateValue } from '@internationalized/date'; 
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import { MdEditCalendar } from "react-icons/md";
-import "./CalendarComponent.css"
+import "./CalendarSelection.css"
+
+interface CalendarProps {
+    selectedDate: DateValue;
+    onDateChange: (value: DateValue | null) => void;
+}
 
 /**
  * React-aria DatePicker that combines a text input with a popover
@@ -10,15 +15,14 @@ import "./CalendarComponent.css"
  * * Wraps the aria-component allowing for custom styling
  * * uses default local time zones. 
  */
-function CalendarComponent () {
-
-    const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+function CalendarSelection ({ selectedDate, onDateChange } : CalendarProps) {
 
     return(
         <DatePicker 
-            defaultValue={today(userTimeZone)} 
+            defaultValue={selectedDate} 
             name={crypto.randomUUID()}
             aria-label='Select a date'
+            onChange={onDateChange}
         >
             <Group aria-label='Select a date'>
                 <DateInput className="aria-Input">
@@ -53,4 +57,4 @@ function CalendarComponent () {
     );
 }
 
-export default CalendarComponent;
+export default CalendarSelection;

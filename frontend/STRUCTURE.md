@@ -28,8 +28,8 @@ frontend
 │   │   └── goals
 │   │       ├── components
 │   │       │   ├── Reccurence
-│   │       │   │   ├── CalendarComponent.css
-│   │       │   │   ├── CalendarComponent.tsx
+│   │       │   │   ├── CalendarSelection.css
+│   │       │   │   ├── CalendarSelection.tsx
 │   │       │   │   └── StepRecurrenceSelectionModal.tsx
 │   │       │   ├── DraggableStep.tsx
 │   │       │   ├── GoalCreationForm.tsx
