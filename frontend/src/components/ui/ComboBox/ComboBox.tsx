@@ -1,5 +1,6 @@
 import {Button, ComboBox, Input, Label, ListBox, ListBoxItem, Popover } from 'react-aria-components';
 import { FaChevronDown } from "react-icons/fa";
+import { useMemo } from 'react';
 import "./DropDown.css"
 
 interface DropDownProps {
@@ -14,14 +15,19 @@ interface DropDownProps {
         defaultString: contains the value of the default selection, which will act as a key
         for finding it's uuid. 
 */ 
+
+/**
+ * Uses a react-aria ComboBox that combines a text input with a drop down box.
+ * @param toDisplay array for the drop down box.
+ * @param defaultString deafault input box string
+ */
 export const ComboBoxComponent =({toDisplay, defaultString}: DropDownProps) => {
 
-    const mapUuidNumbers = new Map<string, string>();
-    for (const displayVal of toDisplay ){
-        mapUuidNumbers.set(displayVal, crypto.randomUUID());
-    }
-
-    const defaultUuid = mapUuidNumbers.get(defaultString);
+    const mapUuidNumbers = useMemo(() => {
+        const map = new Map<string, string>();
+        toDisplay.forEach(val => map.set(val, crypto.randomUUID()));
+        return map;
+    }, [toDisplay]);
 
     return(
         <ComboBox 

@@ -2,9 +2,14 @@ import {Button, Calendar, CalendarCell, CalendarGrid, DateInput, DatePicker, Dat
 import { today } from '@internationalized/date'; 
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import { MdEditCalendar } from "react-icons/md";
-
 import "./CalendarComponent.css"
 
+/**
+ * React-aria DatePicker that combines a text input with a popover
+ * calendar grid to select from. 
+ * * Wraps the aria-component allowing for custom styling
+ * * uses default local time zones. 
+ */
 function CalendarComponent () {
 
     const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
