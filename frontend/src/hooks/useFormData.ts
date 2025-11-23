@@ -19,3 +19,5 @@ export function useForm<T extends Record<string, any>>(initialValues: T){
 
     return { formValues, handleChange, resetForm};
 }
+
+export default useForm;

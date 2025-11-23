@@ -11,7 +11,9 @@
       "@hooks/*": ["hooks/*"],
       "@components/*": ["components/*"],
       "@types/*": ["types/*"],
-      "@views/*": ["views/*"],
+      "@features/*": ["features/*"],
+      "@layouts/*": ["layouts/*"],
+      "@pages/*": ["pages/*"]
     },
 
     // Environment Settings
