@@ -3,8 +3,8 @@ import { staticStep } from "../constants.js";
 import { type DropResult } from "@hello-pangea/dnd";
 import type { Step } from "@features/goals/index.js";
 
-/*
-    Reorders the array. Takes an item from an index and moves it to a new one
+/**
+*    Reorders the array. Takes an item from an index and moves it to a new one
 */
 const reorder = (list: Step[], startIndex: number, endIndex: number) => {
     const result = Array.from(list);

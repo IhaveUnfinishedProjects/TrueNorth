@@ -12,10 +12,17 @@ interface DraggableProps {
     handleChange: (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
     remove: (step: Step) => void;
     onRepeatOpen: () => void;
+    setStepId: (id: string) => void;
 };
 
 
-export const DraggableSteps = ({data, index, handleChange, remove, onRepeatOpen }: DraggableProps) => {
+export const DraggableSteps = ({data, index, handleChange, remove, onRepeatOpen, setStepId }: DraggableProps) => {
+
+    const localHandler = () => {
+        setStepId(data.id);
+        onRepeatOpen();
+    }
+
     return (
         <Draggable 
             draggableId={data.id} 
@@ -49,7 +56,7 @@ export const DraggableSteps = ({data, index, handleChange, remove, onRepeatOpen 
                             -translate-y-1/2 
                             h-[1.5rem] 
                             w-[1.5rem]"
-                        onClick={onRepeatOpen}
+                        onClick={ localHandler }
                     />
 
                     <BinImage step={data} remove={remove}/>

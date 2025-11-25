@@ -12,6 +12,7 @@ import '@features/goals/components/Recurence/recurrence.css'
 
 
 interface RepeatProps {
+    submissionHandler: (event: React.FormEvent) => void;
     onRepeatClose: () => void;
 }
 
@@ -19,12 +20,11 @@ interface RepeatProps {
  * A popup modal to select how often a step should repeat during a goal.
  * * Allows Date based (the 11th of every 'x' month(s))
  * * Allows Positional based (the second Tuesday of every 'x' month(s)) 
+ * @param submissionHandler - Callback to pass event data on submission
  * @param onRepeatClose - Callback to close the modal
- * @param selectedDate - Displays the current selected date (DateValue)
- * @param onDateChange - onChange handler for the selected date
  */
 
-export const StepRecurrenceModal = ({ onRepeatClose }: RepeatProps) =>  {
+export const StepRecurrenceModal = ({ submissionHandler, onRepeatClose }: RepeatProps) =>  {
 
     /* Hooks for combo box handling */
     const { selected: frequency, handleChange: setFrequency } = useComboBox({ arr: REPEATING_FREQUENCY });
@@ -37,14 +37,30 @@ export const StepRecurrenceModal = ({ onRepeatClose }: RepeatProps) =>  {
 
     /* Hook for selecting days of the week */
     const { selectedBoxes: selectedDays, handleChange: onDayChange } = useCheckbox();
+
+    /* Dedicated constants */ 
     const displayOrdinalRadio = interval === "Years" || interval === "Months";
     const displayWeeklyRadio = interval === "Weeks";
+
+    /**
+     * Blocks enter from submitting the form
+     * @param e key board press
+     */
+    const handleKeyDown = (e: React.KeyboardEvent) => {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+        }
+    };
 
     return (
         <ModalWrapper>
 
             {/* Lets the user select how often their goal step occurs */}
-            <form className="recurrenceForm">
+            <form 
+                className="recurrenceForm"
+                onSubmit={submissionHandler}
+                onKeyDown={handleKeyDown}
+            >
                 <h1 className="ml-auto mr-auto">Add Repeats</h1>
 
                 {/* Displays the recurrence start date & allows reselection */}
@@ -91,7 +107,7 @@ export const StepRecurrenceModal = ({ onRepeatClose }: RepeatProps) =>  {
 
                 <div className="recurrenceSubmitButtons">
                     <button type="button" className="recurrenceSubmitButton" onClick={onRepeatClose}>Back</button>
-                    <button type="button" className="recurrenceSubmitButton" onClick={onRepeatClose}>Save</button>
+                    <button type="submit" className="recurrenceSubmitButton">Save</button>
                 </div>
             </form>
         </ModalWrapper>
