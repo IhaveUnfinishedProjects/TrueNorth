@@ -1,5 +1,6 @@
 import { DragDropContext, Droppable} from "@hello-pangea/dnd";
-import { type DynamicFormProps, useStepForm } from "../index.js";
+import { type DynamicFormProps, useStepForm, StepRecurrenceModal } from "@features/goals/index.js";
+import { useToggleModal } from "@hooks/index.js";
 import DraggableSteps from "./DraggableStep/DraggableStep.js";
 
 /*
@@ -8,9 +9,13 @@ import DraggableSteps from "./DraggableStep/DraggableStep.js";
     steps using the @hello-pangea/dnd library.
 */
 
-export const GoalStepsForm: React.FC<DynamicFormProps> = ({  onRepeatOpen, handleSubmit }) => {
+export const GoalStepsForm = ({ handleSubmit }: DynamicFormProps) => {
 
+    /* Hooks for managing form data */
     const { steps, push, remove, handleChange, staticStepId, handleStaticKeyDown, handleDragDrop } = useStepForm();
+    const { isOpen:isRepeatOpen, onOpen:onRepeatOpen, onClose:onRepeatClose } = useToggleModal();
+
+    /* Separates the movable steps from the immovable one you type into */
     const staticStep = steps.find(step => step.id === staticStepId)
     const dynamicSteps = steps.filter(step => step.id != staticStepId);
 
@@ -70,6 +75,10 @@ export const GoalStepsForm: React.FC<DynamicFormProps> = ({  onRepeatOpen, handl
             <button type="submit" className="formButton">
                 Continue
             </button>
+
+            {isRepeatOpen && <StepRecurrenceModal 
+                onRepeatClose={onRepeatClose}
+            />}
         </form>
     );
 }

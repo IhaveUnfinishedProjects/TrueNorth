@@ -1,15 +1,16 @@
 import { Card, CardHeader, ConfirmationModal } from "@components/ui/index.js";
 import { useToggleModal } from "@hooks/index.js";
-import { GoalStepsForm, StepRecurrenceModal, createSubmissionButtons, createBackButtons } from "@features/goals/index.js";
+import { GoalStepsForm, createSubmissionButtons, createBackButtons } from "@features/goals/index.js";
 import PlanningHeader from "./components/PlanningHeader.js";
 import "@root/index.css";
-import '@features/goals/components/Recurence/recurrence.css'
 
 export const GoalPlanning = () => {
 
+    /* Hooks for displaying & hiding this pages modals */
     const { isOpen:isBackOpen, onOpen:onBackOpen, onClose:onBackClose } = useToggleModal();
     const { isOpen:isSubmitOpen, onOpen:onSubmitOpen, onClose:onSubmitClose } = useToggleModal();
-    const { isOpen:isRepeatOpen, onOpen:onRepeatOpen, onClose:onRepeatClose } = useToggleModal();
+
+    /* Hooks for recieving submitted data from this pages forms & modals */
 
     const handleSubmit = (event: React.FormEvent) => {
         // Mock API call to backend
@@ -25,7 +26,6 @@ export const GoalPlanning = () => {
                 <CardHeader onBackOpen={onBackOpen}/>
 
                 <GoalStepsForm 
-                    onRepeatOpen={onRepeatOpen}
                     handleSubmit={handleSubmit}
                 />
             </Card>
@@ -40,10 +40,6 @@ export const GoalPlanning = () => {
                 header="Something" 
                 buttons={createSubmissionButtons} 
                 onClose={onSubmitClose}
-            />}
-
-            {isRepeatOpen && <StepRecurrenceModal 
-                onRepeatClose={onRepeatClose}
             />}
         </>
     );

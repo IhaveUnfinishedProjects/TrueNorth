@@ -8,6 +8,8 @@ import {
     REPEATING_INTERVALS,
     useComboBox
 } from '@features/goals/index.js';
+import '@features/goals/components/Recurence/recurrence.css'
+
 
 interface RepeatProps {
     onRepeatClose: () => void;
@@ -43,6 +45,7 @@ export const StepRecurrenceModal = ({ onRepeatClose }: RepeatProps) =>  {
 
             {/* Lets the user select how often their goal step occurs */}
             <form className="recurrenceForm">
+                <h1 className="ml-auto mr-auto">Add Repeats</h1>
 
                 {/* Displays the recurrence start date & allows reselection */}
                 <div className="recurrenceGroup">

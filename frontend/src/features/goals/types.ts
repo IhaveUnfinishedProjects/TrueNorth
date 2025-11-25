@@ -2,7 +2,6 @@ import type { ChangeEvent } from 'react';
 import type { DropResult } from '@hello-pangea/dnd';
 
 export interface DynamicFormProps {
-    onRepeatOpen: () => void;
     handleSubmit: (event: React.FormEvent) => void;
 }
 
