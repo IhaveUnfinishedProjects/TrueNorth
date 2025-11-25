@@ -1,0 +1,10 @@
+.PlanningHeaderDiv {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: left;
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+    padding-bottom: 0.5rem;
+}

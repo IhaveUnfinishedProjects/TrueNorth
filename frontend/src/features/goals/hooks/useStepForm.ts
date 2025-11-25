@@ -1,7 +1,7 @@
 import { useState, type ChangeEvent } from "react";
 import { staticStep } from "../constants.js";
 import { type DropResult } from "@hello-pangea/dnd";
-import type { Step } from "../types.js";
+import type { Step } from "@features/goals/index.js";
 
 /*
     Reorders the array. Takes an item from an index and moves it to a new one

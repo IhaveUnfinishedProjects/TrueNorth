@@ -1,6 +1,6 @@
 import { DragDropContext, Droppable} from "@hello-pangea/dnd";
-import type { DynamicFormProps } from "../index.js";
-import DraggableSteps from "./DraggableStep.js";
+import { type DynamicFormProps, useStepForm } from "../index.js";
+import DraggableSteps from "./DraggableStep/DraggableStep.js";
 
 /*
     This component renders a form that manages and 
@@ -8,18 +8,9 @@ import DraggableSteps from "./DraggableStep.js";
     steps using the @hello-pangea/dnd library.
 */
 
-export const GoalStepsForm: React.FC<DynamicFormProps> = ({ 
-        steps, 
-        staticStepId, 
-        push, 
-        remove,
-        handleChange, 
-        handleStaticKeyDown, 
-        handleSubmit,
-        handleDragDrop,
-        onRepeatOpen 
-    }) => {
+export const GoalStepsForm: React.FC<DynamicFormProps> = ({  onRepeatOpen, handleSubmit }) => {
 
+    const { steps, push, remove, handleChange, staticStepId, handleStaticKeyDown, handleDragDrop } = useStepForm();
     const staticStep = steps.find(step => step.id === staticStepId)
     const dynamicSteps = steps.filter(step => step.id != staticStepId);
 

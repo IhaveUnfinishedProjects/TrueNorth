@@ -1,0 +1,61 @@
+/* Container for the whole group */
+.radio-group-container {
+    display: flex;
+    flex-direction: row;
+    gap: 0.75rem; /* Space between options */
+    margin-top: 0.5rem;
+}
+
+/* The Label "Repeat on" */
+.radio-group-label {
+    font-weight: 600;
+    color: #413737;
+    font-size: 0.9rem;
+}
+
+/* The individual clickable row */
+.radio-option {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem; /* Space between circle and text */
+    cursor: pointer;
+    font-size: 0.95rem;
+    color: #413737;
+    outline: none;
+}
+
+/* The "Circle" itself (Unchecked state) */
+.radio-circle {
+    width: 18px;
+    height: 18px;
+    border: 2px solid #413737; /* Dark border */
+    border-radius: 50%;        /* Makes it round */
+    background-color: transparent;
+    transition: all 0.2s ease; /* Smooth click animation */
+}
+
+/* The "Circle" (Checked state) */
+/* React Aria adds 'data-selected' attribute automatically when active */
+.radio-option[data-selected] .radio-circle {
+    border-color: #3B82F6;      /* Blue border */
+    background-color: #3B82F6;  /* Blue fill */
+    box-shadow: inset 0 0 0 3px white; /* The white dot in the middle */
+}
+
+/* Optional: Focus state for keyboard navigation */
+.radio-option[data-focus-visible] .radio-circle {
+    outline: 2px solid #3B82F6;
+    outline-offset: 2px;
+}
+
+label {
+    color: #413737;
+    font-family: "Manrope", sans-serif;
+    font-weight: 600;
+}
+
+span {
+    color: #413737;
+    font-family: "Manrope", sans-serif;
+    font-weight: 600;
+}

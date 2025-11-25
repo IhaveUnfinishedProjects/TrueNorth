@@ -14,7 +14,7 @@ export function useSelectDate () {
         }
     }
 
-    return { selectedDate, handleChange };
+    return { selectedDate, handleChange, currentDateString };
 }
 
 export default useSelectDate;

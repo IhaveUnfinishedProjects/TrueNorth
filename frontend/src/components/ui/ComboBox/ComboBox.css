@@ -1,0 +1,42 @@
+/* DROP DOWN STYLING */
+.dropDownPopover {
+    background-color: white;
+    width: fit-content;
+    box-shadow: 3px 3px rgba(0, 0, 0, 0.571);
+    z-index: 10;
+}
+
+.combobox-listbox {
+    max-height: 200px;
+    overflow-y: auto;
+    padding-left:  6px;
+    padding-right: 6px;
+}
+
+.combobox-listbox::-webkit-scrollbar {
+  width: 5px;
+  background: transparent;
+}
+.combobox-listbox::-webkit-scrollbar-thumb {
+  background-color: #ccc; /* Subtle color */
+  border-radius: 10px;
+}
+
+.listBoxItem {
+    margin-top: 0.25rem;
+}
+
+.listBoxItem:hover {
+    background-color: #d8dadc;
+}
+
+
+/* INPUT STYLING */
+::placeholder {
+    color: #413737;
+    opacity: 1;
+}
+
+/*
+    
+*/

@@ -1,0 +1,103 @@
+/* Main container for the group */
+.react-aria-Checkbox {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  font-family: system-ui, -apple-system, sans-serif;
+  max-width: 400px;
+}
+
+/* The Label for the whole group */
+.checkbox-group-label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #333;
+}
+
+/* The Grid Layout 
+  - display: flex + flex-wrap allows items to flow in rows.
+  - gap creates space between items.
+*/
+.checkbox-grid {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+/* Individual Checkbox Item */
+.checkbox-option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  color: #444;
+  /* Disable default text selection for better UX */
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* The visual square box */
+.checkbox-box {
+  width: 18px;
+  height: 18px;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: white;
+  transition: all 0.2s ease;
+}
+
+/* The SVG Checkmark inside the box */
+.checkbox-box svg {
+  width: 14px;
+  height: 14px;
+  fill: none;
+  stroke: white;
+  stroke-width: 3px;
+  /* Hidden by default, shown when selected */
+  opacity: 0;
+  transform: scale(0.5);
+  transition: all 0.2s ease;
+}
+
+/* 
+   React Aria States 
+   (data-selected, data-focus-visible)
+*/
+
+/* Hover state */
+.checkbox-option:hover .checkbox-box {
+  border-color: #888;
+}
+
+/* Selected state */
+.checkbox-option[data-selected] .checkbox-box {
+  background-color: #007bff; /* Blue brand color */
+  border-color: #007bff;
+}
+
+.checkbox-option[data-selected] .checkbox-box svg {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Focus ring for keyboard accessibility */
+.checkbox-option[data-focus-visible] .checkbox-box {
+  outline: 2px solid #007bff;
+  outline-offset: 2px;
+}
+
+/* Pressed/Active state */
+.checkbox-option[data-pressed] .checkbox-box {
+  transform: scale(0.95);
+}
+
+/* Disabled state */
+.checkbox-option[data-disabled] {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

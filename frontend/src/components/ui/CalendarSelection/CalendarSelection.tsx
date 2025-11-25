@@ -7,6 +7,7 @@ import "./CalendarSelection.css"
 interface CalendarProps {
     selectedDate: DateValue;
     onDateChange: (value: DateValue | null) => void;
+    currentDateString: CalendarDate;
 }
 
 /**
@@ -15,20 +16,21 @@ interface CalendarProps {
  * * Wraps the aria-component allowing for custom styling
  * * uses default local time zones. 
  */
-function CalendarSelection ({ selectedDate, onDateChange } : CalendarProps) {
-
+function CalendarSelection ({ selectedDate, onDateChange, currentDateString } : CalendarProps) {
+    
     return(
         <DatePicker 
             defaultValue={selectedDate} 
             name={crypto.randomUUID()}
             aria-label='Select a date'
             onChange={onDateChange}
+            minValue={currentDateString}
         >
             <Group aria-label='Select a date'>
                 <DateInput className="aria-Input">
                     {(segment) => <DateSegment segment={segment} />}
                 </DateInput>
-                <Button  className="aria-Button ml-[1rem]">
+                <Button  className="aria-Button aria-Calendar-Button">
                     <MdEditCalendar size={20} />
                 </Button>
             </Group>

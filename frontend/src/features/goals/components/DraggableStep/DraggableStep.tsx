@@ -1,9 +1,10 @@
 import { RxDragHandleDots2 } from "react-icons/rx";
 import { MdEventRepeat } from "react-icons/md";
 import { type DraggableProvided, Draggable } from "@hello-pangea/dnd";
-import BinImage from "./StepDeleteButton.js";
-import type { Step } from "../constants.js";
+import BinImage from "../StepDeleteButton.js";
+import type { Step } from "@features/goals/index.js";
 import type { ChangeEvent } from "react";
+import './DraggableStep.css';
 
 interface DraggableProps {
     data: Step;
@@ -32,7 +33,7 @@ export const DraggableSteps = ({data, index, handleChange, remove, onRepeatOpen 
                         <RxDragHandleDots2 className="w-6 h-6"/>
                     </div>
 
-                    <input className="w-[90%] pr-[0.6rem]"
+                    <input className="w-[100%] pr-[2.5rem]"
                         name={data.id} 
                         value={data.description}
                         placeholder="Add a step here!"
@@ -42,13 +43,12 @@ export const DraggableSteps = ({data, index, handleChange, remove, onRepeatOpen 
                     <MdEventRepeat 
                         className="
                             absolute 
-                            right-[2.5rem] 
+                            right-[4rem] 
                             top-1/2 
                             transform 
                             -translate-y-1/2 
                             h-[1.5rem] 
                             w-[1.5rem]"
-                        
                         onClick={onRepeatOpen}
                     />
 

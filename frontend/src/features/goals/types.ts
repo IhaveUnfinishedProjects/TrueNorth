@@ -2,15 +2,8 @@ import type { ChangeEvent } from 'react';
 import type { DropResult } from '@hello-pangea/dnd';
 
 export interface DynamicFormProps {
-    steps: Step[];
-    staticStepId: string;
-    push: (step: Step) => void;
-    remove: (step: Step) => void;
-    handleChange: (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
-    handleStaticKeyDown: (event: React.KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
-    handleSubmit: (event: React.FormEvent) => void;
-    handleDragDrop: (result: DropResult) => void;
     onRepeatOpen: () => void;
+    handleSubmit: (event: React.FormEvent) => void;
 }
 
 export type InputFormData = {
@@ -23,3 +16,5 @@ export type InputFormData = {
 }
 
 export type Step = {id: string, description: string};
+
+export const DayOfWeek = ["Mon", "Tue", "Wed", "Fri", "Thu", "Sat", "Sun"];

@@ -5,7 +5,10 @@ interface ComboBoxProps<T> {
 }
 
 function useComboBox<T> ({arr}: ComboBoxProps<T>) {
-    const [selected, setSelected] = useState("");
+
+    const [selected, setSelected] = useState<string>(() => {
+        return arr.length > 0 ? arr[0]!.toString() : "";
+    });
 
     const handleChange = (value: T | null) => {
         if (value && arr.includes(value)) {

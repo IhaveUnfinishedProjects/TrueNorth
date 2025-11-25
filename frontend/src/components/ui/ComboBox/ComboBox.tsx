@@ -1,7 +1,7 @@
 import {Button, ComboBox, Input, Label, ListBox, ListBoxItem, Popover } from 'react-aria-components';
 import { FaChevronDown } from "react-icons/fa";
 import { useMemo } from 'react';
-import "./DropDown.css"
+import "./ComboBox.css"
 
 interface DropDownProps {
     toDisplay: string[];
@@ -33,14 +33,14 @@ export const ComboBoxComponent =({toDisplay, defaultString, handleChange}: DropD
             <Label></Label>
             <div className="flex">
                 <Input className="dropDownInput" placeholder={ defaultString }/>
-                <Button>
+                <Button className="dropDownInputButton">
                     <FaChevronDown size={16} />
                 </Button>
             </div>
             <Popover className="dropDownPopover">
-                <ListBox className="max-h-[200px] overflow-y-auto">
+                <ListBox className="combobox-listbox">
                     {toDisplay.map(value => 
-                        <ListBoxItem key={mapUuidNumbers.get(value)}>{value}</ListBoxItem>
+                        <ListBoxItem className="listBoxItem" key={mapUuidNumbers.get(value)}>{value}</ListBoxItem>
                     )}
                 </ListBox>
             </Popover>

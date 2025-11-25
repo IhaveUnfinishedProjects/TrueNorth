@@ -3,14 +3,6 @@ export const staticStep = {
     description: ""
 }
 
-export const RECURRENCE_OPTIONS = [
-    "Daily",
-    "Weekly",
-    "Monthly",
-    "Yearly",
-    "Custom"
-]
-
 export const REPEATING_INTERVALS = [
     "Days", 
     "Weeks", 

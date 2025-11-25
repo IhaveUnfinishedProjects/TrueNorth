@@ -12,7 +12,6 @@
 
     border-radius: 10px;
     box-shadow: 6px 6px 20px black;
-    
 }  
 
 /* DATE INPUT */
@@ -20,10 +19,9 @@
     display: flex;
     align-items: center;
     gap: 0.25rem;
-    background-color: #d8dadc;
     border-radius: 10px;
     padding: 0.25rem;
-    color: #1E64D4;
+    padding-left: 1rem;
 }
 
 /* HEADER */
@@ -61,6 +59,12 @@
     align-items: center;
 }
 
+.CalendarCell[data-disabled] {
+    text-decoration: line-through; 
+    color: #9ca3af;
+    cursor: not-allowed;
+}
+
 .CalendarCell[data-hovered] {
     background-color: #d8dadc;
 }
@@ -78,16 +82,16 @@
     color: white;
 }
 
-/* ARIA BUTTON */
+/* ARIA BUTTONS */
 
 .aria-Button {
     display: flex;
     justify-content: center;
     align-items: center;
+
     height: 2.25rem;
     aspect-ratio: 1 / 1;
     border-radius: 50%;
-    background-color: #B3D7EF;
 }
 
 .aria-Button[data-hovered] {
@@ -96,4 +100,12 @@
 
 .aria-Button[data-pressed] {
     background-color: #c6c6c6;
+}
+
+.aria-Calendar-Button {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 2;
 }
