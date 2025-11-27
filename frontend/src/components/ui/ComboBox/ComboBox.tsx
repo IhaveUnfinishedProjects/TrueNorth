@@ -7,6 +7,7 @@ interface DropDownProps {
     toDisplay: string[];
     defaultString: string;
     handleChange: (value: string) => void;
+    name: string;
 }
 
 /**
@@ -14,7 +15,7 @@ interface DropDownProps {
  * @param toDisplay array for the drop down box.
  * @param defaultString deafault input box string
  */
-export const ComboBoxComponent =({toDisplay, defaultString, handleChange}: DropDownProps) => {
+export const ComboBoxComponent =({toDisplay, defaultString, handleChange, name }: DropDownProps) => {
 
     const mapUuidNumbers = useMemo(() => {
         const map = new Map<string, string>();
@@ -26,7 +27,7 @@ export const ComboBoxComponent =({toDisplay, defaultString, handleChange}: DropD
         <ComboBox 
             className="dropDownSelect" 
             defaultInputValue={ defaultString } 
-            name={crypto.randomUUID()}
+            name={name}
             aria-label='Select an option'
             onInputChange={handleChange}
         >

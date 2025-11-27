@@ -8,15 +8,17 @@ interface RecurrenceCheckboxProps {
     onChange: (values: string[]) => void;
     /** The options to display */
     options: string[];
+    name: string;
 }
 
-export const CheckboxComponent = ({ curSelected, onChange, options }: RecurrenceCheckboxProps) => {
+export const CheckboxComponent = ({ curSelected, onChange, options, name }: RecurrenceCheckboxProps) => {
     console.log(curSelected);
     return (
         <CheckboxGroup 
             value={curSelected} 
             onChange={onChange} 
             className="react-aria-Checkbox"
+            name={name}
         >
             <Label className="checkbox-group-label">Repeat on days</Label>
             

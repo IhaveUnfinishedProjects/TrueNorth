@@ -71,14 +71,15 @@ export const StepRecurrenceModal = ({ submissionHandler, onRepeatClose }: Repeat
                             selectedDate={selectedDate}
                             onDateChange={onDateChange}
                             currentDateString={currentDateString}
+                            name="startDate"
                         />
                     </div>
 
                     <h3>Repeat every</h3>
                     <div className="recurrenceRows">
                         {/* Allows selection to repeat every x days/weeks/months */}
-                        <ComboBox toDisplay={REPEATING_FREQUENCY} defaultString={frequency} handleChange={setFrequency}/>
-                        <ComboBox toDisplay={REPEATING_INTERVALS} defaultString={interval} handleChange={setInterval}/>
+                        <ComboBox toDisplay={REPEATING_FREQUENCY} defaultString={frequency} handleChange={setFrequency} name="frequency"/>
+                        <ComboBox toDisplay={REPEATING_INTERVALS} defaultString={interval} handleChange={setInterval} name="interval"/>
                     </div>
                 </div>
                 
@@ -92,7 +93,7 @@ export const StepRecurrenceModal = ({ submissionHandler, onRepeatClose }: Repeat
                 {/* Allows the selection of days within a week */}
                 {displayWeeklyRadio && 
                     <div className="recurrenceGroup">
-                        <CheckboxComponent curSelected={selectedDays} onChange={onDayChange} options={DayOfWeek}/>
+                        <CheckboxComponent curSelected={selectedDays} onChange={onDayChange} options={DayOfWeek} name=""/>
                     </div>
                 }                
 
@@ -100,8 +101,8 @@ export const StepRecurrenceModal = ({ submissionHandler, onRepeatClose }: Repeat
                 <div className="recurrenceGroup">
                     <h3>Select time</h3>
                     <div className="recurrenceRows">
-                        <ComboBox toDisplay={TIME_OPTIONS} defaultString={time} handleChange={setTime}/>
-                        <ComboBox toDisplay={MERIDIAN_OPTIONS} defaultString={period} handleChange={setPeriod}/>
+                        <ComboBox toDisplay={TIME_OPTIONS} defaultString={time} handleChange={setTime} name="time"/>
+                        <ComboBox toDisplay={MERIDIAN_OPTIONS} defaultString={period} handleChange={setPeriod} name="period"/>
                     </div>
                 </div>
 

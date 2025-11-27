@@ -37,7 +37,7 @@ export const OrdinalRadio = ({interval, selectedDate}: OrdinalRadioProps ) => {
 
     return(
         <div>
-            <RadioForm label={recurrence} options={options} selected={selected} handleChange={handleChange}/>
+            <RadioForm label={recurrence} options={options} selected={selected} handleChange={handleChange} name="type"/>
         </div>
     );
 }

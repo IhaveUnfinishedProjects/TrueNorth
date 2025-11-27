@@ -15,11 +15,13 @@ interface RadioFormProps {
     selected: string;
     /** Change handler */
     handleChange: (value: string) => void;
+    /** The name of the Radio component */
+    name: string
 }
 
-export const RadioForm = ({ label, options, selected, handleChange }: RadioFormProps) => {
+export const RadioForm = ({ label, options, selected, handleChange, name }: RadioFormProps) => {
     return(
-        <RadioGroup value={selected} onChange={handleChange} className="radio-group-container">
+        <RadioGroup value={selected} onChange={handleChange} name={name} className="radio-group-container">
             <Label>{label}</Label>
             {options.map(data => {
                 return (
