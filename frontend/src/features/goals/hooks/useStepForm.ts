@@ -1,7 +1,7 @@
 import { useState, type ChangeEvent } from "react";
 import { staticStep } from "../constants.js";
 import { type DropResult } from "@hello-pangea/dnd";
-import type { Step } from "@features/goals/index.js";
+import type { RecurrenceSchedule, Step } from "@features/goals/index.js";
 
 /**
 *    Reorders the array. Takes an item from an index and moves it to a new one
@@ -69,7 +69,19 @@ export function useStepForm() {
         }
     };
 
-    return { steps, remove, handleChange, staticStepId, handleStaticKeyDown, handleDragDrop };
+    function updateRecurrence(curStep: Step, recurrence: RecurrenceSchedule): void {
+        setSteps(prevSteps =>
+            prevSteps.map(data => {
+
+                if (data.id === curStep.id) {
+                    return {...data, recurrence};
+                }
+                return data;
+            })
+        );
+    }
+
+    return { steps, remove, handleChange, staticStepId, handleStaticKeyDown, handleDragDrop, updateRecurrence };
 }
 
 export default useStepForm;

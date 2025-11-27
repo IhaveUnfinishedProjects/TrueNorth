@@ -12,7 +12,7 @@ import '@features/goals/components/Recurence/recurrence.css'
 
 
 interface RepeatProps {
-    submissionHandler: (event: React.FormEvent) => void;
+    submissionHandler: (event: React.FormEvent<HTMLFormElement>) => void;
     onRepeatClose: () => void;
 }
 

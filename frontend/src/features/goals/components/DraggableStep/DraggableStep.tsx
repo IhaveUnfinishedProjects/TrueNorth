@@ -7,33 +7,28 @@ import type { ChangeEvent } from "react";
 import './DraggableStep.css';
 
 interface DraggableProps {
-    data: Step;
+    step: Step;
     index: number;
     handleChange: (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
     remove: (step: Step) => void;
     onRepeatOpen: () => void;
-    setStepId: (id: string) => void;
+    setStep: (step: Step) => void;
 };
 
 
-export const DraggableSteps = ({data, index, handleChange, remove, onRepeatOpen, setStepId }: DraggableProps) => {
-
-    const localHandler = () => {
-        setStepId(data.id);
-        onRepeatOpen();
-    }
+export const DraggableSteps = ({step, index, handleChange, remove, onRepeatOpen, setStep }: DraggableProps) => {
 
     return (
         <Draggable 
-            draggableId={data.id} 
-            key={data.id} 
+            draggableId={step.id} 
+            key={step.id} 
             index={index}
         >
             {(provided: DraggableProvided) => (
                 <div 
                     ref={provided.innerRef}
                     {...provided.draggableProps}
-                    key={data.id} 
+                    key={step.id} 
                     className="inputTags"
                 >
                     <div {...provided.dragHandleProps}>
@@ -41,8 +36,8 @@ export const DraggableSteps = ({data, index, handleChange, remove, onRepeatOpen,
                     </div>
 
                     <input className="w-[100%] pr-[2.5rem]"
-                        name={data.id} 
-                        value={data.description}
+                        name={step.id} 
+                        value={step.description}
                         placeholder="Add a step here!"
                         onChange={handleChange}
                     />
@@ -56,10 +51,10 @@ export const DraggableSteps = ({data, index, handleChange, remove, onRepeatOpen,
                             -translate-y-1/2 
                             h-[1.5rem] 
                             w-[1.5rem]"
-                        onClick={ localHandler }
+                        onClick={ () => {setStep(step), onRepeatOpen() }}
                     />
 
-                    <BinImage step={data} remove={remove}/>
+                    <BinImage step={step} remove={remove}/>
                 </div> 
             )}
         </Draggable>

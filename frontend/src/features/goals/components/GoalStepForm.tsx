@@ -1,5 +1,5 @@
 import { DragDropContext, Droppable} from "@hello-pangea/dnd";
-import { type GoalStepFormProps, useStepForm, StepRecurrenceModal } from "@features/goals/index.js";
+import { type GoalStepFormProps, useStepForm, StepRecurrenceModal, RecurrenceSchema, type Step } from "@features/goals/index.js";
 import { useToggleModal } from "@hooks/index.js";
 import DraggableSteps from "./DraggableStep/DraggableStep.js";
 import { useState } from "react";
@@ -13,9 +13,9 @@ import { useState } from "react";
 export const GoalStepsForm = ({ handleSubmit }: GoalStepFormProps) => {
 
     /* Hooks for managing form data */
-    const { steps, remove, handleChange, staticStepId, handleStaticKeyDown, handleDragDrop } = useStepForm();
+    const { steps, remove, handleChange, staticStepId, handleStaticKeyDown, handleDragDrop, updateRecurrence } = useStepForm();
     const { isOpen:isRepeatOpen, onOpen:onRepeatOpen, onClose:onRepeatClose } = useToggleModal();
-    const [ stepId, setStepId ] = useState("");
+    const [ curStep, setCurStep ] = useState<Step>();
 
     /* Separates the movable steps from the immovable one you type into */
     const staticStep = steps.find(step => step.id === staticStepId)
@@ -33,9 +33,20 @@ export const GoalStepsForm = ({ handleSubmit }: GoalStepFormProps) => {
     /**
      * Attaches the return from the Step Recurrence form to it's respective step object
      */
-    const handleStepRecurrenceSubmit = (event: React.FormEvent) => {
+    const handleStepRecurrenceSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        console.log(event);
+        onRepeatClose();
+        const untypedRecurrenceData = Object.fromEntries(new FormData(event.currentTarget).entries());
+
+        try {
+            const recurrenceData = RecurrenceSchema.parse(untypedRecurrenceData);
+            if (curStep) {
+                updateRecurrence(curStep, recurrenceData);
+            }
+        } catch (error) {
+            console.error("Validation failed:", error);
+            alert("Please fill out all required fields.");
+        }
     }
 
     return(
@@ -54,17 +65,17 @@ export const GoalStepsForm = ({ handleSubmit }: GoalStepFormProps) => {
                                 ref={provided.innerRef}
                             >
                                 {/* Renders the dynamic (draggable) steps */}
-                                {dynamicSteps.map((data, index) => {
+                                {dynamicSteps.map((step, index) => {
                                     return (
                                         // Custom component encapsulating the Draggable logic
-                                        <div key={data.id}>
+                                        <div key={step.id}>
                                             <DraggableSteps
-                                                data={data}
+                                                step={step}
                                                 index={index}
                                                 handleChange={handleChange}
                                                 remove={remove}
                                                 onRepeatOpen={onRepeatOpen}
-                                                setStepId={setStepId}
+                                                setStep={setCurStep}
                                             />
                                         </div>
                                     )
