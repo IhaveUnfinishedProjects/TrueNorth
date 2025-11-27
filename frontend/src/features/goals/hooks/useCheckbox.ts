@@ -8,8 +8,10 @@ function useCheckbox () {
 
     const [ selectedBoxes, setSelectedBoxes ] = useState<string[]>([]);
 
-    const handleChange = (values: string[]) => {
-        setSelectedBoxes(values);
+    const handleChange = (values: string[] | null) => {
+        if (values) {
+            setSelectedBoxes(values);
+        }
     }
 
     return { selectedBoxes, handleChange }

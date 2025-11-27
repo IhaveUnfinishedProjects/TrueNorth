@@ -8,6 +8,7 @@ interface CalendarProps {
     selectedDate: DateValue;
     onDateChange: (value: DateValue | null) => void;
     currentDateString: CalendarDate;
+    name: string;
 }
 
 /**
@@ -16,12 +17,11 @@ interface CalendarProps {
  * * Wraps the aria-component allowing for custom styling
  * * uses default local time zones. 
  */
-function CalendarSelection ({ selectedDate, onDateChange, currentDateString } : CalendarProps) {
-    
+function CalendarSelection ({ selectedDate, onDateChange, currentDateString, name } : CalendarProps) {
     return(
         <DatePicker 
             defaultValue={selectedDate} 
-            name={crypto.randomUUID()}
+            name={name}
             aria-label='Select a date'
             onChange={onDateChange}
             minValue={currentDateString}

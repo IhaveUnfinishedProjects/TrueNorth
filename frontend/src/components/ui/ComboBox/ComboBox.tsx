@@ -1,12 +1,13 @@
 import {Button, ComboBox, Input, Label, ListBox, ListBoxItem, Popover } from 'react-aria-components';
 import { FaChevronDown } from "react-icons/fa";
-import { useMemo } from 'react';
+import { useMemo, type Key } from 'react';
 import "./ComboBox.css"
 
 interface DropDownProps {
     toDisplay: string[];
     defaultString: string;
-    handleChange: (value: string) => void;
+    handleChange: (value: string | Key | null) => void;
+    name: string;
 }
 
 /**
@@ -14,7 +15,7 @@ interface DropDownProps {
  * @param toDisplay array for the drop down box.
  * @param defaultString deafault input box string
  */
-export const ComboBoxComponent =({toDisplay, defaultString, handleChange}: DropDownProps) => {
+export const ComboBoxComponent = ({toDisplay, defaultString, handleChange, name}: DropDownProps) => {
 
     const mapUuidNumbers = useMemo(() => {
         const map = new Map<string, string>();
@@ -24,11 +25,13 @@ export const ComboBoxComponent =({toDisplay, defaultString, handleChange}: DropD
 
     return(
         <ComboBox 
+            name={name}
             className="dropDownSelect" 
-            defaultInputValue={ defaultString } 
-            name={crypto.randomUUID()}
-            aria-label='Select an option'
+            inputValue={ defaultString }
             onInputChange={handleChange}
+            selectedKey={defaultString}
+            onSelectionChange={handleChange}
+            aria-label='Select an option'
         >
             <Label></Label>
             <div className="flex">

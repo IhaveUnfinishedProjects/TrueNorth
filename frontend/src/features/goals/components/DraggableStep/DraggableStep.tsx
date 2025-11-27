@@ -3,37 +3,40 @@ import { MdEventRepeat } from "react-icons/md";
 import { type DraggableProvided, Draggable } from "@hello-pangea/dnd";
 import BinImage from "../StepDeleteButton.js";
 import type { Step } from "@features/goals/index.js";
-import type { ChangeEvent } from "react";
+import { useEffect, type ChangeEvent } from "react";
 import './DraggableStep.css';
 
 interface DraggableProps {
-    data: Step;
+    step: Step;
     index: number;
     handleChange: (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
     remove: (step: Step) => void;
     onRepeatOpen: () => void;
-    setStepId: (id: string) => void;
+    setStep: (step: Step) => void;
 };
 
-
-export const DraggableSteps = ({data, index, handleChange, remove, onRepeatOpen, setStepId }: DraggableProps) => {
-
-    const localHandler = () => {
-        setStepId(data.id);
-        onRepeatOpen();
-    }
+/**
+ * Provides a step for a goal which is controlled by a drag'n'drop area. Allows deletion & editing. 
+ * @param step - The Step object for this item. Expected to contain at least `id` and `description`.
+ * @param index - The zero-based index of this step within the draggable list (used by Draggable).
+ * @param handleChange - ChangeEvent handler for the input. Called with events from the input or textarea when description changes.
+ * @param remove - Function called to remove this step. Receives the current step as its argument.
+ * @param onRepeatOpen - Callback invoked to open the repeat configuration UI/modal for the current step.
+ * @param setStep - Function that accepts a step id (string) to mark the current step before invoking onRepeatOpen.
+ */
+export const DraggableSteps = ({step, index, handleChange, remove, onRepeatOpen, setStep }: DraggableProps) => {
 
     return (
         <Draggable 
-            draggableId={data.id} 
-            key={data.id} 
+            draggableId={step.id} 
+            key={step.id} 
             index={index}
         >
             {(provided: DraggableProvided) => (
                 <div 
                     ref={provided.innerRef}
                     {...provided.draggableProps}
-                    key={data.id} 
+                    key={step.id} 
                     className="inputTags"
                 >
                     <div {...provided.dragHandleProps}>
@@ -41,8 +44,8 @@ export const DraggableSteps = ({data, index, handleChange, remove, onRepeatOpen,
                     </div>
 
                     <input className="w-[100%] pr-[2.5rem]"
-                        name={data.id} 
-                        value={data.description}
+                        name={step.id} 
+                        value={step.description}
                         placeholder="Add a step here!"
                         onChange={handleChange}
                     />
@@ -56,10 +59,10 @@ export const DraggableSteps = ({data, index, handleChange, remove, onRepeatOpen,
                             -translate-y-1/2 
                             h-[1.5rem] 
                             w-[1.5rem]"
-                        onClick={ localHandler }
+                        onClick={ () => {setStep(step); onRepeatOpen()} }
                     />
 
-                    <BinImage step={data} remove={remove}/>
+                    <BinImage step={step} remove={remove}/>
                 </div> 
             )}
         </Draggable>

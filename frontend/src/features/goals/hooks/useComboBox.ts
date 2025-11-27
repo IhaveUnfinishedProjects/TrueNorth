@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, type Key } from "react";
 
 interface ComboBoxProps<T> {
     arr: T[];
@@ -10,10 +10,9 @@ function useComboBox<T> ({arr}: ComboBoxProps<T>) {
         return arr.length > 0 ? arr[0]!.toString() : "";
     });
 
-    const handleChange = (value: T | null) => {
-        if (value && arr.includes(value)) {
+    const handleChange = (value: string | Key | null ) => {
+        if (value) {
             setSelected(value.toString());
-            console.log(value.toString());
         }
     }
 

@@ -14,7 +14,6 @@ export const GoalPlanning = () => {
 
     const handleSubmit = (steps: Step[]) => {
         //resetForm();
-        console.log(steps);
         onSubmitOpen();
     }
 

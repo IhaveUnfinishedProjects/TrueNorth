@@ -1,38 +1,36 @@
 import { useState, type ChangeEvent } from "react";
 import { staticStep } from "../constants.js";
 import { type DropResult } from "@hello-pangea/dnd";
-import type { Step } from "@features/goals/index.js";
+import type { Step, RecurrenceSchedule } from "@features/goals/index.js";
+
 
 /**
-*    Reorders the array. Takes an item from an index and moves it to a new one
-*/
-const reorder = (list: Step[], startIndex: number, endIndex: number) => {
-    const result = Array.from(list);
-    const [removed] = result.splice(startIndex, 1);
-
-    if (removed){
-        console.log(list, startIndex, endIndex);
-        result.splice(endIndex, 0, removed);
-    }
-
-    return result;
-};
-
+ * Allows the creation, deletion, and swapping of elements
+ * in the step creation for for a specific goal. 
+ */
 export function useStepForm() {
 
     const [steps, setSteps] = useState<Step[]>([staticStep]);
     const staticStepId = staticStep.id;
-
-    // Pushes a new step to the end of the array.
-    const push = (step: Step) => {
-        setSteps(prevSteps => [...prevSteps, step]);
-    }
 
     // Removes a given step by id
     const remove = (step: Step) => {
         const newSteps = steps.filter(curStep => curStep.id !== step.id);
         setSteps(newSteps);
     };
+
+    function updateRecurrence(step: Step, recurrence: RecurrenceSchedule): void {
+        setSteps(prevSteps =>
+            prevSteps.map(data => {
+
+                if (data.id === step.id){
+                    console.log("Data is being overwritten? Maybe")
+                    return {...data, recurrence};
+                }
+                return data;
+            })
+        );
+    }
 
     function handleChange(event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
         const { name, value } = event.currentTarget;
@@ -74,7 +72,22 @@ export function useStepForm() {
         }
     };
 
-    return { steps, push, remove, handleChange, staticStepId, handleStaticKeyDown, handleDragDrop };
+    return { steps, remove, updateRecurrence, handleChange, staticStepId, handleStaticKeyDown, handleDragDrop };
 }
+
+/**
+* Helper function. 
+* Reorders the array. Takes an item from an index and moves it to a new one
+*/
+const reorder = (list: Step[], startIndex: number, endIndex: number) => {
+    const result = Array.from(list);
+    const [removed] = result.splice(startIndex, 1);
+
+    if (removed){
+        result.splice(endIndex, 0, removed);
+    }
+
+    return result;
+};
 
 export default useStepForm;
