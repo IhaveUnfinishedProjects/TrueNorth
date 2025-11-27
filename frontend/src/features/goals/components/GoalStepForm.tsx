@@ -31,7 +31,7 @@ export const GoalStepsForm = ({ handleSubmit }: GoalStepFormProps) => {
     }
 
     /**
-     * Attaches the return from the Step Recurrence form to it's respective step object
+     * Attaches the return object from the Step Recurrence form to it's respective step. 
      */
     const handleStepRecurrenceSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();

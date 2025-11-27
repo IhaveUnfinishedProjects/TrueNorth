@@ -7,7 +7,7 @@ import "./CalendarSelection.css"
 interface CalendarProps {
     selectedDate: DateValue;
     onDateChange: (value: DateValue | null) => void;
-    currentDateString: CalendarDate;
+    currentDate: CalendarDate;
     name: string;
 }
 
@@ -17,15 +17,15 @@ interface CalendarProps {
  * * Wraps the aria-component allowing for custom styling
  * * uses default local time zones. 
  */
-function CalendarSelection ({ selectedDate, onDateChange, currentDateString, name } : CalendarProps) {
+function CalendarSelection ({ selectedDate, onDateChange, currentDate, name } : CalendarProps) {
     
     return(
         <DatePicker 
-            defaultValue={selectedDate} 
+            value={selectedDate} 
             name={name}
             aria-label='Select a date'
             onChange={onDateChange}
-            minValue={currentDateString}
+            minValue={currentDate}
         >
             <Group aria-label='Select a date'>
                 <DateInput className="aria-Input">

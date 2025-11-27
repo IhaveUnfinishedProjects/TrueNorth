@@ -27,18 +27,19 @@ interface RepeatProps {
 export const StepRecurrenceModal = ({ submissionHandler, onRepeatClose }: RepeatProps) =>  {
 
     /* Hooks for combo box handling */
-    const { selected: frequency, handleChange: setFrequency } = useComboBox({ arr: REPEATING_FREQUENCY });
-    const { selected: interval, handleChange: setInterval }   = useComboBox({ arr: REPEATING_INTERVALS });
-    const { selected: time, handleChange: setTime }           = useComboBox({ arr: TIME_OPTIONS });
-    const { selected: period, handleChange: setPeriod }       = useComboBox({ arr: MERIDIAN_OPTIONS });
+    const fComboBox = useComboBox({ arr: REPEATING_FREQUENCY });
+    const iComboBox = useComboBox({ arr: REPEATING_INTERVALS });
+    const tComboBox = useComboBox({ arr: TIME_OPTIONS });
+    const mComboBox = useComboBox({ arr: MERIDIAN_OPTIONS });
 
     /* Hooks for calendar selection handling */
-    const { selectedDate, handleChange: onDateChange, currentDateString } = useSelectDate();
+    const { selectedDate, handleChange: onDateChange, currentDate } = useSelectDate();
 
     /* Hook for selecting days of the week */
     const { selectedBoxes: selectedDays, handleChange: onDayChange } = useCheckbox();
 
     /* Dedicated constants */ 
+    const interval = iComboBox.input;
     const displayOrdinalRadio = interval === "Years" || interval === "Months";
     const displayWeeklyRadio = interval === "Weeks";
 
@@ -70,7 +71,7 @@ export const StepRecurrenceModal = ({ submissionHandler, onRepeatClose }: Repeat
                         <CalendarSelection 
                             selectedDate={selectedDate}
                             onDateChange={onDateChange}
-                            currentDateString={currentDateString}
+                            currentDate={currentDate}
                             name="startDate"
                         />
                     </div>
@@ -78,8 +79,22 @@ export const StepRecurrenceModal = ({ submissionHandler, onRepeatClose }: Repeat
                     <h3>Repeat every</h3>
                     <div className="recurrenceRows">
                         {/* Allows selection to repeat every x days/weeks/months */}
-                        <ComboBox toDisplay={REPEATING_FREQUENCY} defaultString={frequency} handleChange={setFrequency} name="frequency"/>
-                        <ComboBox toDisplay={REPEATING_INTERVALS} defaultString={interval} handleChange={setInterval} name="interval"/>
+                        <ComboBox 
+                            name="frequency"
+                            options={fComboBox.options}
+                            input={fComboBox.input}
+                            selectKey={fComboBox.selectKey}
+                            onChangeInput={fComboBox.onChangeInput}
+                            onChangeKey={fComboBox.onChangeKey}
+                        />
+                        <ComboBox 
+                            name="interval"
+                            options={iComboBox.options}
+                            input={iComboBox.input}
+                            selectKey={iComboBox.selectKey}
+                            onChangeInput={iComboBox.onChangeInput}
+                            onChangeKey={iComboBox.onChangeKey}
+                        />
                     </div>
                 </div>
                 
@@ -101,8 +116,22 @@ export const StepRecurrenceModal = ({ submissionHandler, onRepeatClose }: Repeat
                 <div className="recurrenceGroup">
                     <h3>Select time</h3>
                     <div className="recurrenceRows">
-                        <ComboBox toDisplay={TIME_OPTIONS} defaultString={time} handleChange={setTime} name="time"/>
-                        <ComboBox toDisplay={MERIDIAN_OPTIONS} defaultString={period} handleChange={setPeriod} name="period"/>
+                        <ComboBox 
+                            name="time"
+                            options={tComboBox.options}
+                            input={tComboBox.input}
+                            selectKey={tComboBox.selectKey}
+                            onChangeInput={tComboBox.onChangeInput}
+                            onChangeKey={tComboBox.onChangeKey}
+                        />                        
+                        <ComboBox 
+                            name="meridian"
+                            options={mComboBox.options}
+                            input={mComboBox.input}
+                            selectKey={mComboBox.selectKey}
+                            onChangeInput={mComboBox.onChangeInput}
+                            onChangeKey={mComboBox.onChangeKey}
+                        />                        
                     </div>
                 </div>
 

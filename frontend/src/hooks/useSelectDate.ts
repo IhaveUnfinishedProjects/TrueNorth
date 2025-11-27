@@ -5,8 +5,8 @@ export function useSelectDate () {
 
 
     const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-    const currentDateString = today(userTimeZone);
-    const [selectedDate, setSelectedDate] = useState<DateValue>(currentDateString);
+    const currentDate = today(userTimeZone);
+    const [selectedDate, setSelectedDate] = useState<DateValue>(currentDate);
 
     const handleChange = (value: DateValue | null) => {
         if (value){
@@ -14,7 +14,7 @@ export function useSelectDate () {
         }
     }
 
-    return { selectedDate, handleChange, currentDateString };
+    return { selectedDate, handleChange, currentDate };
 }
 
 export default useSelectDate;

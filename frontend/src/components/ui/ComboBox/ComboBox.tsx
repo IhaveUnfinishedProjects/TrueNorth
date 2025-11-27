@@ -1,13 +1,15 @@
 import {Button, ComboBox, Input, Label, ListBox, ListBoxItem, Popover } from 'react-aria-components';
 import { FaChevronDown } from "react-icons/fa";
-import { useMemo } from 'react';
+import { type Key } from 'react';
 import "./ComboBox.css"
 
 interface DropDownProps {
-    toDisplay: string[];
-    defaultString: string;
-    handleChange: (value: string) => void;
     name: string;
+    options: Map<Key, string>;
+    input: string;
+    selectKey: Key | null;
+    onChangeInput: (value: string) => void;
+    onChangeKey: (key: Key | null) => void;
 }
 
 /**
@@ -15,33 +17,28 @@ interface DropDownProps {
  * @param toDisplay array for the drop down box.
  * @param defaultString deafault input box string
  */
-export const ComboBoxComponent =({toDisplay, defaultString, handleChange, name }: DropDownProps) => {
-
-    const mapUuidNumbers = useMemo(() => {
-        const map = new Map<string, string>();
-        toDisplay.forEach(val => map.set(val, crypto.randomUUID()));
-        return map;
-    }, [toDisplay]);
+export const ComboBoxComponent =({ name, options, input, selectKey, onChangeInput, onChangeKey }: DropDownProps) => {
 
     return(
         <ComboBox 
-            className="dropDownSelect" 
-            defaultInputValue={ defaultString } 
             name={name}
+            className="dropDownSelect" 
+            inputValue={input} 
+            onInputChange={onChangeInput}
+            selectedKey={selectKey ? selectKey.toString() : null}
+            onSelectionChange={onChangeKey}
             aria-label='Select an option'
-            onInputChange={handleChange}
         >
-            <Label></Label>
             <div className="flex">
-                <Input className="dropDownInput" placeholder={ defaultString }/>
+                <Input className="dropDownInput" placeholder={input}/>
                 <Button className="dropDownInputButton">
                     <FaChevronDown size={16} />
                 </Button>
             </div>
             <Popover className="dropDownPopover">
                 <ListBox className="combobox-listbox">
-                    {toDisplay.map(value => 
-                        <ListBoxItem className="listBoxItem" key={mapUuidNumbers.get(value)}>{value}</ListBoxItem>
+                    {[...options.entries()].map(([data, value]) => 
+                        <ListBoxItem className='listBoxItem' key={data} id={data.toString()}>{value}</ListBoxItem>
                     )}
                 </ListBox>
             </Popover>
