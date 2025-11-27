@@ -23,11 +23,6 @@ export function useStepForm() {
     const [steps, setSteps] = useState<Step[]>([staticStep]);
     const staticStepId = staticStep.id;
 
-    // Pushes a new step to the end of the array.
-    const push = (step: Step) => {
-        setSteps(prevSteps => [...prevSteps, step]);
-    }
-
     // Removes a given step by id
     const remove = (step: Step) => {
         const newSteps = steps.filter(curStep => curStep.id !== step.id);
@@ -74,7 +69,7 @@ export function useStepForm() {
         }
     };
 
-    return { steps, push, remove, handleChange, staticStepId, handleStaticKeyDown, handleDragDrop };
+    return { steps, remove, handleChange, staticStepId, handleStaticKeyDown, handleDragDrop };
 }
 
 export default useStepForm;

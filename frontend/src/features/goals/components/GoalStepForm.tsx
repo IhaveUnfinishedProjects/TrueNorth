@@ -13,7 +13,7 @@ import { useState } from "react";
 export const GoalStepsForm = ({ handleSubmit }: GoalStepFormProps) => {
 
     /* Hooks for managing form data */
-    const { steps, push, remove, handleChange, staticStepId, handleStaticKeyDown, handleDragDrop } = useStepForm();
+    const { steps, remove, handleChange, staticStepId, handleStaticKeyDown, handleDragDrop } = useStepForm();
     const { isOpen:isRepeatOpen, onOpen:onRepeatOpen, onClose:onRepeatClose } = useToggleModal();
     const [ stepId, setStepId ] = useState("");
 
