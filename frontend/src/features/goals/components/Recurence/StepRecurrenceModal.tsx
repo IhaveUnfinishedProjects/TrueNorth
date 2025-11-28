@@ -101,7 +101,7 @@ export const StepRecurrenceModal = ({ submissionHandler, onRepeatClose }: Repeat
                 {/* Allows the selection of ordinal or date for months & years */}
                 {displayOrdinalRadio && 
                     <div className="recurrenceGroup">
-                        <OrdinalRadio interval={interval} selectedDate={selectedDate}/>
+                        <OrdinalRadio interval={interval} selectedDate={selectedDate} name="type"/>
                     </div>
                 }   
 
