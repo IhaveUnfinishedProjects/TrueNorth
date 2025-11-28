@@ -19,8 +19,9 @@ export type InputFormData = {
     parent?: string
 }
 
-const MeridianLiteral = z.enum(['AM', 'PM']);
+export const MeridianLiteral = z.enum(['AM', 'PM']);
 const OrdinalLiteral = z.enum(['date', 'ordinal']);
+export type Meridian = z.infer<typeof MeridianLiteral>;
 
 /** 
  * Configuration for recurring steps (e.g., "Every 2 weeks on Mon/Fri"). 
@@ -30,7 +31,7 @@ export const RecurrenceSchema = z.object ({
     interval:  z.string().nonempty(),  // "1", "2"
     frequency: z.string().nonempty(),  // "Daily", "Weekly", "Monthly"
     time:      z.string().optional(),  // "12:00" (Optional)
-    period:    MeridianLiteral.nullable().optional(), // "AM" | "PM" (Optional)
+    meridian:    MeridianLiteral.nullable().optional(), // "AM" | "PM" (Optional)
     selectedDays: z.array(z.string()).optional(),     // ["Mon", "Fri"] (Only for Weekly)
     type:      OrdinalLiteral.nullable().optional()   // (Only for Monthly/Yearly)
 });

@@ -1,5 +1,5 @@
 import { DragDropContext, Droppable} from "@hello-pangea/dnd";
-import { type GoalStepFormProps, useStepForm, StepRecurrenceModal, RecurrenceSchema, type Step } from "@features/goals/index.js";
+import { type GoalStepFormProps, useStepForm, StepRecurrenceModal, RecurrenceSchema, type Step, type RecurrenceSchedule } from "@features/goals/index.js";
 import { useToggleModal } from "@hooks/index.js";
 import DraggableSteps from "./DraggableStep/DraggableStep.js";
 import { useState } from "react";
@@ -25,7 +25,6 @@ export const GoalStepsForm = ({ handleSubmit }: GoalStepFormProps) => {
      * Turns the GoalStepForm data into something GoalPlanning.tsx can consume
      */
     const handleLocalSubmit = (event: React.FormEvent) => {
-        console.log("Whole damn form got submitted");
         event.preventDefault();
         handleSubmit(steps);
     }
@@ -33,19 +32,10 @@ export const GoalStepsForm = ({ handleSubmit }: GoalStepFormProps) => {
     /**
      * Attaches the return object from the Step Recurrence form to it's respective step. 
      */
-    const handleStepRecurrenceSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
+    const handleStepRecurrenceSubmit = (recurrenceData: RecurrenceSchedule) => {
         onRepeatClose();
-        const untypedRecurrenceData = Object.fromEntries(new FormData(event.currentTarget).entries());
-
-        try {
-            const recurrenceData = RecurrenceSchema.parse(untypedRecurrenceData);
-            if (curStep) {
-                updateRecurrence(curStep, recurrenceData);
-            }
-        } catch (error) {
-            console.error("Validation failed:", error);
-            alert("Please fill out all required fields.");
+        if (curStep) {
+            updateRecurrence(curStep, recurrenceData);
         }
     }
 

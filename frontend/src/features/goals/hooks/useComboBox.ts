@@ -39,7 +39,6 @@ function useComboBox ({arr}: ComboBoxProps) {
     }
 
     const onChangeKey = (selectKey: Key | null) => {
-        console.log("This is the selectKey: " + selectKey);
         setKey(selectKey);
         const value = options.get(selectKey!.toString());
         setInput(value ? value : '');

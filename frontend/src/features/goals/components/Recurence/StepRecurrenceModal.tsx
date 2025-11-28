@@ -1,6 +1,6 @@
 import { ComboBox, ModalWrapper, CalendarSelection, CheckboxComponent } from "@components/ui/index.js";
 import { useSelectDate } from '@hooks/index.js';
-import { OrdinalRadio, useCheckbox, DayOfWeek } from '@features/goals/index.js';
+import { type Meridian, MeridianLiteral, OrdinalRadio, useCheckbox, DayOfWeek, type RecurrenceSchedule } from '@features/goals/index.js';
 import {
     REPEATING_FREQUENCY,
     TIME_OPTIONS,
@@ -12,7 +12,7 @@ import '@features/goals/components/Recurence/recurrence.css'
 
 
 interface RepeatProps {
-    submissionHandler: (event: React.FormEvent<HTMLFormElement>) => void;
+    submissionHandler: (recurrence: RecurrenceSchedule) => void;
     onRepeatClose: () => void;
 }
 
@@ -53,13 +53,37 @@ export const StepRecurrenceModal = ({ submissionHandler, onRepeatClose }: Repeat
         }
     };
 
+    const localHandler = (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+        
+        try {
+            const formData = new FormData(event.currentTarget);
+            const meridian: Meridian = MeridianLiteral.parse(mComboBox.input);
+
+            const recurrencePayload: RecurrenceSchedule = {
+                startDate: selectedDate.toString(),
+                interval: iComboBox.input,
+                frequency: fComboBox.input,
+                time: tComboBox.input,
+                meridian: meridian,
+                selectedDays: selectedDays
+            };
+
+            submissionHandler(recurrencePayload);
+            
+        } catch (error) {
+            console.error("Validation failed:", error);
+            alert("Please fill out all required fields.");
+        }
+    };
+
     return (
         <ModalWrapper>
 
             {/* Lets the user select how often their goal step occurs */}
             <form 
                 className="recurrenceForm"
-                onSubmit={submissionHandler}
+                onSubmit={localHandler}
                 onKeyDown={handleKeyDown}
             >
                 <h1 className="ml-auto mr-auto">Add Repeats</h1>

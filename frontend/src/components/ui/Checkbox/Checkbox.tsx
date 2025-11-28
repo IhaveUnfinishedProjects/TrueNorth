@@ -12,7 +12,6 @@ interface RecurrenceCheckboxProps {
 }
 
 export const CheckboxComponent = ({ curSelected, onChange, options, name }: RecurrenceCheckboxProps) => {
-    console.log(curSelected);
     return (
         <CheckboxGroup 
             value={curSelected} 
