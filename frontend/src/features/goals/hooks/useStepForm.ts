@@ -3,21 +3,11 @@ import { staticStep } from "../constants.js";
 import { type DropResult } from "@hello-pangea/dnd";
 import type { RecurrenceSchedule, Step } from "@features/goals/index.js";
 
+
 /**
-*    Reorders the array. Takes an item from an index and moves it to a new one
-*/
-const reorder = (list: Step[], startIndex: number, endIndex: number) => {
-    const result = Array.from(list);
-    const [removed] = result.splice(startIndex, 1);
-
-    if (removed){
-        console.log(list, startIndex, endIndex);
-        result.splice(endIndex, 0, removed);
-    }
-
-    return result;
-};
-
+ * Allows the creation, deletion, and swapping of elements
+ * in the step creation for for a specific goal. 
+ */
 export function useStepForm() {
 
     const [steps, setSteps] = useState<Step[]>([staticStep]);
@@ -31,6 +21,19 @@ export function useStepForm() {
         const newSteps = steps.filter(curStep => curStep.id !== step.id);
         setSteps(newSteps);
     };
+
+    function updateRecurrence(step: Step, recurrence: RecurrenceSchedule): void {
+        setSteps(prevSteps =>
+            prevSteps.map(data => {
+
+                if (data.id === step.id){
+                    console.log("Data is being overwritten? Maybe")
+                    return {...data, recurrence};
+                }
+                return data;
+            })
+        );
+    }
 
     function handleChange(event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
         const { name, value } = event.currentTarget;
@@ -92,5 +95,20 @@ export function useStepForm() {
 
     return { steps, remove, handleChange, staticStepId, handleStaticKeyDown, handleDragDrop, updateRecurrence };
 }
+
+/**
+* Helper function. 
+* Reorders the array. Takes an item from an index and moves it to a new one
+*/
+const reorder = (list: Step[], startIndex: number, endIndex: number) => {
+    const result = Array.from(list);
+    const [removed] = result.splice(startIndex, 1);
+
+    if (removed){
+        result.splice(endIndex, 0, removed);
+    }
+
+    return result;
+};
 
 export default useStepForm;

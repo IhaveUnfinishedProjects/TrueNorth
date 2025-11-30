@@ -5,7 +5,7 @@ interface RecurrenceCheckboxProps {
     /** The list of currently selected values */
     curSelected: string[];
     /** Handler called when selection changes, returning a new list of values */
-    onChange: (values: string[]) => void;
+    onChange: (values: string[] | null) => void;
     /** The options to display */
     options: string[];
     name: string;

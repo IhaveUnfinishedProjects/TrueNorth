@@ -16,8 +16,10 @@ function useCheckbox ({defaultVal}: useCheckboxProps) {
         return [];
     });
 
-    const handleChange = (values: string[]) => {
-        setSelectedBoxes(values);
+    const handleChange = (values: string[] | null) => {
+        if (values) {
+            setSelectedBoxes(values);
+        }
     }
 
     return { selectedBoxes, handleChange }
