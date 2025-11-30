@@ -23,7 +23,10 @@ export function useStepForm() {
     const [steps, setSteps] = useState<Step[]>([staticStep]);
     const staticStepId = staticStep.id;
 
-    // Removes a given step by id
+    /**
+     * Removes a step object.
+     * @param step - The step to remove
+     */
     const remove = (step: Step) => {
         const newSteps = steps.filter(curStep => curStep.id !== step.id);
         setSteps(newSteps);
@@ -39,6 +42,7 @@ export function useStepForm() {
         );
     };
 
+    
     function handleDragDrop(result: DropResult) {
         const { source, destination } = result;
 
@@ -69,6 +73,11 @@ export function useStepForm() {
         }
     };
 
+    /**
+     * Adds or updates the recurrence information for a Step.
+     * @param curStep The current step to add the recurrence object too
+     * @param recurrence The recurrence information we want to store
+     */
     function updateRecurrence(curStep: Step, recurrence: RecurrenceSchedule): void {
         setSteps(prevSteps =>
             prevSteps.map(data => {

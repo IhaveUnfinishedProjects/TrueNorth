@@ -1,5 +1,5 @@
 import { DragDropContext, Droppable} from "@hello-pangea/dnd";
-import { type GoalStepFormProps, useStepForm, StepRecurrenceModal, RecurrenceSchema, type Step, type RecurrenceSchedule } from "@features/goals/index.js";
+import { type GoalStepFormProps, useStepForm, StepRecurrenceModal, type Step, type RecurrenceSchedule } from "@features/goals/index.js";
 import { useToggleModal } from "@hooks/index.js";
 import DraggableSteps from "./DraggableStep/DraggableStep.js";
 import { useState } from "react";
