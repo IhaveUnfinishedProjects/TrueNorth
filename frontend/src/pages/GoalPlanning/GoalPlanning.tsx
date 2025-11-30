@@ -1,6 +1,6 @@
 import { Card, CardHeader, ConfirmationModal } from "@components/ui/index.js";
 import { useToggleModal } from "@hooks/index.js";
-import { GoalStepsForm, createSubmissionButtons, createBackButtons, type Step } from "@features/goals/index.js";
+import { GoalStepsForm, planSubmissionButtons, createBackButtons, type Step } from "@features/goals/index.js";
 import PlanningHeader from "./components/PlanningHeader.js";
 import "@root/index.css";
 
@@ -10,10 +10,10 @@ export const GoalPlanning = () => {
     const { isOpen:isBackOpen, onOpen:onBackOpen, onClose:onBackClose } = useToggleModal();
     const { isOpen:isSubmitOpen, onOpen:onSubmitOpen, onClose:onSubmitClose } = useToggleModal();
 
-    /* Hooks for recieving submitted data from this pages forms & modals */
-
     const handleSubmit = (steps: Step[]) => {
         //resetForm();
+        // Make an API call 
+        console.log(steps);
         onSubmitOpen();
     }
 
@@ -35,8 +35,8 @@ export const GoalPlanning = () => {
             />}
             
             {isSubmitOpen && <ConfirmationModal 
-                header="Something" 
-                buttons={createSubmissionButtons} 
+                header="Finished?" 
+                buttons={planSubmissionButtons} 
                 onClose={onSubmitClose}
             />}
         </>

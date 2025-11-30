@@ -1,3 +1,6 @@
+import { type InputFieldConfig } from "@root/types/InputTag.js";
+import { type InputFormData } from "./types.js";
+
 /*
     This file contains the static data for GoalCreation.tsx
     to pass into Input.tsx
@@ -5,9 +8,6 @@
     It includes the content for the models, the modals buttons,
     and the content for the <input/> tags. 
 */ 
-
-import { type InputFieldConfig } from "@root/types/InputTag.js";
-import { type InputFormData } from "./types.js";
 
 export const initialValues: InputFormData = {
     goalName:'',

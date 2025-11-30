@@ -1,21 +1,21 @@
 import { ComboBox, ModalWrapper, CalendarSelection, CheckboxComponent } from "@components/ui/index.js";
 import { useSelectDate } from '@hooks/index.js';
-import { type Step, OrdinalRadio, useCheckbox, DayOfWeek } from '@features/goals/index.js';
+import { MeridianEnum, OrdinalRadio, useCheckbox, DayOfWeek, type RecurrenceSchedule, type MeridianType } from '@features/goals/index.js';
 import {
     REPEATING_FREQUENCY,
     TIME_OPTIONS,
-    MERIDIAN_OPTIONS,
     REPEATING_INTERVALS,
-    useComboBox
+    useComboBox,
+    useOrdinalRadio
 } from '@features/goals/index.js';
 import { parseDate } from '@internationalized/date'; 
 import '@features/goals/components/Recurence/recurrence.css'
 import { useEffect } from "react";
 
 interface RepeatProps {
-    submissionHandler: (event: React.FormEvent<HTMLFormElement>) => void;
+    submissionHandler: (recurrence: RecurrenceSchedule) => void;
     onRepeatClose: () => void;
-    step: Step | undefined;
+    recurrence: RecurrenceSchedule | undefined;
 }
 
 /**
@@ -24,25 +24,29 @@ interface RepeatProps {
  * * Allows Positional based (the second Tuesday of every 'x' month(s)) 
  * @param submissionHandler - Callback to pass event data on submission
  * @param onRepeatClose - Callback to close the modal
+ * @param recurrence - The recurrence data of the selected step (if it exists)
  */
 
-export const StepRecurrenceModal = ({ submissionHandler, onRepeatClose, step }: RepeatProps) =>  {
-
-    /* Hooks for calendar selection handling */
-    const { selectedDate, handleChange: onDateChange, currentDateString } = useSelectDate();
+export const StepRecurrenceModal = ({ submissionHandler, onRepeatClose, recurrence }: RepeatProps) =>  {
 
     /* Hooks for combo box handling */
-    const { selected: frequency, handleChange: setFrequency } = useComboBox({ arr: REPEATING_FREQUENCY });
-    const { selected: interval, handleChange: setInterval }   = useComboBox({ arr: REPEATING_INTERVALS });
-    const { selected: time, handleChange: setTime }           = useComboBox({ arr: TIME_OPTIONS });
-    const { selected: period, handleChange: setPeriod }       = useComboBox({ arr: MERIDIAN_OPTIONS });
+    const fComboBox = useComboBox({ arr: REPEATING_FREQUENCY, defaultVal: recurrence?.frequency });
+    const iComboBox = useComboBox({ arr: REPEATING_INTERVALS, defaultVal: recurrence?.interval });
+    const tComboBox = useComboBox({ arr: TIME_OPTIONS, defaultVal: recurrence?.time });
+    const mComboBox = useComboBox({ arr: MeridianEnum.options, defaultVal: recurrence?.meridian });
+
+    /* Hooks for calendar selection handling */
+    const { selectedDate, handleChange: onDateChange, currentDate } = useSelectDate({defaultVal: recurrence?.startDate});
 
     /* Hook for selecting days of the week */
-    const { selectedBoxes: selectedDays, handleChange: onDayChange } = useCheckbox();
+    const { selectedBoxes: selectedDays, handleChange: onDayChange } = useCheckbox({defaultVal: recurrence?.selectedDays});
 
-    /* Dedicated constants */ 
-    const displayOrdinalRadio = interval === "Years" || interval === "Months";
-    const displayWeeklyRadio = interval === "Weeks";
+    /* Hook for remembering the option between ordinal & date */
+    const { ordinal, onOrdinalChange } = useOrdinalRadio({defaultVal: recurrence?.type});
+
+    /* Acts as a condition to check against for opening ordinal & weekly view. */ 
+    const interval = iComboBox.input;
+    console.log(interval === "Years");
 
     /**
      * Blocks enter from submitting the form
@@ -54,13 +58,38 @@ export const StepRecurrenceModal = ({ submissionHandler, onRepeatClose, step }: 
         }
     };
 
+    const localHandler = (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+        
+        try {
+             const meridian: MeridianType = MeridianEnum.parse(mComboBox.input);
+
+            const recurrencePayload: RecurrenceSchedule = {
+                startDate: selectedDate.toString(),
+                interval: iComboBox.input,
+                frequency: fComboBox.input,
+                time: tComboBox.input,
+                meridian: meridian,
+                selectedDays: selectedDays,
+                type: ordinal
+            };
+            console.log(interval);
+
+            submissionHandler(recurrencePayload);
+            
+        } catch (error) {
+            console.error("Validation failed:", error);
+            alert("Please fill out all required fields.");
+        }
+    };
+
     return (
         <ModalWrapper>
 
             {/* Lets the user select how often their goal step occurs */}
             <form 
                 className="recurrenceForm"
-                onSubmit={submissionHandler}
+                onSubmit={localHandler}
                 onKeyDown={handleKeyDown}
             >
                 <h1 className="ml-auto mr-auto">Add Repeats</h1>
@@ -70,9 +99,9 @@ export const StepRecurrenceModal = ({ submissionHandler, onRepeatClose, step }: 
                     <h3>Start</h3>
                     <div className="recurrenceRows">
                         <CalendarSelection 
-                            selectedDate={ selectedDate }
-                            onDateChange={ onDateChange }
-                            currentDateString={currentDateString}
+                            selectedDate={selectedDate}
+                            onDateChange={onDateChange}
+                            currentDate={currentDate}
                             name="startDate"
                         />
                     </div>
@@ -80,22 +109,36 @@ export const StepRecurrenceModal = ({ submissionHandler, onRepeatClose, step }: 
                     <h3>Repeat every</h3>
                     <div className="recurrenceRows">
                         {/* Allows selection to repeat every x days/weeks/months */}
-                        <ComboBox toDisplay={REPEATING_FREQUENCY} defaultString={frequency} handleChange={setFrequency} name="interval"/>
-                        <ComboBox toDisplay={REPEATING_INTERVALS} defaultString={interval} handleChange={setInterval} name="frequency"/>
+                        <ComboBox 
+                            name="interval"
+                            options={fComboBox.options}
+                            input={fComboBox.input}
+                            selectKey={fComboBox.selectKey}
+                            onChangeInput={fComboBox.onChangeInput}
+                            onChangeKey={fComboBox.onChangeKey}
+                        />
+                        <ComboBox 
+                            name="frquency"
+                            options={iComboBox.options}
+                            input={iComboBox.input}
+                            selectKey={iComboBox.selectKey}
+                            onChangeInput={iComboBox.onChangeInput}
+                            onChangeKey={iComboBox.onChangeKey}
+                        />
                     </div>
                 </div>
                 
                 {/* Allows the selection of ordinal or date for months & years */}
-                {displayOrdinalRadio && 
+                {(interval === "Years" || interval === "Months") && 
                     <div className="recurrenceGroup">
-                        <OrdinalRadio interval={interval} selectedDate={selectedDate}/>
+                        <OrdinalRadio ordinalChoice={ordinal} onChange={onOrdinalChange} interval={interval} selectedDate={selectedDate} name="type"/>
                     </div>
                 }   
 
                 {/* Allows the selection of days within a week */}
-                {displayWeeklyRadio && 
+                {interval === "Weeks" && 
                     <div className="recurrenceGroup">
-                        <CheckboxComponent curSelected={selectedDays} onChange={onDayChange} options={DayOfWeek} name="selectedDays"/>
+                        <CheckboxComponent curSelected={selectedDays} onChange={onDayChange} options={DayOfWeek} name=""/>
                     </div>
                 }                
 
@@ -103,8 +146,22 @@ export const StepRecurrenceModal = ({ submissionHandler, onRepeatClose, step }: 
                 <div className="recurrenceGroup">
                     <h3>Select time</h3>
                     <div className="recurrenceRows">
-                        <ComboBox toDisplay={TIME_OPTIONS} defaultString={time} handleChange={setTime} name="time"/>
-                        <ComboBox toDisplay={MERIDIAN_OPTIONS} defaultString={period} handleChange={setPeriod} name="period"/>
+                        <ComboBox 
+                            name="time"
+                            options={tComboBox.options}
+                            input={tComboBox.input}
+                            selectKey={tComboBox.selectKey}
+                            onChangeInput={tComboBox.onChangeInput}
+                            onChangeKey={tComboBox.onChangeKey}
+                        />                        
+                        <ComboBox 
+                            name="meridian"
+                            options={mComboBox.options}
+                            input={mComboBox.input}
+                            selectKey={mComboBox.selectKey}
+                            onChangeInput={mComboBox.onChangeInput}
+                            onChangeKey={mComboBox.onChangeKey}
+                        />                        
                     </div>
                 </div>
 

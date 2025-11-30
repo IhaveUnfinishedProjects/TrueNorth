@@ -2,7 +2,7 @@ import {RadioGroup, Radio, Label} from 'react-aria-components';
 import './RadioForm.css';
 
 interface displayObj {
-    value: 'date' | 'ordinal';
+    value: string;
     displayLabel: string;
 }
 
@@ -14,12 +14,14 @@ interface RadioFormProps {
     /** The currently selected radio button(s) */
     selected: string;
     /** Change handler */
-    handleChange: (value: string) => void;
+    onChange: (value: string) => void;
+    /** The name of the Radio component */
+    name: string
 }
 
-export const RadioForm = ({ label, options, selected, handleChange }: RadioFormProps) => {
+export const RadioForm = ({ label, options, selected, onChange, name }: RadioFormProps) => {
     return(
-        <RadioGroup value={selected} onChange={handleChange} className="radio-group-container">
+        <RadioGroup value={selected} onChange={onChange} name={name} className="radio-group-container">
             <Label>{label}</Label>
             {options.map(data => {
                 return (

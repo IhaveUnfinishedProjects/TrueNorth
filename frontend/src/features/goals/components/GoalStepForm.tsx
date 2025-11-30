@@ -1,5 +1,5 @@
 import { DragDropContext, Droppable} from "@hello-pangea/dnd";
-import { type Step, type GoalStepFormProps, RecurrenceSchema, useStepForm, StepRecurrenceModal } from "@features/goals/index.js";
+import { type GoalStepFormProps, useStepForm, StepRecurrenceModal, type Step, type RecurrenceSchedule } from "@features/goals/index.js";
 import { useToggleModal } from "@hooks/index.js";
 import DraggableSteps from "./DraggableStep/DraggableStep.js";
 import { useState } from "react";
@@ -13,9 +13,9 @@ import { useState } from "react";
 export const GoalStepsForm = ({ handleSubmit }: GoalStepFormProps) => {
 
     /* Hooks for managing form data */
-    const { steps, remove, updateRecurrence, handleChange, staticStepId, handleStaticKeyDown, handleDragDrop } = useStepForm();
+    const { steps, remove, handleChange, staticStepId, handleStaticKeyDown, handleDragDrop, updateRecurrence } = useStepForm();
     const { isOpen:isRepeatOpen, onOpen:onRepeatOpen, onClose:onRepeatClose } = useToggleModal();
-    const [ step, setStep ] = useState<Step>();
+    const [ curStep, setCurStep ] = useState<Step>();
 
     /* Separates the movable steps from the immovable one you type into */
     const staticStep = steps.find(step => step.id === staticStepId)
@@ -24,28 +24,18 @@ export const GoalStepsForm = ({ handleSubmit }: GoalStepFormProps) => {
     /**
      * Turns the GoalStepForm data into something GoalPlanning.tsx can consume
      */
-    const handleGoalStepSubmit = (event: React.FormEvent) => {
+    const handleLocalSubmit = (event: React.FormEvent) => {
         event.preventDefault();
         handleSubmit(steps);
     }
 
     /**
-     * Step Recurrence returns a 'recurrence' type object providing details about a step being repeated.
-     * This function backpacks the recurrence object onto the correct step object. 
+     * Attaches the return object from the Step Recurrence form to it's respective step. 
      */
-    const handleStepRecurrenceSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
+    const handleStepRecurrenceSubmit = (recurrenceData: RecurrenceSchedule) => {
         onRepeatClose();
-        const untypedRecurrenceData = Object.fromEntries(new FormData(event.currentTarget).entries());
-
-        try {
-            const recurrenceData = RecurrenceSchema.parse(untypedRecurrenceData);
-            if (step) {
-                updateRecurrence(step, recurrenceData);
-            }
-        } catch (error) {
-            console.error("Validation failed:", error);
-            alert("Please fill out all required fields.");
+        if (curStep) {
+            updateRecurrence(curStep, recurrenceData);
         }
     }
 
@@ -75,7 +65,7 @@ export const GoalStepsForm = ({ handleSubmit }: GoalStepFormProps) => {
                                                 handleChange={handleChange}
                                                 remove={remove}
                                                 onRepeatOpen={onRepeatOpen}
-                                                setStep={setStep}
+                                                setStep={setCurStep}
                                             />
                                         </div>
                                     )
@@ -112,7 +102,7 @@ export const GoalStepsForm = ({ handleSubmit }: GoalStepFormProps) => {
             {isRepeatOpen && <StepRecurrenceModal 
                 submissionHandler = {handleStepRecurrenceSubmit}
                 onRepeatClose={onRepeatClose}
-                step={step}
+                recurrence={curStep?.recurrence}
             />}
         </>
     );
