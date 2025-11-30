@@ -9,6 +9,7 @@ export { default as OrdinalRadio } from './utils/OrdinalRadio/OrdinalRadio.js';
 export { default as useComboBox } from './hooks/useComboBox.js';
 export { default as useStepForm } from './hooks/useStepForm.js';
 export { default as useCheckbox } from './hooks/useCheckbox.js';
+export { default as useOrdinalRadio } from './hooks/useOrdinalRadio.js';
 
 /* Export types */
 export * from './types.js';

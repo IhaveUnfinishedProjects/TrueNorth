@@ -102,6 +102,7 @@ export const GoalStepsForm = ({ handleSubmit }: GoalStepFormProps) => {
             {isRepeatOpen && <StepRecurrenceModal 
                 submissionHandler = {handleStepRecurrenceSubmit}
                 onRepeatClose={onRepeatClose}
+                recurrence={curStep?.recurrence}
             />}
         </>
     );

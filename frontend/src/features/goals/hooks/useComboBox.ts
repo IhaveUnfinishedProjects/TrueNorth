@@ -1,10 +1,15 @@
 import { useMemo, useState, type Key } from "react";
 
+/**
+ * @param arr - The options the combobox displays
+ * @param default - An optional default string
+ */
 interface ComboBoxProps {
     arr: string[];
+    defaultVal: string | undefined | null;
 }
 
-function useComboBox ({arr}: ComboBoxProps) {
+function useComboBox ({arr, defaultVal}: ComboBoxProps) {
 
     /**
      * Provides each option in arr[] it's own uuid selectKey. 
@@ -20,6 +25,9 @@ function useComboBox ({arr}: ComboBoxProps) {
      * option available in options, or '' if none exist. 
      */
     const [input, setInput] = useState<string>(() => {
+        if (defaultVal) {
+            return defaultVal; 
+        } 
         const val = options.values().next();
         return (val.done ? '' : val.value.toString());
     });

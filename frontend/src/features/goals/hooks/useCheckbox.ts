@@ -1,12 +1,20 @@
 import { useState } from 'react';
 
+interface useCheckboxProps {
+    defaultVal: string[] | null | undefined;
+}
+
 /**
  * 
- * @returns 
  */
-function useCheckbox () {
+function useCheckbox ({defaultVal}: useCheckboxProps) {
 
-    const [ selectedBoxes, setSelectedBoxes ] = useState<string[]>([]);
+    const [ selectedBoxes, setSelectedBoxes ] = useState<string[]>(() =>{
+        if (defaultVal) {
+            return defaultVal;
+        }
+        return [];
+    });
 
     const handleChange = (values: string[]) => {
         setSelectedBoxes(values);
