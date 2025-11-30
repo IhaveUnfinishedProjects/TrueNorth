@@ -1,10 +1,9 @@
 import { ComboBox, ModalWrapper, CalendarSelection, CheckboxComponent } from "@components/ui/index.js";
 import { useSelectDate } from '@hooks/index.js';
-import { type Meridian, MeridianLiteral, OrdinalRadio, useCheckbox, DayOfWeek, type RecurrenceSchedule } from '@features/goals/index.js';
+import { MeridianEnum, OrdinalRadio, useCheckbox, DayOfWeek, type RecurrenceSchedule, type MeridianType } from '@features/goals/index.js';
 import {
     REPEATING_FREQUENCY,
     TIME_OPTIONS,
-    MERIDIAN_OPTIONS,
     REPEATING_INTERVALS,
     useComboBox,
     useOrdinalRadio
@@ -24,6 +23,7 @@ interface RepeatProps {
  * * Allows Positional based (the second Tuesday of every 'x' month(s)) 
  * @param submissionHandler - Callback to pass event data on submission
  * @param onRepeatClose - Callback to close the modal
+ * @param recurrence - The recurrence data of the selected step (if it exists)
  */
 
 export const StepRecurrenceModal = ({ submissionHandler, onRepeatClose, recurrence }: RepeatProps) =>  {
@@ -32,7 +32,7 @@ export const StepRecurrenceModal = ({ submissionHandler, onRepeatClose, recurren
     const fComboBox = useComboBox({ arr: REPEATING_FREQUENCY, defaultVal: recurrence?.frequency });
     const iComboBox = useComboBox({ arr: REPEATING_INTERVALS, defaultVal: recurrence?.interval });
     const tComboBox = useComboBox({ arr: TIME_OPTIONS, defaultVal: recurrence?.time });
-    const mComboBox = useComboBox({ arr: MERIDIAN_OPTIONS, defaultVal: recurrence?.meridian });
+    const mComboBox = useComboBox({ arr: MeridianEnum.options, defaultVal: recurrence?.meridian });
 
     /* Hooks for calendar selection handling */
     const { selectedDate, handleChange: onDateChange, currentDate } = useSelectDate({defaultVal: recurrence?.startDate});
@@ -41,10 +41,11 @@ export const StepRecurrenceModal = ({ submissionHandler, onRepeatClose, recurren
     const { selectedBoxes: selectedDays, handleChange: onDayChange } = useCheckbox({defaultVal: recurrence?.selectedDays});
 
     /* Hook for remembering the option between ordinal & date */
-    const { ordinal, onOrdinalChange } = useOrdinalRadio();
+    const { ordinal, onOrdinalChange } = useOrdinalRadio({defaultVal: recurrence?.type});
 
     /* Acts as a condition to check against for opening ordinal & weekly view. */ 
     const interval = iComboBox.input;
+    console.log(interval === "Years");
 
     /**
      * Blocks enter from submitting the form
@@ -60,7 +61,7 @@ export const StepRecurrenceModal = ({ submissionHandler, onRepeatClose, recurren
         event.preventDefault();
         
         try {
-             const meridian: Meridian = MeridianLiteral.parse(mComboBox.input);
+             const meridian: MeridianType = MeridianEnum.parse(mComboBox.input);
 
             const recurrencePayload: RecurrenceSchedule = {
                 startDate: selectedDate.toString(),
@@ -68,7 +69,8 @@ export const StepRecurrenceModal = ({ submissionHandler, onRepeatClose, recurren
                 frequency: fComboBox.input,
                 time: tComboBox.input,
                 meridian: meridian,
-                selectedDays: selectedDays
+                selectedDays: selectedDays,
+                type: ordinal
             };
             console.log(interval);
 
@@ -126,9 +128,9 @@ export const StepRecurrenceModal = ({ submissionHandler, onRepeatClose, recurren
                 </div>
                 
                 {/* Allows the selection of ordinal or date for months & years */}
-                {interval === "Years" || interval === "Months" && 
+                {(interval === "Years" || interval === "Months") && 
                     <div className="recurrenceGroup">
-                        <OrdinalRadio interval={interval} selectedDate={selectedDate} name="type"/>
+                        <OrdinalRadio ordinalChoice={ordinal} onChange={onOrdinalChange} interval={interval} selectedDate={selectedDate} name="type"/>
                     </div>
                 }   
 

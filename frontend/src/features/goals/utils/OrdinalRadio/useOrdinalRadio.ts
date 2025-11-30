@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useMemo } from "react";
 import type { DateValue } from '@internationalized/date';
 
 interface UseOrdinalRadioProps {
@@ -6,12 +6,11 @@ interface UseOrdinalRadioProps {
     selectedDate: DateValue;
 }
 
+/**
+ * Takes the interval "Years" or "Months" allowing us to produce a 
+ * ordinal and date string in accordance based on the selected date. 
+ */
 function useOrdinalRadio({ interval, selectedDate }: UseOrdinalRadioProps) {
-    const [selected, setSelected] = useState<string>("date"); // Default to 'date' to avoid empty state issues
-
-    const handleChange = (value: string) => {
-        setSelected(value);
-    };
 
     // Helper for "st", "nd", "rd", "th"
     const getSuffix = (day: number): string => {
@@ -24,7 +23,7 @@ function useOrdinalRadio({ interval, selectedDate }: UseOrdinalRadioProps) {
         }
     };
 
-    const { options, label } = useMemo(() => {
+    const { options, recurrenceLabel } = useMemo(() => {
         /** * A helper function for OrdinalRadio, calculating the date as an ordinal. 
          * Returns a string version of the selected date with an ordinal option. 
          * E.G "6th of October" or "1st Saturday of October" for yearly.
@@ -56,7 +55,7 @@ function useOrdinalRadio({ interval, selectedDate }: UseOrdinalRadioProps) {
         }
 
         return {
-            label: recurrenceLabel,
+            recurrenceLabel,
             options: [
                 { value: 'date' as const, displayLabel: dateDesc },
                 { value: 'ordinal' as const, displayLabel: ordinalDesc }
@@ -64,7 +63,7 @@ function useOrdinalRadio({ interval, selectedDate }: UseOrdinalRadioProps) {
         };
     }, [selectedDate, interval]);
 
-    return { selected, handleChange, options, label };
+    return { options, recurrenceLabel };
 }
 
 export default useOrdinalRadio;

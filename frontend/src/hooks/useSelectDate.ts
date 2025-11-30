@@ -6,7 +6,6 @@ interface useSelectDateProps {
 }
 
 export function useSelectDate ({defaultVal}: useSelectDateProps) {
-    console.log(defaultVal);
 
     const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
     const currentDate = today(userTimeZone);
