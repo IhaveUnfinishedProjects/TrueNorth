@@ -19,7 +19,6 @@ const GoalCreation = () => {
     const { isOpen:isSubmitOpen, onOpen:onSubmitOpen, onClose:onSubmitClose, name } = useToggleModal();
     const { formValues, handleChange, resetForm } = useForm(initialValues);
     const [ curParentId, setCurParentId ] = useState<string>();
-    console.log(curParentId);
 
     useEffect(() => {
         if (name) {

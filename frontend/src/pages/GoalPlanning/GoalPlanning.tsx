@@ -34,6 +34,8 @@ export const GoalPlanning = () => {
         if (name) {
             if (name === confirmButtonName && steps && curParentId) {
                 addSteps({newSteps: steps, curParentId: curParentId});
+                navigate('/');
+                return;
             }
         }
     }, [name])

@@ -47,7 +47,7 @@ export const addSteps = ({newSteps, curParentId}: addStepsProps) => {
     const completeGoals = getGoals();
     
     const newGoals = completeGoals.map(goal => {
-        goal.id === curParentId ? {...goal, steps: newSteps} : goal;
+        return goal.id === curParentId ? { ...goal, steps: newSteps} : goal;
     })
 
     localStorage.setItem(DB_KEY, JSON.stringify(newGoals))
