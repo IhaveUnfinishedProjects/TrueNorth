@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from 'react-dom';
-import { Link } from "react-router";
+import { Link } from "react-router-dom";
 import { ModalWrapper } from "@components/ui/index.js";
 import type { ModalButtonProps } from "@root/types/index.js";
 import "@root/index.css";
@@ -17,7 +17,7 @@ interface ModalProps {
     header: string;
     paragraph?: string;
     buttons: ModalButtonProps[];
-    onClose: () => void;
+    onClose: (name: string | undefined) => void;
 }
 
 const ConfirmationModal:React.FC<ModalProps> = ({ header, paragraph, buttons, onClose }) => {
@@ -35,13 +35,13 @@ const ConfirmationModal:React.FC<ModalProps> = ({ header, paragraph, buttons, on
                     {buttons.map((button, index) => {
                         if (button.route) {
                             return (
-                                <Link key={ index } to={ button.route } className="button-style" onClick={ onClose }>
-                                    { button.text }
-                                </Link>
+                                    <Link key={ index } to={ button.route } className="button-style" onClick={ () => onClose(button.name) }>
+                                        { button.text }
+                                    </Link>
                             );
                         } else {
                             return (
-                                <button key={ index } className="button-style" onClick={ onClose }>
+                                <button key={ index } className="button-style" onClick={ () => onClose(button.name) }>
                                     { button.text }
                                 </button>
                             );

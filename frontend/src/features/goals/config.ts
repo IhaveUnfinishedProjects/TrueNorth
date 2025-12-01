@@ -35,6 +35,8 @@ export const createBackButtons: ModalButtonProps[] = [
     }
 ];
 
+
+export const addStepsButName = "AddSteps";
 /**
  * Submission button options for goal creation submission
  */
@@ -45,7 +47,7 @@ export const createSubmissionButtons: ModalButtonProps[] = [
     },
     {
         text: "Add Steps",
-        route: "/PlanGoal/:curParentId"
+        name: `${addStepsButName}`
     }
 ]
 
@@ -63,6 +65,8 @@ export const planBackButtons: ModalButtonProps[] = [
     }
 ];
 
+export const confirmButtonName = "YesButton";
+
 /**
  * Submission button options for submitting the
  * steps of a goal
@@ -74,8 +78,7 @@ export const planSubmissionButtons: ModalButtonProps[] = [
     },
     {
         text: "Yes",
-        route: "/",
-        name: "YesButton"
+        name: `${confirmButtonName}`
     }
 ]
 

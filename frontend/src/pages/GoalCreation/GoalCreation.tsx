@@ -1,9 +1,10 @@
 import { ConfirmationModal, Card, CardHeader } from '@components/ui/index.js';
-import { createBackButtons, createSubmissionButtons, initialValues, InputFieldData, Form, type Goal, addGoal} from "@features/goals/index.js";
+import { createBackButtons, createSubmissionButtons, initialValues, InputFieldData, Form, type Goal, addGoal, addStepsButName} from "@features/goals/index.js";
 import { useToggleModal, useForm } from '@hooks/index.js';
 import "./GoalCreation.css";
 import "@root/index.css";
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useNavigate } from "react-router-dom";
 
 /*
     This function is responsible for rendering the new goal creation component.
@@ -13,11 +14,21 @@ import { useState } from 'react';
 
 const GoalCreation = () => {
 
+    const navigate = useNavigate();
     const { isOpen:isBackOpen, onOpen:onBackOpen, onClose:onBackClose } = useToggleModal();
-    const { isOpen:isSubmitOpen, onOpen:onSubmitOpen, onClose:onSubmitClose } = useToggleModal();
+    const { isOpen:isSubmitOpen, onOpen:onSubmitOpen, onClose:onSubmitClose, name } = useToggleModal();
     const { formValues, handleChange, resetForm } = useForm(initialValues);
     const [ curParentId, setCurParentId ] = useState<string>();
     console.log(curParentId);
+
+    useEffect(() => {
+        if (name) {
+            if (name === addStepsButName) {
+                navigate(`/PlanGoal/${curParentId}`);
+                return;
+            }
+        }
+    }, [name]);
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         // Mock API call to backend for parent id. 

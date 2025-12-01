@@ -1,38 +1,45 @@
 import { Card, CardHeader, ConfirmationModal } from "@components/ui/index.js";
 import { useToggleModal } from "@hooks/index.js";
-import { GoalStepsForm, planSubmissionButtons, createBackButtons, type Step, isGoal } from "@features/goals/index.js";
+import { GoalStepsForm, planSubmissionButtons, confirmButtonName, createBackButtons, type Step, isGoal, addSteps } from "@features/goals/index.js";
 import PlanningHeader from "./components/PlanningHeader.js";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import "@root/index.css";
 
 export const GoalPlanning = () => {
 
+    /* For navigating the user if the parent id is invalid */ 
     const navigate = useNavigate(); // To redirect when an id is invalid. 
-    const { curParendId } = useParams<{ curParendId: string }>();
+    const { curParentId } = useParams<{ curParentId: string }>();
+    /* Hooks for displaying & hiding this pages modals */
+    const { isOpen:isBackOpen, onOpen:onBackOpen, onClose:onBackClose } = useToggleModal();
+    const { isOpen:isSubmitOpen, onOpen:onSubmitOpen, onClose:onSubmitClose, name } = useToggleModal();
+    const [steps, setSteps] = useState<Step[]>();
 
     useEffect(() => {
-        if (curParendId){
-            const bool = isGoal(curParendId);
+        if (curParentId){
+            const bool = isGoal(curParentId);
             if (bool) {
-                return;
+                return; // Returns if parent goal exists
             }
         }
-        // If this runs the parent goal doesn't exist
-        console.error(`Goal resource not found. Invalid ID: ${curParendId}.`);
+        // Take the user home if the goal doesn't exist
+        console.error(`Goal resource not found. Invalid ID: ${curParentId}.`);
         navigate('/', { replace: true });
         return;
 
-        }, [curParendId, navigate]);
+        }, [curParentId, navigate]);
 
-    /* Hooks for displaying & hiding this pages modals */
-    const { isOpen:isBackOpen, onOpen:onBackOpen, onClose:onBackClose } = useToggleModal();
-    const { isOpen:isSubmitOpen, onOpen:onSubmitOpen, onClose:onSubmitClose } = useToggleModal();
+    useEffect(() => {
+        if (name) {
+            if (name === confirmButtonName && steps && curParentId) {
+                addSteps({newSteps: steps, curParentId: curParentId});
+            }
+        }
+    }, [name])
     
-    const handleSubmit = (steps: Step[]) => {
-        //resetForm();
-        // Make an API call 
-        
+    const handleSubmit = (steps: Step[]) => {       
+        setSteps(steps); 
         onSubmitOpen();
     }
 

@@ -17,7 +17,7 @@ function App() {
                 <Routes>
                     <Route path="/" element={<HomePageContent />} />
                     <Route path="/CreateGoal" element={<GoalCreation />} />
-                    <Route path="/PlanGoal" element={<GoalPlanning />} />
+                    <Route path="/PlanGoal/:curParentId" element={<GoalPlanning />} />
                 </Routes>
             </main>
         </>
