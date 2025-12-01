@@ -16,10 +16,15 @@ const GoalCreation = () => {
     const { isOpen:isSubmitOpen, onOpen:onSubmitOpen, onClose:onSubmitClose } = useToggleModal();
     const { formValues, handleChange, resetForm } = useForm(initialValues);
 
-    const handleSubmit = (event: React.FormEvent) => {
+    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         // Mock API call to backend for parent id. 
         event.preventDefault();
         const parentId: string = Date.now().toString();
+
+        // Logging the data. 
+        const data = Object.fromEntries(new FormData(event.currentTarget).entries());
+        console.log(data);
+
         resetForm();
         onSubmitOpen();
     }

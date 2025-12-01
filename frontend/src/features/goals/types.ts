@@ -10,13 +10,13 @@ export interface GoalStepFormProps {
 /** 
  * Represents the metadata required to define a high-level Goal. 
  */
-export type InputFormData = {
+export type Goal = {
     goalName: string,
     desiredAchievement: string,
     importance: string,
     measurement: string,
     achievementDate: string,
-    parent?: string
+    parent?: string,
 }
 
 /**

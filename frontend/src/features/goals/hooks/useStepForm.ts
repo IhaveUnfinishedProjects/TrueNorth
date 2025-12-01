@@ -22,19 +22,6 @@ export function useStepForm() {
         setSteps(newSteps);
     };
 
-    function updateRecurrence(step: Step, recurrence: RecurrenceSchedule): void {
-        setSteps(prevSteps =>
-            prevSteps.map(data => {
-
-                if (data.id === step.id){
-                    console.log("Data is being overwritten? Maybe")
-                    return {...data, recurrence};
-                }
-                return data;
-            })
-        );
-    }
-
     function handleChange(event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
         const { name, value } = event.currentTarget;
 

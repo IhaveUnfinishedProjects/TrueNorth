@@ -1,5 +1,5 @@
 import { type InputFieldConfig } from "@root/types/InputTag.js";
-import { type InputFormData } from "./types.js";
+import { type Goal } from "./types.js";
 
 /*
     This file contains the static data for GoalCreation.tsx
@@ -9,7 +9,10 @@ import { type InputFormData } from "./types.js";
     and the content for the <input/> tags. 
 */ 
 
-export const initialValues: InputFormData = {
+/**
+ * Initial Values for Goal Creation
+ */
+export const initialValues: Goal = {
     goalName:'',
     desiredAchievement:'',
     importance:'',
@@ -18,6 +21,9 @@ export const initialValues: InputFormData = {
     parent:''
 };
 
+/**
+ * Back Button options for goal creation
+ */
 export const createBackButtons = [
     {
         text: "Yes",
@@ -28,6 +34,9 @@ export const createBackButtons = [
     }
 ];
 
+/**
+ * Submission button options for goal creation submission
+ */
 export const createSubmissionButtons = [
     {
         text: "Add Sub-Goal",
@@ -39,6 +48,10 @@ export const createSubmissionButtons = [
     }
 ]
 
+/**
+ * Back button options for planning the steps
+ * of a goal
+ */
 export const planBackButtons = [
     {
         text: "Yes",
@@ -49,18 +62,21 @@ export const planBackButtons = [
     }
 ];
 
+/**
+ * Submission button options for submitting the
+ * steps of a goal
+ */
 export const planSubmissionButtons = [
     {
-        text: "Something",
-        //route: "/CreateGoal"
+        text: "No",
     },
     {
-        text: "Something",
-        //route: "/PlanGoal"
+        text: "Yes",
+        route: "/"
     }
 ]
 
-export const InputFieldData: InputFieldConfig<InputFormData>[] = [
+export const InputFieldData: InputFieldConfig<Goal>[] = [
     {
         type: "text",
         name: "goalName",

@@ -13,7 +13,6 @@ export const GoalPlanning = () => {
     const handleSubmit = (steps: Step[]) => {
         //resetForm();
         // Make an API call 
-        console.log(steps);
         onSubmitOpen();
     }
 

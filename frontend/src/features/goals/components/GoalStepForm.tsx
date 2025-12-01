@@ -41,7 +41,7 @@ export const GoalStepsForm = ({ handleSubmit }: GoalStepFormProps) => {
 
     return(
         <>
-            <form onSubmit={ handleGoalStepSubmit }>
+            <form onSubmit={ handleLocalSubmit }>
                 {/* Initializes the drag and drop context for the entire list */}
                 <DragDropContext onDragEnd={handleDragDrop}>
                     {steps.length > 1 && <h3>First Step</h3>}

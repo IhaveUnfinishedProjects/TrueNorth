@@ -46,7 +46,6 @@ export const StepRecurrenceModal = ({ submissionHandler, onRepeatClose, recurren
 
     /* Acts as a condition to check against for opening ordinal & weekly view. */ 
     const interval = iComboBox.input;
-    console.log(interval === "Years");
 
     /**
      * Blocks enter from submitting the form
@@ -73,7 +72,6 @@ export const StepRecurrenceModal = ({ submissionHandler, onRepeatClose, recurren
                 selectedDays: selectedDays,
                 type: ordinal
             };
-            console.log(interval);
 
             submissionHandler(recurrencePayload);
             

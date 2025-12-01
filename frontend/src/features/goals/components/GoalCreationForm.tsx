@@ -5,10 +5,10 @@ type InputProps<T> = {
     formValues: T;
     handleChange: (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
     InputFieldData: InputFieldConfig<T>[];
-    handleSubmit: (event: React.FormEvent) => void;
+    handleSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
 };
 
-export const Form = <T extends Record<string, any>> ({ formValues, handleChange, InputFieldData, handleSubmit }: InputProps<T>) => {
+export const Form = <T extends Record<string, string>> ({ formValues, handleChange, InputFieldData, handleSubmit }: InputProps<T>) => {
     return (
         <>
             <form onSubmit={handleSubmit}>
