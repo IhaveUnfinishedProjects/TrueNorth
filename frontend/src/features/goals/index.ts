@@ -22,3 +22,6 @@ export * from './constants.js';
 
 /* Export schema */
 export * from './recurrence.schema.js';
+
+/* Storage */
+export * from './api/index.js';

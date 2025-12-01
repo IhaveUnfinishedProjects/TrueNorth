@@ -1,6 +1,6 @@
 import React from "react";
 import { useRef } from "react";
-import { Link } from "react-router";
+import { Link } from "react-router-dom";
 
 import '@root/index.css';
 import Logo from "@assets/logo.svg?react";

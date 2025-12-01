@@ -1,5 +1,6 @@
 import { type InputFieldConfig } from "@root/types/InputTag.js";
 import { type Goal } from "./types.js";
+import type { ModalButtonProps } from "@root/types/index.js";
 
 /*
     This file contains the static data for GoalCreation.tsx
@@ -24,7 +25,7 @@ export const initialValues: Goal = {
 /**
  * Back Button options for goal creation
  */
-export const createBackButtons = [
+export const createBackButtons: ModalButtonProps[] = [
     {
         text: "Yes",
         route: "/"
@@ -37,14 +38,14 @@ export const createBackButtons = [
 /**
  * Submission button options for goal creation submission
  */
-export const createSubmissionButtons = [
+export const createSubmissionButtons: ModalButtonProps[] = [
     {
         text: "Add Sub-Goal",
-        route: "/CreateGoal"
+        route: "/CreateGoal/"
     },
     {
         text: "Add Steps",
-        route: "/PlanGoal"
+        route: "/PlanGoal/:curParentId"
     }
 ]
 
@@ -52,7 +53,7 @@ export const createSubmissionButtons = [
  * Back button options for planning the steps
  * of a goal
  */
-export const planBackButtons = [
+export const planBackButtons: ModalButtonProps[] = [
     {
         text: "Yes",
         route: "/CreateGoal"
@@ -66,13 +67,15 @@ export const planBackButtons = [
  * Submission button options for submitting the
  * steps of a goal
  */
-export const planSubmissionButtons = [
+export const planSubmissionButtons: ModalButtonProps[] = [
     {
         text: "No",
+        name: "NoButton"
     },
     {
         text: "Yes",
-        route: "/"
+        route: "/",
+        name: "YesButton"
     }
 ]
 

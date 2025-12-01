@@ -8,4 +8,5 @@
 export interface ModalButtonProps {
     text: string;
     route?: string;
+    name?: string;
 }

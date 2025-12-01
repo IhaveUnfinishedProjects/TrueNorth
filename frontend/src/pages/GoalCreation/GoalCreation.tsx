@@ -1,8 +1,9 @@
 import { ConfirmationModal, Card, CardHeader } from '@components/ui/index.js';
-import { createBackButtons, createSubmissionButtons, initialValues, InputFieldData, Form} from "@features/goals/index.js";
+import { createBackButtons, createSubmissionButtons, initialValues, InputFieldData, Form, type Goal, addGoal} from "@features/goals/index.js";
 import { useToggleModal, useForm } from '@hooks/index.js';
 import "./GoalCreation.css";
 import "@root/index.css";
+import { useState } from 'react';
 
 /*
     This function is responsible for rendering the new goal creation component.
@@ -15,16 +16,29 @@ const GoalCreation = () => {
     const { isOpen:isBackOpen, onOpen:onBackOpen, onClose:onBackClose } = useToggleModal();
     const { isOpen:isSubmitOpen, onOpen:onSubmitOpen, onClose:onSubmitClose } = useToggleModal();
     const { formValues, handleChange, resetForm } = useForm(initialValues);
+    const [ curParentId, setCurParentId ] = useState<string>();
+    console.log(curParentId);
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         // Mock API call to backend for parent id. 
         event.preventDefault();
-        const parentId: string = Date.now().toString();
 
         // Logging the data. 
-        const data = Object.fromEntries(new FormData(event.currentTarget).entries());
-        console.log(data);
+        const goal: Goal = {
+            goalName: formValues.goalName,
+            desiredAchievement: formValues.desiredAchievement,
+            importance: formValues.importance,
+            measurement: formValues.measurement,
+            achievementDate: formValues.achievementDate,
+            parent: curParentId ?? ''
+        }
 
+        const parentId = addGoal(goal);
+        if (parentId) {
+            setCurParentId(parentId);
+        } else {
+            setCurParentId(undefined);
+        }
         resetForm();
         onSubmitOpen();
     }
