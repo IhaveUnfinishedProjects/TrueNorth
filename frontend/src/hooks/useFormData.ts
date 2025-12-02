@@ -14,9 +14,14 @@ export function useForm<T extends Record<string, string>>(initialValues: T){
         setFormValues(prev => ({ ...prev, [name]: value }));
     }
 
-    const resetForm = useCallback(() => {
-        setFormValues(initialValues);
-    }, [initialValues]);
+    const resetForm = (values: T | undefined | null) => {
+        if (values) {
+            setFormValues(values);
+        } else {
+            console.log("This has run")
+            setFormValues(initialValues);
+        }
+    }
 
     return { formValues, handleChange, resetForm};
 }

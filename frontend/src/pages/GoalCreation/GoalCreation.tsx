@@ -1,5 +1,5 @@
 import { ConfirmationModal, Card, CardHeader } from '@components/ui/index.js';
-import { createBackButtons, createSubmissionButtons, initialValues, InputFieldData, Form, type Goal, addGoal, addStepsButName, addSubGoalButName} from "@features/goals/index.js";
+import { createBackButtons, createSubmissionButtons, initialValues, InputFieldData, Form, type Goal, addGoal, addStepsButName, addSubGoalButName, isGoal, getGoals, getGoal} from "@features/goals/index.js";
 import { useToggleModal, useForm } from '@hooks/index.js';
 import "./GoalCreation.css";
 import "@root/index.css";
@@ -21,7 +21,6 @@ const GoalCreation = () => {
     const [ curParentId, setCurParentId ] = useState<string>();
     const [ pendingGoal, setPendingGoal ] = useState<Goal>();
 
-
     /** 
      * When the goal is submitted this runs as the name
      * of the Submission modal button is returned on 
@@ -29,6 +28,7 @@ const GoalCreation = () => {
      */
     useEffect(() => {
         if (subModal.name && pendingGoal) {
+            console.log("This runs when clicked", subModal.name, addSubGoalButName);
             
             const parentId = addGoal(pendingGoal);
             setCurParentId(parentId);
@@ -41,7 +41,7 @@ const GoalCreation = () => {
 
             // For when a sub-goal is being made
             if (subModal.name === addSubGoalButName){
-                resetForm();
+                resetForm(undefined);
                 return;
             }
 
