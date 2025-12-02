@@ -1,9 +1,5 @@
-import type { Goal, Step } from "@features/goals/index.js";
+import type { CompleteGoal, addStepsProps, addGoalParams } from "@features/goals/index.js";
 
-export interface CompleteGoal extends Goal {
-    id: string;
-    steps?: Step[];
-}
 const DB_KEY = 'app_goals_database';
 
 
@@ -30,12 +26,13 @@ export const getGoal = (id: string): CompleteGoal | undefined => {
  * @param newGoal This is the newly submitted goal. 
  * @returns The newly created goal so the ID can be accessed. 
  */
-export const addGoal = (newGoal: Goal): string => {
+export const addGoal = ({newGoal, curParentId}: addGoalParams): string => {
 
     const completeGoal: CompleteGoal = {
         ...newGoal,
         id: crypto.randomUUID(),
-        steps: []
+        steps: [],
+        parent: curParentId ?? ''
     }
 
     const currentGoals = getGoals();
@@ -44,10 +41,6 @@ export const addGoal = (newGoal: Goal): string => {
     return completeGoal.id;
 }
 
-interface addStepsProps {
-    newSteps: Step[],
-    curParentId: string;
-}
 /**
  * Add steps allows submitted steps to be added to the local storage
  * @param newSteps - The steps to add the the goal object

@@ -3,8 +3,8 @@ import { createBackButtons, createSubmissionButtons, initialValues, InputFieldDa
 import { useToggleModal, useForm } from '@hooks/index.js';
 import "./GoalCreation.css";
 import "@root/index.css";
-import { useEffect, useState } from 'react';
-import { useNavigate } from "react-router-dom";
+import { useEffect } from 'react';
+import { useNavigate, useParams } from "react-router-dom";
 
 /*
     This function is responsible for rendering the new goal creation component.
@@ -18,7 +18,22 @@ const GoalCreation = () => {
     const backModal = useToggleModal();
     const subModal = useToggleModal();
     const { formValues, handleChange, resetForm } = useForm(initialValues);
-    const [ parentGoal, setParentGoal ] = useState<CompleteGoal>();
+    const { curParentId } = useParams<{ curParentId: string }>();
+
+    /**
+     * Resets the form when the parent id changes.
+     * This is how we know to create a new form, 
+     * and if the form we're making is a sub goal.
+     */
+    useEffect(() => {
+        if (curParentId && isGoal(curParentId)) {
+            resetForm(undefined);
+        }
+
+        if (curParentId && !(isGoal(curParentId))) {
+            navigate(`/CreateGoal`, { replace: true }); // Safety check for if no goals exist
+        } 
+    }, [curParentId])
 
     /**
      * * Submits the data to create a complete goal object. 
@@ -28,18 +43,16 @@ const GoalCreation = () => {
      */
     const submitData = (buttonName: string | undefined) => {
         const newGoal: Goal = {...formValues};
-        const goalId = addGoal(newGoal);
-        setParentGoal(getGoal(goalId));
+        const goalId = addGoal({newGoal, curParentId});
 
         if (buttonName === addStepsButName) {
             navigate(`/PlanGoal/${goalId}`);
-            return;
         }
 
         if (buttonName === addSubGoalButName){
-            resetForm(undefined);
-            return;
+            navigate(`/CreateGoal/${goalId}`);
         } 
+        subModal.onClose();
     }
 
     const localSubmit = (event: React.FormEvent<HTMLFormElement>) => {
