@@ -4,7 +4,8 @@ import GoalCreation from './pages/GoalCreation/GoalCreation.js';
 import GoalPlanning from './pages/GoalPlanning/GoalPlanning.js';
 
 import { useState } from "react";
-import { Routes, Route, Link } from 'react-router';
+import { Routes, Route } from 'react-router-dom';
+import { BackgroundURL } from '@assets/index.js';
 
 function App() {
 
@@ -13,12 +14,17 @@ function App() {
     return (
         <>
             <Header onHeightMeasured={({height}) => setHeaderHeight(height)}/>
-            <main className="min-h-screen bg-[url('src/assets/background.svg')] bg-cover" style={{ marginTop: `${headerHeight * 2}` }}>  
-                <Routes>
-                    <Route path="/" element={<HomePageContent />} />
-                    <Route path="/CreateGoal" element={<GoalCreation />} />
-                    <Route path="/PlanGoal/:curParentId" element={<GoalPlanning />} />
-                </Routes>
+            <main 
+                className="min-h-screen bg-cover" 
+                style={{ 
+                    marginTop: `${headerHeight * 2}`,
+                    backgroundImage: `url(${BackgroundURL})`
+                }}>  
+                    <Routes>
+                        <Route path="/" element={<HomePageContent />} />
+                        <Route path="/CreateGoal" element={<GoalCreation />} />
+                        <Route path="/PlanGoal/:curParentId" element={<GoalPlanning />} />
+                    </Routes>
             </main>
         </>
     )

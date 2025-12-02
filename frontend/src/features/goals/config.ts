@@ -37,13 +37,14 @@ export const createBackButtons: ModalButtonProps[] = [
 
 
 export const addStepsButName = "AddSteps";
+export const addSubGoalButName = "AddSubGoal";
 /**
  * Submission button options for goal creation submission
  */
 export const createSubmissionButtons: ModalButtonProps[] = [
     {
         text: "Add Sub-Goal",
-        route: "/CreateGoal/"
+        name: "/CreateGoal/"
     },
     {
         text: "Add Steps",

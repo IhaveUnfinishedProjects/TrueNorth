@@ -15,11 +15,16 @@ export const GoalPlanning = () => {
     const { isOpen:isBackOpen, onOpen:onBackOpen, onClose:onBackClose } = useToggleModal();
     const { isOpen:isSubmitOpen, onOpen:onSubmitOpen, onClose:onSubmitClose, name } = useToggleModal();
     const [steps, setSteps] = useState<Step[]>();
-
+    
+    /**
+     * Checks the parent id is valid each time it changes. 
+     * Returns the user home if it's not. 
+     */
     useEffect(() => {
         if (curParentId){
             const bool = isGoal(curParentId);
             if (bool) {
+                console.log("Goal exists");
                 return; // Returns if parent goal exists
             }
         }
@@ -28,8 +33,13 @@ export const GoalPlanning = () => {
         navigate('/', { replace: true });
         return;
 
-        }, [curParentId, navigate]);
+        }, [curParentId]);
 
+    /**
+     * Checks if the submit button was pressed. 
+     * This allows the steps to be added and the user
+     * to be navigated home. 
+     */
     useEffect(() => {
         if (name) {
             if (name === confirmButtonName && steps && curParentId) {
