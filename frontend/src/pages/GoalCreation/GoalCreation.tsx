@@ -1,5 +1,5 @@
 import { ConfirmationModal, Card, CardHeader } from '@components/ui/index.js';
-import { createBackButtons, createSubmissionButtons, initialValues, InputFieldData, Form, type Goal, addGoal, addStepsButName, addSubGoalButName, isGoal, getGoals, getGoal} from "@features/goals/index.js";
+import { createBackButtons, createSubmissionButtons, initialValues, InputFieldData, Form, type Goal, addGoal, addStepsButName, addSubGoalButName, isGoal, getGoals, getGoal, type CompleteGoal} from "@features/goals/index.js";
 import { useToggleModal, useForm } from '@hooks/index.js';
 import "./GoalCreation.css";
 import "@root/index.css";
@@ -18,50 +18,32 @@ const GoalCreation = () => {
     const backModal = useToggleModal();
     const subModal = useToggleModal();
     const { formValues, handleChange, resetForm } = useForm(initialValues);
-    const [ curParentId, setCurParentId ] = useState<string>();
-    const [ pendingGoal, setPendingGoal ] = useState<Goal>();
+    const [ parentGoal, setParentGoal ] = useState<CompleteGoal>();
 
-    /** 
-     * When the goal is submitted this runs as the name
-     * of the Submission modal button is returned on 
-     * it's onClose();
+    /**
+     * * Submits the data to create a complete goal object. 
+     * * Sets the made goal to be the parent goal for the next step. 
+     * * Routes the user to where they need to be. 
+     * @param buttonName Name of the button pressed to decide route. 
      */
-    useEffect(() => {
-        if (subModal.name && pendingGoal) {
-            console.log("This runs when clicked", subModal.name, addSubGoalButName);
-            
-            const parentId = addGoal(pendingGoal);
-            setCurParentId(parentId);
+    const submitData = (buttonName: string | undefined) => {
+        const newGoal: Goal = {...formValues};
+        const goalId = addGoal(newGoal);
+        setParentGoal(getGoal(goalId));
 
-            // For when steps are being added
-            if (subModal.name === addStepsButName) {
-                navigate(`/PlanGoal/${parentId}`);
-                return;
-            }
-
-            // For when a sub-goal is being made
-            if (subModal.name === addSubGoalButName){
-                resetForm(undefined);
-                return;
-            }
-
+        if (buttonName === addStepsButName) {
+            navigate(`/PlanGoal/${goalId}`);
+            return;
         }
-    }, [subModal.name]);
 
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-        // Mock API call to backend for parent id. 
+        if (buttonName === addSubGoalButName){
+            resetForm(undefined);
+            return;
+        } 
+    }
+
+    const localSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-
-        // Logging the data. 
-        setPendingGoal({
-            goalName: formValues.goalName,
-            desiredAchievement: formValues.desiredAchievement,
-            importance: formValues.importance,
-            measurement: formValues.measurement,
-            achievementDate: formValues.achievementDate,
-            parent: curParentId ?? ''
-        });
-
         subModal.onOpen();
     }
 
@@ -73,7 +55,7 @@ const GoalCreation = () => {
                 formValues={formValues} 
                 handleChange={handleChange} 
                 InputFieldData={InputFieldData} 
-                handleSubmit={handleSubmit} 
+                handleSubmit={localSubmit} 
             />
 
             {/* Contains Modal Logic (Open & Close) */}
@@ -88,7 +70,7 @@ const GoalCreation = () => {
                 header = "Create SubGoal?"
                 paragraph= 'Is this a goal made of smaller goals (like "Launch a Company"), or can you list the steps right away?'
                 buttons = {createSubmissionButtons}
-                onClose={subModal.onClose}
+                onClose={submitData}
             />}
         </Card>
     );
