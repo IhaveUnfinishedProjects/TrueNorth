@@ -35,7 +35,13 @@ const ConfirmationModal:React.FC<ModalProps> = ({ header, paragraph, buttons, on
                     {buttons.map((button, index) => {
                         if (button.route) {
                             return (
-                                    <Link key={ index } to={ button.route } className="button-style" onClick={ () => onClose(button.name) }>
+                                    <Link 
+                                        key={ index } 
+                                        to={ button.route } 
+                                        className="button-style" 
+                                        onClick={ () => onClose(button.name) }
+                                        state={{ fromApp: true }}
+                                    >
                                         { button.text }
                                     </Link>
                             );

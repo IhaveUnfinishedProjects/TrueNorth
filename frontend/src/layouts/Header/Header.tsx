@@ -63,7 +63,7 @@ const Header:React.FC<HeaderProps> = ( { onHeightMeasured }) => {
 
             <nav className="flex gap-5 items-center">
                 {NavBarData.map((data, index) => (
-                    <Link key={index} to={data.linkTo}>
+                    <Link key={index} to={data.linkTo} state={{ fromApp: true }}>
                         <button>
                             {data.name}
                         </button>

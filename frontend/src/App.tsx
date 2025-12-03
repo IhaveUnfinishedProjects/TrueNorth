@@ -23,6 +23,7 @@ function App() {
                     <Routes>
                         <Route path="/" element={<HomePageContent />} />
                         <Route path="/CreateGoal/:curParentId?" element={<GoalCreation />} />
+                        <Route path="/EditGoal/:curParentId" element={<GoalCreation />} />
                         <Route path="/PlanGoal/:curParentId" element={<GoalPlanning />} />
                     </Routes>
             </main>

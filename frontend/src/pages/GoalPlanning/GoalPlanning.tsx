@@ -24,7 +24,6 @@ export const GoalPlanning = () => {
         if (curParentId){
             const bool = isGoal(curParentId);
             if (bool) {
-                console.log("Goal exists");
                 return; // Returns if parent goal exists
             }
         }

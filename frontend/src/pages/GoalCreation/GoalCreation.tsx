@@ -1,10 +1,10 @@
 import { ConfirmationModal, Card, CardHeader } from '@components/ui/index.js';
-import { createBackButtons, createSubmissionButtons, initialValues, InputFieldData, Form, type Goal, addGoal, addStepsButName, addSubGoalButName, isGoal, getGoals, getGoal, type CompleteGoal} from "@features/goals/index.js";
-import { useToggleModal, useForm } from '@hooks/index.js';
+import { createBackButtons, createSubmissionButtons, initialValues, InputFieldData, Form, type Goal, addGoal, addStepsButName, addSubGoalButName, isGoal, getGoal, yesBackButton, noBackButton, type CompleteGoal} from "@features/goals/index.js";
+import { useToggleModal, useForm, useGoBack, useAppNavigate } from '@hooks/index.js';
 import "./GoalCreation.css";
 import "@root/index.css";
 import { useEffect } from 'react';
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams, useLocation } from "react-router-dom";
 
 /*
     This function is responsible for rendering the new goal creation component.
@@ -14,11 +14,14 @@ import { useNavigate, useParams } from "react-router-dom";
 
 const GoalCreation = () => {
 
-    const navigate = useNavigate();
+    const navigate = useAppNavigate();
     const backModal = useToggleModal();
     const subModal = useToggleModal();
     const { formValues, handleChange, resetForm } = useForm(initialValues);
-    const { curParentId } = useParams<{ curParentId: string }>();
+    const { goBack } = useGoBack();
+    const { curParentId } = useParams<{ curParentId?: string, goalId?: string }>();
+    const isEditMode = location.pathname.includes("/EditGoal");
+    console.log(isEditMode);
 
     /**
      * Resets the form when the parent id changes.
@@ -26,14 +29,19 @@ const GoalCreation = () => {
      * and if the form we're making is a sub goal.
      */
     useEffect(() => {
-        if (curParentId && isGoal(curParentId)) {
-            resetForm(undefined);
+        if (curParentId) {
+            if (isGoal(curParentId)) {
+                if (isEditMode) {
+                    const goal: CompleteGoal | undefined = getGoal(curParentId);
+                    resetForm(goal);
+                } else {
+                    resetForm(undefined);
+                }
+            } else {
+                navigate('/CreateGoal', {replace: true});
+            }
         }
-
-        if (curParentId && !(isGoal(curParentId))) {
-            navigate(`/CreateGoal`, { replace: true }); // Safety check for if no goals exist
-        } 
-    }, [curParentId])
+    }, [curParentId, isEditMode])
 
     /**
      * * Submits the data to create a complete goal object. 
@@ -44,7 +52,7 @@ const GoalCreation = () => {
     const submitData = (buttonName: string | undefined) => {
         const newGoal: Goal = {...formValues};
         const goalId = addGoal({newGoal, curParentId});
-
+        navigate(`/EditGoal/${goalId}`, {replace: true});
         if (buttonName === addStepsButName) {
             navigate(`/PlanGoal/${goalId}`);
         }
@@ -58,6 +66,20 @@ const GoalCreation = () => {
     const localSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         subModal.onOpen();
+    }
+
+    /**
+     * Local handler for when the a button in
+     * the back modal is pressed. Routes the user
+     * to their last page or to home. 
+     */
+    function localBackHandler (buttonName: string | undefined) {
+        if (buttonName === yesBackButton) {
+            goBack();
+        }
+
+        backModal.onClose();
+        return;
     }
 
     return (
@@ -76,7 +98,7 @@ const GoalCreation = () => {
             { backModal.isOpen && <ConfirmationModal 
                 header = "Go back?"
                 buttons={createBackButtons}
-                onClose={backModal.onClose}
+                onClose={localBackHandler}
             />}
 
             {subModal.isOpen && <ConfirmationModal 

@@ -18,7 +18,6 @@ export function useForm<T extends Record<string, string>>(initialValues: T){
         if (values) {
             setFormValues(values);
         } else {
-            console.log("This has run")
             setFormValues(initialValues);
         }
     }

@@ -22,16 +22,20 @@ export const initialValues: Goal = {
     parent:''
 };
 
+export const yesBackButton = "YesGoBack";
+export const noBackButton = "DontGoBack";
+
 /**
  * Back Button options for goal creation
  */
 export const createBackButtons: ModalButtonProps[] = [
     {
         text: "Yes",
-        route: "/"
+        name: `${yesBackButton}`
     },
     {
         text: "No",
+        name: `${noBackButton}`
     }
 ];
 
