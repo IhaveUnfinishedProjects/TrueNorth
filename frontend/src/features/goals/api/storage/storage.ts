@@ -21,6 +21,21 @@ export const getGoal = (id: string): CompleteGoal | undefined => {
     return goal;
 }
 
+/** Returns any goal that isn't a parent */
+export const getLeafGoals = () => {
+    const goals: CompleteGoal[] = getGoals();
+    const mappedGoals = new Map(goals.map(data => [data.id, data]));
+
+    goals.forEach(goal => {
+        if(goal.parent){
+            mappedGoals.delete(goal.parent);
+        }
+    });
+
+    console.log(goals, '<-- Goals, reduced goals -->', [...mappedGoals.values()]);
+    return [...mappedGoals.values()];
+}
+
 /**
  * Used to add goal to the local storage for a mock db.
  * @param newGoal This is the newly submitted goal. 

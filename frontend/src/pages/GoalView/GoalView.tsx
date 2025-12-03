@@ -1,29 +1,31 @@
 import '@root/index.css';
 import './GoalView.css';
-import { Card } from '@root/components/ui/index.js';
-import { getGoals, type CompleteGoal } from '@root/features/goals/index.js';
+import { getGoals, getLeafGoals, type CompleteGoal } from '@features/goals/index.js';
+import { getColour } from './components/index.js';
+import { useFormatDate } from '@hooks/index.js';
 
 
 export const GoalView = () => {
 
     // Given a list of goals, which defaults to all of them we want to display a card for each
-    const goals: CompleteGoal[] = getGoals();
+    const goals: CompleteGoal[] = getLeafGoals();
+    const { formatISO8601 } = useFormatDate();
 
     return (
-        <div className='CardContainer'>
-            {goals.map(goal => (
-                <Card key={goal.id}>
-                    <div className='GoalViewCard'>
-                        <h1>{goal.goalName}</h1>
+        <>
+            <h1 className="headerGoal"> Goals Overview </h1>
+            <div className='CardContainer'>
+                {goals.map((goal, index) => (
+                    <div className={`GoalViewCard ${getColour(index)}`}>
+                        <h2 className='GoalViewH2'>{goal.goalName}</h2>
                         <p>{goal.desiredAchievement}</p>
                         <p>{goal.importance}</p>
-                        
-                        {goal.achievementDate && <p>Due: {goal.achievementDate}</p>}
+                        {goal.achievementDate && <p>Due: {formatISO8601({dateObj: goal.achievementDate, dateStyle: 'medium'}) ?? goal.achievementDate}</p>}
 
                     </div>
-                </Card>
-            ))}
-        </div>
+                ))}
+            </div>
+        </>
     );
 }
 

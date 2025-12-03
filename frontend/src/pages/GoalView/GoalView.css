@@ -1,5 +1,11 @@
+/* HEADER STYLING */ 
+.headerGoal {
+    margin-left: 15%;
+}
+
+/* The container that holds all the cards*/
 .CardContainer {
-    width: 60%;
+    width: 70%;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 2rem;
@@ -7,8 +13,31 @@
     margin-right: auto;
 }
 
-.cardDiv {
-    border: 2px solid pink;
+/* The individual cards */ 
+.GoalViewCard {
+    /* Spacing */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    /* Sizing */
     width: 100%;
-    aspect-ratio: 1 / 1;
+    min-width: 100%;
+    border-radius: 15px;
+    aspect-ratio: 1 / 1.1;
+    padding: 1rem;
+
+    /* Text styling */
+    font-weight: 400;
+    color: antiquewhite;
+
+    /* Other styling */
+    box-shadow: 
+        -4px 6px 0px 0px rgba(0, 0, 0, 0.2),
+        4px 6px 0px 0px rgba(0, 0, 0, 0.2);
+}
+
+/* Card <h2> styling */
+.GoalViewH2 {
+    font-size: clamp(1rem, 1.5vw, 3rem);
 }

@@ -63,7 +63,6 @@ export const createSubmissionButtons: ModalButtonProps[] = [
 export const planBackButtons: ModalButtonProps[] = [
     {
         text: "Yes",
-        route: "/CreateGoal"
     },
     {
         text: "No",
