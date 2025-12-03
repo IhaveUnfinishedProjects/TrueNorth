@@ -24,13 +24,13 @@ const HomePageContent: React.FC<{}> = () => {
         {
             title: "Create Goal",
             details: "Start your journey by creating some clear goals, and define some actionable steps to reach them.",
-            link: "https://www.youtube.com/",
+            link: "/CreateGoal",
             SvgImage: CreateGoal
         },
         {
             title: "View Goal",
             details: "View your current goal, and the next actionable steps you need to take to move toward your desired outcome.",
-            link: "https://www.youtube.com/",
+            link: "/GoalView",
             SvgImage: ViewGoal
         },
         {

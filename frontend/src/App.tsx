@@ -1,7 +1,6 @@
 import Header from './layouts/Header/Header.js';
 import HomePageContent from "./pages/Home/Home.js";
-import GoalCreation from './pages/GoalCreation/GoalCreation.js';
-import GoalPlanning from './pages/GoalPlanning/GoalPlanning.js';
+import { GoalCreation, GoalPlanning, GoalView } from '@pages/index.js';
 
 import { useState } from "react";
 import { Routes, Route } from 'react-router-dom';
@@ -18,13 +17,14 @@ function App() {
                 className="min-h-screen bg-cover" 
                 style={{ 
                     marginTop: `${headerHeight * 2}`,
-                    backgroundImage: `url(${BackgroundURL})`
+                    backgroundImage: `url(${BackgroundURL})`,
                 }}>  
                     <Routes>
                         <Route path="/" element={<HomePageContent />} />
-                        <Route path="/CreateGoal/:curParentId?" element={<GoalCreation />} />
-                        <Route path="/EditGoal/:curParentId" element={<GoalCreation />} />
-                        <Route path="/PlanGoal/:curParentId" element={<GoalPlanning />} />
+                        <Route path="/CreateGoal/:curParentId?" element={<GoalCreation/>} />
+                        <Route path="/EditGoal/:curParentId" element={<GoalCreation/>} />
+                        <Route path="/PlanGoal/:curParentId" element={<GoalPlanning/>} />
+                        <Route path="/GoalView" element={<GoalView/>} />
                     </Routes>
             </main>
         </>

@@ -1,0 +1,14 @@
+.CardContainer {
+    width: 60%;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.cardDiv {
+    border: 2px solid pink;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+}

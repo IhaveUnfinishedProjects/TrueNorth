@@ -1,6 +1,6 @@
 import { Card, CardHeader, ConfirmationModal } from "@components/ui/index.js";
-import { useToggleModal } from "@hooks/index.js";
-import { GoalStepsForm, planSubmissionButtons, confirmButtonName, createBackButtons, type Step, isGoal, addSteps } from "@features/goals/index.js";
+import { useGoBack, useToggleModal } from "@hooks/index.js";
+import { GoalStepsForm, planSubmissionButtons, confirmButtonName, createBackButtons, type Step, addSteps, yesBackButton } from "@features/goals/index.js";
 import PlanningHeader from "./components/PlanningHeader.js";
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
@@ -11,6 +11,7 @@ export const GoalPlanning = () => {
     /* For navigating the user if the parent id is invalid */ 
     const navigate = useNavigate(); // To redirect when an id is invalid. 
     const { curParentId } = useParams<{ curParentId: string }>();
+    const { goBack } = useGoBack();
     /* Hooks for displaying & hiding this pages modals */
     const { isOpen:isBackOpen, onOpen:onBackOpen, onClose:onBackClose } = useToggleModal();
     const { isOpen:isSubmitOpen, onOpen:onSubmitOpen, onClose:onSubmitClose, name } = useToggleModal();
@@ -21,39 +22,48 @@ export const GoalPlanning = () => {
      * Returns the user home if it's not. 
      */
     useEffect(() => {
-        if (curParentId){
-            const bool = isGoal(curParentId);
-            if (bool) {
-                return; // Returns if parent goal exists
-            }
+        if (!curParentId) {
+            console.warn("No goal was found to create steps for.");
+            navigate('/', { replace: true });
         }
-        // Take the user home if the goal doesn't exist
-        console.error(`Goal resource not found. Invalid ID: ${curParentId}.`);
-        navigate('/', { replace: true });
-        return;
-
         }, [curParentId]);
+
+    
+    /**
+     * Local submit handler stores a temp version of
+     * steps, then opens a confirmation modal. 
+     */
+    const handleSubmit = (steps: Step[]) => {       
+        setSteps(steps); 
+        onSubmitOpen();
+    }
 
     /**
      * Checks if the submit button was pressed. 
      * This allows the steps to be added and the user
      * to be navigated home. 
      */
-    useEffect(() => {
-        if (name) {
-            if (name === confirmButtonName && steps && curParentId) {
-                addSteps({newSteps: steps, curParentId: curParentId});
-                navigate('/');
-                return;
-            }
+    const subOnCloseHandler = (name: string | undefined) => {
+        if (name === confirmButtonName && steps && curParentId) {
+            addSteps({newSteps: steps, curParentId: curParentId});
+            navigate('/');
+            return;
+        } else {
+            console.error("Steps was unable to be added");
+            navigate('/');
         }
-    }, [name])
-    
-    const handleSubmit = (steps: Step[]) => {       
-        setSteps(steps); 
-        onSubmitOpen();
+        onSubmitClose();
     }
 
+    /**
+     * Checks if the user wants to go back to editing the goal. 
+     */
+    const backOnCloseHander = (name: string | undefined) => {
+        if (name === yesBackButton) {
+            goBack();
+        }
+        onBackClose();
+    }
     return (
         <>
             <PlanningHeader />
@@ -68,13 +78,13 @@ export const GoalPlanning = () => {
             {isBackOpen && <ConfirmationModal 
                 header="Go back?" 
                 buttons={createBackButtons} 
-                onClose={onBackClose}
+                onClose={backOnCloseHander}
             />}
             
             {isSubmitOpen && <ConfirmationModal 
                 header="Finished?" 
                 buttons={planSubmissionButtons} 
-                onClose={onSubmitClose}
+                onClose={subOnCloseHandler}
             />}
         </>
     );
