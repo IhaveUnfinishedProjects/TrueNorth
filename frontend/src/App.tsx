@@ -1,6 +1,6 @@
 import Header from './layouts/Header/Header.js';
 import HomePageContent from "./pages/Home/Home.js";
-import { GoalCreation, GoalPlanning, GoalView } from '@pages/index.js';
+import { GoalCreation, GoalPlanning, GoalView, GoalDetail } from '@pages/index.js';
 
 import { useState } from "react";
 import { Routes, Route } from 'react-router-dom';
@@ -25,6 +25,7 @@ function App() {
                         <Route path="/EditGoal/:curParentId" element={<GoalCreation/>} />
                         <Route path="/PlanGoal/:curParentId" element={<GoalPlanning/>} />
                         <Route path="/GoalView" element={<GoalView/>} />
+                        <Route path="/GoalDetail/:goalId" element={<GoalDetail/>} />
                     </Routes>
             </main>
         </>

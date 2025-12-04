@@ -1,3 +1,10 @@
+/* Bread crumb styling */
+.breadCrumb {
+    font-weight: 200;
+    color: #78807C;
+    font-size: 0.8rem;
+}
+
 /* HEADER STYLING */ 
 .headerGoal {
     margin-left: 15%;
@@ -18,13 +25,13 @@
     /* Spacing */
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    row-gap: 1rem;
 
     /* Sizing */
     width: 100%;
     min-width: 100%;
     border-radius: 15px;
-    aspect-ratio: 1 / 1.1;
+    aspect-ratio: 1.2 / 1;
     padding: 1rem;
 
     /* Text styling */
@@ -35,6 +42,22 @@
     box-shadow: 
         -4px 6px 0px 0px rgba(0, 0, 0, 0.2),
         4px 6px 0px 0px rgba(0, 0, 0, 0.2);
+}
+
+/* Styling for when the mouse is hovering over the card */
+.GoalViewCard:hover {
+    cursor: pointer;
+    filter: brightness(90%);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);    
+    transition: background-color 0.15s ease-out, box-shadow 0.15s ease-out, transform 0.15s ease-out;
+}
+
+/* Styling for when the user is actively clicking/pressing down on the card */
+.GoalViewCard:active {
+    transform: scale(0.98); 
+    filter: brightness(80%);
+    box-shadow: none;
+    transition: transform 0.05s ease-out, background-color 0.05s ease-out;
 }
 
 /* Card <h2> styling */

@@ -11,6 +11,12 @@ export const getGoals = (): CompleteGoal[] => {
     return data ? JSON.parse(data) : [];
 }
 
+export const getGoalsMap = (): Map<string, CompleteGoal> => {
+    const goals = getGoals();
+    const mappedGoals = new Map(goals.map(goal => [goal.id, goal]));
+    return mappedGoals;
+}
+
 /**
  * @param id the id of the goal to get
  */
@@ -32,8 +38,26 @@ export const getLeafGoals = () => {
         }
     });
 
-    console.log(goals, '<-- Goals, reduced goals -->', [...mappedGoals.values()]);
-    return [...mappedGoals.values()];
+    return mappedGoals;
+}
+
+/**
+ * Returns the oldest ancestor for a goal. 
+ * @param id The id of the goal to find the oldest ancestor of 
+ * @param goalMap a map to pass through for quicker run time
+ */
+export const getAncestor = (id: string): CompleteGoal | undefined => {
+    const mappedGoals: Map<string, CompleteGoal> = getGoalsMap();
+
+    const findAncestor = (id: string) => {
+        const parent = mappedGoals.get(id)?.parent;
+        if (!parent) {
+            return mappedGoals.get(id);
+        } else {
+            return findAncestor(parent)
+        }
+    }
+    return findAncestor(id);
 }
 
 /**
