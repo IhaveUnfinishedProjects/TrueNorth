@@ -1,0 +1,57 @@
+/* Button styling for the home page feature cards*/
+.home-button {
+    text-align: center;
+    border: 1px solid white;
+    border-radius: 5px;
+    width: 33%;
+}
+
+.home-button:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+  transform: translateY(-1px); 
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+}
+
+.home-button:focus {
+  outline: none; 
+  box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.5); 
+  background-color: rgba(0, 0, 0, 0.02);
+}
+
+/* Home card styling */
+.card-container {
+
+    /* flex & placement */
+    display: flex;
+    flex-direction: row;
+    padding: 1rem;
+
+    /* sizing */
+    width: 62%;
+    height: 12rem;
+
+    /* Colouring */
+    background-color: #D9D9D9;
+    border-radius: 20px;
+    box-shadow: var(--shadow-lg);
+
+}
+
+.card-container:hover {
+    outline: none; 
+    box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.5); 
+}
+
+.container-text {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 100%;
+}
+
+/* Svg image styling */
+.svg-image {
+    max-width: 100%;
+    height: auto;
+}

@@ -26,7 +26,20 @@ export const GoalStepsForm = ({ handleSubmit }: GoalStepFormProps) => {
      */
     const handleLocalSubmit = (event: React.FormEvent) => {
         event.preventDefault();
-        handleSubmit(steps);
+        
+        /* 
+            The steps on submission might have something
+            typed into the static field. The static field 
+            is contained by the steps[] array in the first 
+            index. This just moves it to the end, then we 
+            filter out any steps with a blank description. 
+        */
+        if (steps[0]){
+            const [first, ...rest] = steps;
+            const newSteps: Step[] = [...rest, first]
+        }
+        const result = steps.filter(step => step.description !== "");
+        handleSubmit(result);
     }
 
     /**

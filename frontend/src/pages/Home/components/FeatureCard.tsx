@@ -1,52 +1,32 @@
 import React from "react";
 import "@root/index.css";
+import { useAppNavigate } from '@hooks/index.js';
+import type { featureCardData } from "./config.js";
 
 /*
     This file is responsible for taking FeatureCardData & rendering the 
     content into the card.
 */
 
-interface RectangleProps {
-    title: string;
-    details: string;
-    link: string;
-    SvgImage: React.FC<React.SVGProps<SVGSVGElement>>;
-}
+const FeatureCard = ({ title, details, link, SvgImage, buttonText }: featureCardData ) => {
 
-const FeatureCard = ({ title, details, link, SvgImage }: RectangleProps ) => {
+    const navigate = useAppNavigate();
+
     return (
 
         /* This acts as the rectangle card container. */
-        <div 
-            className={`
-                flex
-                flex-row
-                w-5/8
-                h-35
-                bg-[#D9D9D9]
-                rounded-2xl
-                shadow-lg
-                py-3
-                px-4
-            `}
-        >
+        <div className="card-container">
                 {/* The first flex box item contains the text header and explaination */}
-                <div className="flex flex-col justify-between">
+                <div className="container-text">
 
-                    <h2 className="text-[#413737] text-2xl font-bold">
-                        {title}
-                    </h2>
-                    <p className="text-[#413737] text-l font-medium leading-tight">
-                        {details}
-                    </p>
-                    <a href={link} className="text-center border-1 border-white rounded-lg w-1/3">Button</a>
+                    <h2 className="text-[#413737] text-2xl font-bold">{ title }</h2>
+                    <p className="text-[#413737] text-l font-medium leading-tight">{ details }</p>
+                    <button onClick={() => navigate(`${link}`)} className="home-button">{buttonText}</button>
 
                 </div>
 
                 {/* The second flex item containing the SVG image */}
-                <div className="flex items-center">
-                     <SvgImage className="h-[100%] w-auto pl-10" />
-                </div>
+                <SvgImage className="svg-image" />
                 
         </div>
     );
