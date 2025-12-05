@@ -3,11 +3,12 @@ import "./card.css";
 
 interface CardProps {
     children: ReactNode;
+    className?: string; // Optional class name 
 }
 
-export const Card = ({ children }: CardProps) => {
+export const Card = ({ children, className="" }: CardProps) => {
     return (
-        <div className="cardDiv">
+        <div className={`cardDiv ${className}`}>
             {children}
         </div>
     );

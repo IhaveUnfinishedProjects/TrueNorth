@@ -20,7 +20,7 @@ export const getGoalsMap = (): Map<string, CompleteGoal> => {
 /**
  * @param id the id of the goal to get
  */
-export const getGoal = (id: string): CompleteGoal | undefined => {
+export const getGoal = (id: string | undefined): CompleteGoal | undefined => {
     const goals = getGoals();
     const goal = goals.find(goal => goal.id === id);
 

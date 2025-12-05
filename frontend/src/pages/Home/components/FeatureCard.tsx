@@ -13,7 +13,7 @@ interface RectangleProps {
     SvgImage: React.FC<React.SVGProps<SVGSVGElement>>;
 }
 
-const FeatureCard: React.FC<RectangleProps> = ({ title, details, link, SvgImage }) => {
+const FeatureCard = ({ title, details, link, SvgImage }: RectangleProps ) => {
     return (
 
         /* This acts as the rectangle card container. */
