@@ -7,16 +7,16 @@
 }
 
 .home-button:hover {
-  background-color: rgba(0, 0, 0, 0.05);
-  transform: translateY(-1px); 
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    background-color: rgba(0, 0, 0, 0.05);
+    transform: translateY(-1px); 
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   cursor: pointer;
 }
 
 .home-button:focus {
-  outline: none; 
-  box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.5); 
-  background-color: rgba(0, 0, 0, 0.02);
+    outline: none; 
+    box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.5); 
+    background-color: rgba(0, 0, 0, 0.02);
 }
 
 /* Home card styling */

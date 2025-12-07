@@ -1,0 +1,24 @@
+/* Header container styling */
+.header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    padding: 1.25rem;
+    margin-bottom: 5rem;
+    color: #413737;
+    border-bottom: 2px solid #413737;
+    background-color: #F6E7CB;
+}
+.header-button {
+    padding: 0.5rem;
+}
+
+.header-button:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+    transform: translateY(-1px); 
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    border: 1px solid white;
+    border-radius: 5px;
+}
