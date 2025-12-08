@@ -1,16 +1,19 @@
 import { useState, type ChangeEvent } from "react";
 import { staticStep } from "../constants.js";
 import { type DropResult } from "@hello-pangea/dnd";
-import type { RecurrenceSchedule, Step } from "@features/goals/index.js";
+import type { CompleteGoal, RecurrenceSchedule, Step } from "@features/goals/index.js";
 
 
 /**
  * Allows the creation, deletion, and swapping of elements
  * in the step creation for for a specific goal. 
  */
-export function useStepForm() {
+export function useStepForm(goal: CompleteGoal | undefined) {
 
-    const [steps, setSteps] = useState<Step[]>([staticStep]);
+    console.log(goal);
+    const [steps, setSteps] = useState<Step[]>(() => {
+        return goal?.steps ? [staticStep,  ...goal.steps] : [staticStep];
+    });
     const staticStepId = staticStep.id;
 
     /**

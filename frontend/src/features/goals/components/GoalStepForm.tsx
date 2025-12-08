@@ -10,10 +10,10 @@ import { useState } from "react";
     steps using the @hello-pangea/dnd library.
 */
 
-export const GoalStepsForm = ({ handleSubmit }: GoalStepFormProps) => {
+export const GoalStepsForm = ({ handleSubmit, goal }: GoalStepFormProps) => {
 
     /* Hooks for managing form data */
-    const { steps, remove, handleChange, staticStepId, handleStaticKeyDown, handleDragDrop, updateRecurrence } = useStepForm();
+    const { steps, remove, handleChange, staticStepId, handleStaticKeyDown, handleDragDrop, updateRecurrence } = useStepForm(goal);
     const { isOpen:isRepeatOpen, onOpen:onRepeatOpen, onClose:onRepeatClose } = useToggleModal();
     const [ curStep, setCurStep ] = useState<Step>();
 

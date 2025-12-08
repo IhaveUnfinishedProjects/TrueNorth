@@ -1,10 +1,11 @@
-import type { RecurrenceSchedule } from './index.js';
+import type { CompleteGoal, RecurrenceSchedule } from './index.js';
 
 /**
  * Represents the return type for GoalStepForm when the form is submitted. 
  */
 export interface GoalStepFormProps {
     handleSubmit: (steps: Step[]) => void;
+    goal: CompleteGoal | undefined;
 }
 
 /** 

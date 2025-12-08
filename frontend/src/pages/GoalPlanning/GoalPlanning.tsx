@@ -1,6 +1,6 @@
 import { Card, CardHeader, ConfirmationModal } from "@components/ui/index.js";
 import { useGoBack, useToggleModal } from "@hooks/index.js";
-import { GoalStepsForm, confirmationButtons, type Step, addSteps, yesButtonName } from "@features/goals/index.js";
+import { GoalStepsForm, confirmationButtons, type Step, addSteps, yesButtonName, getGoal } from "@features/goals/index.js";
 import PlanningHeader from "./components/PlanningHeader.js";
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
@@ -72,6 +72,7 @@ export const GoalPlanning = () => {
 
                 <GoalStepsForm 
                     handleSubmit={handleSubmit}
+                    goal={getGoal(curParentId)}
                 />
             </Card>
 
