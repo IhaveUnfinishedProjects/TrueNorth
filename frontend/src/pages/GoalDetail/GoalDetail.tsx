@@ -1,4 +1,4 @@
-import { getAncestor, getGoal, type CompleteGoal } from "@root/features/goals/index.js";
+import { getGoal, type CompleteGoal } from "@root/features/goals/index.js";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useAppNavigate } from "@hooks/index.js";
@@ -32,8 +32,8 @@ export const GoalDetail = () => {
             <div className='goal-detail-header'>
                 <h1>{goal.goalName}</h1>
                 <div>
-                    <button className="">Edit</button>
-                    <button className="">+ Add Step</button>
+                    <button className="" onClick={() => navigate(`/EditGoal/${goal.id}`)}>Edit</button>
+                    <button className="" onClick={() => navigate(`/PlanGoal/${goal.id}`)}>+ Add Step</button>
                 </div>
             </div>
 
