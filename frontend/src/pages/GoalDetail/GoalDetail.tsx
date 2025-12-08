@@ -1,16 +1,18 @@
-import { getGoal, type CompleteGoal } from "@root/features/goals/index.js";
+import { getAncestor, getGoal, type CompleteGoal } from "@root/features/goals/index.js";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useAppNavigate } from "@hooks/index.js";
 import { Card } from "@root/components/ui/index.js";
 import { FeatureCard } from './components/featureCard.js';
 import './GoalDetail.css';
+import { getBreadCrumb } from "@root/features/goals/components/GoalView/components/util.js";
 
 export const GoalDetail = () => {
 
     const { goalId } = useParams<{ goalId: string}>();
     const navigate = useAppNavigate();
     const goal: CompleteGoal | undefined = getGoal(goalId);
+    const breadCrumb = getBreadCrumb(goal);
 
     useEffect(() => {
 
@@ -24,6 +26,8 @@ export const GoalDetail = () => {
 
     if (goal) {return (
         <Card className='goal-detail-card'>
+            <p className='goal-detail-crumb'> {breadCrumb}</p>
+
             {/* This contains the header section */}
             <div className='goal-detail-header'>
                 <h1>{goal.goalName}</h1>

@@ -8,6 +8,15 @@
     gap: 2rem;
 }
 
+/* Styling of the breadcrumb */
+.goal-detail-crumb {
+    width: 90%;
+    margin-top: 1.5rem;
+    margin-bottom: -2rem;
+    color: #78807C;
+}
+
+
 /* Styling of cards header row */
 .goal-detail-header {
     /* Sizing */
@@ -19,7 +28,6 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    margin-top: 1.5rem;
 }
 
 .goal-detail-header div {

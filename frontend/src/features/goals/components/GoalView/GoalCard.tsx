@@ -1,5 +1,5 @@
-import { getAncestor, getLeafGoals, type CompleteGoal } from '@features/goals/index.js';
-import { getColour } from './components/index.js';
+import { getAncestor, type CompleteGoal } from '@features/goals/index.js';
+import { getBreadCrumb, getColour } from './components/index.js';
 import { useFormatDate, useAppNavigate } from '@hooks/index.js';
 import { MdCalendarToday } from "react-icons/md";
 
@@ -19,7 +19,7 @@ export const GoalCard = ({goals}: GoalCardProps) => {
             {goals.map((goal, index) => (
                 <div onClick={() => navigate(`/GoalDetail/${goal.id}`)} className={`GoalViewCard ${getColour(index)}`}>
                     <div>
-                        <p className='breadCrumb'> {getAncestor(goal.id)?.goalName + ' > ' + goal.goalName + ' >'}</p>
+                        <p className='goal-card-crumb'> {getBreadCrumb(goal)}</p>
                         <h2 className='GoalViewH2'>{goal.goalName}</h2>
                     </div>
                     <p>{goal.desiredAchievement}</p>
