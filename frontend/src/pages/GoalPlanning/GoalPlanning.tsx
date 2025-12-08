@@ -1,6 +1,6 @@
 import { Card, CardHeader, ConfirmationModal } from "@components/ui/index.js";
 import { useGoBack, useToggleModal } from "@hooks/index.js";
-import { GoalStepsForm, planSubmissionButtons, confirmButtonName, createBackButtons, type Step, addSteps, yesBackButton } from "@features/goals/index.js";
+import { GoalStepsForm, confirmationButtons, type Step, addSteps, yesButtonName } from "@features/goals/index.js";
 import PlanningHeader from "./components/PlanningHeader.js";
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
@@ -44,7 +44,7 @@ export const GoalPlanning = () => {
      * to be navigated home. 
      */
     const subOnCloseHandler = (name: string | undefined) => {
-        if (name === confirmButtonName && steps && curParentId) {
+        if (name === yesButtonName && steps && curParentId) {
             addSteps({newSteps: steps, curParentId: curParentId});
             navigate('/');
             return;
@@ -59,7 +59,7 @@ export const GoalPlanning = () => {
      * Checks if the user wants to go back to editing the goal. 
      */
     const backOnCloseHander = (name: string | undefined) => {
-        if (name === yesBackButton) {
+        if (name === yesButtonName) {
             goBack();
         }
         onBackClose();
@@ -77,13 +77,13 @@ export const GoalPlanning = () => {
 
             {isBackOpen && <ConfirmationModal 
                 header="Go back?" 
-                buttons={createBackButtons} 
+                buttons={confirmationButtons} 
                 onClose={backOnCloseHander}
             />}
             
             {isSubmitOpen && <ConfirmationModal 
                 header="Finished?" 
-                buttons={planSubmissionButtons} 
+                buttons={confirmationButtons} 
                 onClose={subOnCloseHandler}
             />}
         </>

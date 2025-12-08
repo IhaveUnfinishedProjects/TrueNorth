@@ -51,7 +51,7 @@ export const GoalDetail = () => {
                 <h2>Steps to complete</h2>
                 <div className="steps-border">
                     {goal.steps?.map((data) => (
-                        <div className="goal-detail-step">
+                        <div key={data.id} className="goal-detail-step">
                             <span>
                                 {data.description}
                             </span>

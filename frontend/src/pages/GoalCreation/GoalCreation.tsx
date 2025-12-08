@@ -1,10 +1,10 @@
 import { ConfirmationModal, Card, CardHeader } from '@components/ui/index.js';
-import { createBackButtons, createSubmissionButtons, initialValues, InputFieldData, Form, type Goal, addGoal, addStepsButName, addSubGoalButName, isGoal, getGoal, yesBackButton, noBackButton, type CompleteGoal} from "@features/goals/index.js";
+import { confirmationButtons, createSubmissionButtons, initialValues, InputFieldData, Form, type Goal, addGoal, addStepsButName, addSubGoalButName, isGoal, getGoal, yesButtonName, type CompleteGoal, updateGoal} from "@features/goals/index.js";
 import { useToggleModal, useForm, useGoBack, useAppNavigate } from '@hooks/index.js';
 import "./GoalCreation.css";
 import "@root/index.css";
 import { useEffect } from 'react';
-import { useParams, useLocation } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 /*
     This function is responsible for rendering the new goal creation component.
@@ -40,6 +40,8 @@ const GoalCreation = () => {
             } else {
                 navigate('/CreateGoal', {replace: true});
             }
+        } else {
+            resetForm(undefined);
         }
     }, [curParentId, isEditMode])
 
@@ -51,15 +53,21 @@ const GoalCreation = () => {
      */
     const submitData = (buttonName: string | undefined) => {
         const newGoal: Goal = {...formValues};
-        const goalId = addGoal({newGoal, curParentId});
-        navigate(`/EditGoal/${goalId}`, {replace: true});
-        if (buttonName === addStepsButName) {
-            navigate(`/PlanGoal/${goalId}`);
-        }
 
-        if (buttonName === addSubGoalButName){
-            navigate(`/CreateGoal/${goalId}`);
-        } 
+        if (isEditMode && buttonName === yesButtonName) {
+            console.log("This runs");
+            updateGoal(curParentId, newGoal);
+            navigate(-1);
+        } else if (!isEditMode){
+            const goalId = addGoal({newGoal, curParentId});
+            navigate(`/EditGoal/${goalId}`, {replace: true});
+
+            if (buttonName === addStepsButName) {
+                navigate(`/PlanGoal/${goalId}`);
+            } else if (buttonName === addSubGoalButName){
+                navigate(`/CreateGoal/${goalId}`);
+            } 
+        }
         subModal.onClose();
     }
 
@@ -74,7 +82,7 @@ const GoalCreation = () => {
      * to their last page or to home. 
      */
     function localBackHandler (buttonName: string | undefined) {
-        if (buttonName === yesBackButton) {
+        if (buttonName === yesButtonName) {
             goBack();
         }
 
@@ -97,14 +105,14 @@ const GoalCreation = () => {
             
             { backModal.isOpen && <ConfirmationModal 
                 header = "Go back?"
-                buttons={createBackButtons}
+                buttons={confirmationButtons}
                 onClose={localBackHandler}
             />}
 
             {subModal.isOpen && <ConfirmationModal 
-                header = "Create SubGoal?"
-                paragraph= 'Is this a goal made of smaller goals (like "Launch a Company"), or can you list the steps right away?'
-                buttons = {createSubmissionButtons}
+                header = {isEditMode ? 'Complete Goal?' : 'Create SubGoal?'}
+                paragraph= {isEditMode ? 'Click Yes to finish editing' : 'Is this a goal made of smaller goals (like "Launch a Company"), or can you list the steps right away?'}
+                buttons = {isEditMode ? confirmationButtons : createSubmissionButtons}
                 onClose={submitData}
             />}
         </Card>

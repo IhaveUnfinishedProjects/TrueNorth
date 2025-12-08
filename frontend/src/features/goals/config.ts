@@ -22,20 +22,20 @@ export const initialValues: Goal = {
     parent:''
 };
 
-export const yesBackButton = "YesGoBack";
-export const noBackButton = "DontGoBack";
+export const yesButtonName = "yesButton";
+export const noButtonName = "noButton";
 
 /**
  * Back Button options for goal creation
  */
-export const createBackButtons: ModalButtonProps[] = [
+export const confirmationButtons: ModalButtonProps[] = [
     {
         text: "Yes",
-        name: `${yesBackButton}`
+        name: `${yesButtonName}`
     },
     {
         text: "No",
-        name: `${noBackButton}`
+        name: `${noButtonName}`
     }
 ];
 
@@ -53,36 +53,6 @@ export const createSubmissionButtons: ModalButtonProps[] = [
     {
         text: "Add Steps",
         name: `${addStepsButName}`
-    }
-]
-
-/**
- * Back button options for planning the steps
- * of a goal
- */
-export const planBackButtons: ModalButtonProps[] = [
-    {
-        text: "Yes",
-    },
-    {
-        text: "No",
-    }
-];
-
-export const confirmButtonName = "YesButton";
-
-/**
- * Submission button options for submitting the
- * steps of a goal
- */
-export const planSubmissionButtons: ModalButtonProps[] = [
-    {
-        text: "No",
-        name: "NoButton"
-    },
-    {
-        text: "Yes",
-        name: `${confirmButtonName}`
     }
 ]
 

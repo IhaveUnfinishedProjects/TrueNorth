@@ -17,7 +17,7 @@ export const GoalCard = ({goals}: GoalCardProps) => {
     return (
         <div className='CardContainer'>
             {goals.map((goal, index) => (
-                <div onClick={() => navigate(`/GoalDetail/${goal.id}`)} className={`GoalViewCard ${getColour(index)}`}>
+                <div key={goal.id} onClick={() => navigate(`/GoalDetail/${goal.id}`)} className={`GoalViewCard ${getColour(index)}`}>
                     <div>
                         <p className='goal-card-crumb'> {getBreadCrumb(goal)}</p>
                         <h2 className='GoalViewH2'>{goal.goalName}</h2>

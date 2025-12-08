@@ -1,4 +1,4 @@
-import type { CompleteGoal, addStepsProps, addGoalParams } from "@features/goals/index.js";
+import type { CompleteGoal, addStepsProps, addGoalParams, Goal } from "@features/goals/index.js";
 
 const DB_KEY = 'app_goals_database';
 
@@ -78,6 +78,28 @@ export const addGoal = ({newGoal, curParentId}: addGoalParams): string => {
     localStorage.setItem(DB_KEY, JSON.stringify([...currentGoals, completeGoal]));
 
     return completeGoal.id;
+}
+
+export const updateGoal = (goalId: string | undefined, newGoal: Goal) => {
+    const goalToUpdate = getGoal(goalId);
+    
+    if (!goalToUpdate || !newGoal) {
+        throw new Error ("Goal couldn't be found");
+        return;
+    }
+
+    const allGoals = getGoals();
+    const newGoals = allGoals.map(goal => {
+        return goal.id === goalId ? {
+            ...goal, 
+            goalName: newGoal.goalName,
+            desiredAchievement: newGoal.desiredAchievement,
+            importance: newGoal.importance,
+            measurement: newGoal.measurement,
+            achievementDate: newGoal.achievementDate
+        }: goal});
+
+    localStorage.setItem(DB_KEY, JSON.stringify(newGoals));
 }
 
 /**
