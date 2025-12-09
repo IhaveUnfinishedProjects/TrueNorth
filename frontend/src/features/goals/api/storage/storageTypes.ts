@@ -7,6 +7,7 @@ import type { Goal, Step } from '@features/goals/index.js';
 export interface CompleteGoal extends Goal {
     id: string;
     steps?: Step[];
+    completeSteps?: Map<string, boolean>;
 }
 
 /**
@@ -23,4 +24,13 @@ export interface addStepsProps {
 export interface addGoalParams {
     newGoal: Goal;
     curParentId: string | undefined;
+}
+
+/**
+ * Requirements for finding the step
+ * to toggle.
+ */
+export interface toggleStepParams {
+    goalId: string;
+    stepId: string;
 }

@@ -1,4 +1,4 @@
-import type { CompleteGoal, addStepsProps, addGoalParams, Goal } from "@features/goals/index.js";
+import type { CompleteGoal, addStepsProps, addGoalParams, toggleStepParams, Goal, Step } from "@features/goals/index.js";
 
 const DB_KEY = 'app_goals_database';
 
@@ -127,3 +127,34 @@ export const isGoal = (id: string): boolean => {
     const goal = goals.find(goal => goal.id === id);
     return (goal !== undefined);
 }
+
+
+/** 
+ * Used to toggle whether a step is completed or not.
+ * Allows progress to be measured. 
+ */
+export const toggleStepComplete = ({ goalId, stepId }: toggleStepParams) => {
+    const allGoals = getGoals();
+    
+    const goal = allGoals.find(g => g.id === goalId);
+    if (!goal) throw new Error("Goal couldn't be found");
+    if (!goal.steps?.some(step => step.id === stepId)) throw new Error("Step couldn't be found");
+
+    const newGoals = allGoals.map(g => {
+        if (g.id !== goalId) return g;
+
+        // Clone existing Map or create a new one to avoid mutation
+        const nextCompleteSteps = new Map(g.completeSteps);
+        
+        // Toggle logic --> !undefined becomes true, !true becomes false
+        const currentStatus = nextCompleteSteps.get(stepId);
+        nextCompleteSteps.set(stepId, !currentStatus);
+
+        return {
+            ...g,
+            completeSteps: nextCompleteSteps
+        };
+    });
+
+    localStorage.setItem(DB_KEY, JSON.stringify(newGoals));
+};
