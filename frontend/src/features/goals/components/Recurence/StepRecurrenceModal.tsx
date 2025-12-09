@@ -40,6 +40,7 @@ export const StepRecurrenceModal = ({ submissionHandler, onRepeatClose, recurren
 
     /* Hook for selecting days of the week */
     const { selectedBoxes: selectedDays, handleChange: onDayChange } = useCheckbox({defaultVal: recurrence?.selectedDays});
+    const selectedDayOptions = selectedDays.map(day => ({id: day, description: day}));
 
     /* Hook for remembering the option between ordinal & date */
     const { ordinal, onOrdinalChange } = useOrdinalRadio({defaultVal: recurrence?.type});
@@ -136,7 +137,7 @@ export const StepRecurrenceModal = ({ submissionHandler, onRepeatClose, recurren
                 {/* Allows the selection of days within a week */}
                 {interval === "Weeks" && 
                     <div className="recurrenceGroup">
-                        <CheckboxComponent curSelected={selectedDays} onChange={onDayChange} options={DayOfWeek} name=""/>
+                        <CheckboxComponent curSelected={selectedDays} onChange={onDayChange} options={selectedDayOptions} name=""/>
                     </div>
                 }                
 

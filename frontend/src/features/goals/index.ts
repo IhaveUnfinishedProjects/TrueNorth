@@ -26,3 +26,6 @@ export * from './recurrence.schema.js';
 
 /* Storage */
 export * from './api/index.js';
+
+/* Specific smart components */
+export * from './components/index.js';

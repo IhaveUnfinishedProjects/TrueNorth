@@ -1,13 +1,18 @@
 import { CheckboxGroup, Checkbox, Label } from 'react-aria-components';
 import "./Checkbox.css";
 
+interface CheckBoxOptions {
+    id: string;
+    description: string;
+}
+
 interface RecurrenceCheckboxProps {
     /** The list of currently selected values */
     curSelected: string[];
     /** Handler called when selection changes, returning a new list of values */
     onChange: (values: string[] | null) => void;
     /** The options to display */
-    options: string[];
+    options: CheckBoxOptions[];
     name: string;
 }
 
@@ -23,7 +28,7 @@ export const CheckboxComponent = ({ curSelected, onChange, options, name }: Recu
             
             <div className="checkbox-grid">
                 {options.map((data) => (
-                    <Checkbox key={data} value={data} className="checkbox-option">
+                    <Checkbox key={data.id} value={data.id} className="checkbox-option">
                         {/* The Visual Box */}
                         <div className="checkbox-box">
                             <svg viewBox="0 0 18 18" aria-hidden="true">
@@ -31,7 +36,7 @@ export const CheckboxComponent = ({ curSelected, onChange, options, name }: Recu
                             </svg>
                         </div>
                         {/* The Label */}
-                        {data}
+                        {data.description}
                     </Checkbox>
                 ))}
             </div>

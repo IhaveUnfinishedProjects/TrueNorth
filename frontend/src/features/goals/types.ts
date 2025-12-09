@@ -34,3 +34,9 @@ export type Step = {
     description: string,
     recurrence?: RecurrenceSchedule
 };
+
+/** The type a check box may take for options */
+export interface CheckBoxOptions {
+    id: string;
+    description: string;
+}

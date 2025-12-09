@@ -2,18 +2,30 @@ import { getGoal, type CompleteGoal } from "@root/features/goals/index.js";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useAppNavigate } from "@hooks/index.js";
-import { Card } from "@root/components/ui/index.js";
+import { Card, CheckboxComponent } from "@root/components/ui/index.js";
 import { FeatureCard } from './components/featureCard.js';
 import './GoalDetail.css';
-import { getBreadCrumb } from "@root/features/goals/components/GoalView/components/util.js";
+import { getBreadCrumb } from "@features/goals/index.js";
+import { useCheckbox, type CheckBoxOptions } from '@features/goals/index.js';
 
 export const GoalDetail = () => {
 
-    const { goalId } = useParams<{ goalId: string}>();
     const navigate = useAppNavigate();
-    const goal: CompleteGoal | undefined = getGoal(goalId);
-    const breadCrumb = getBreadCrumb(goal);
 
+    // Takes the goalId from the url to get the goal, breadcrumb, goal steps
+    const { goalId } = useParams<{ goalId: string}>();
+    const goal: CompleteGoal | undefined = getGoal(goalId);
+
+    const steps: string[] | undefined = goal?.steps?.map(step => step.id);
+    const stepOptions: CheckBoxOptions[] | undefined = goal?.steps?.map(step => ({
+        id: step.id,
+        description: step.description
+    }));
+
+    const breadCrumb: string = getBreadCrumb(goal); // cread crumb string to display goal ancestors
+    const {selectedBoxes, handleChange} = useCheckbox({defaultVal: steps}); // to tick / untick goals
+    
+    /* Makes sure the user has a valid goal selected */
     useEffect(() => {
 
         if (!goal) {
@@ -46,7 +58,8 @@ export const GoalDetail = () => {
             </div>
 
 
-            {goal.steps && 
+            {/* Contains the list of steps & whether they're complete */}
+            {(goal.steps && stepOptions) && 
             <div className="goal-detail-steps">
                 <h2>Steps to complete</h2>
                 <div className="steps-border">
@@ -59,6 +72,8 @@ export const GoalDetail = () => {
                         </div>
                     ))}
                 </div>
+
+                <CheckboxComponent curSelected={selectedBoxes} onChange={handleChange} options={stepOptions ?? []} name="step-checkbox" />
             </div>}
         </Card>
     );}
