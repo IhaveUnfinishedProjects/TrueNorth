@@ -37,7 +37,7 @@ export const CheckboxComponent = ({ curSelected, onChange, options, name, label 
                             </svg>
                         </div>
                         {/* The Label */}
-                        {data.description}
+                        <p className='description-text'>{data.description}</p>
                     </Checkbox>
                 ))}
             </div>

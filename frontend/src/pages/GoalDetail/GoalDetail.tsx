@@ -17,25 +17,22 @@ export const GoalDetail = () => {
     const { goalId } = useParams<{ goalId: string}>();
     const goal: CompleteGoal | undefined = getGoal(goalId);
     const breadCrumb: string = getBreadCrumb(goal);
-
-    useEffect(() => {
-        /* Makes sure the user has a valid goal selected */
-
-        if (!goal) {
-            console.warn(`Goal ${goalId} couldn't be found.`);
-            navigate(-1, { replace: true });
-            return
-        }
-
-    }, [goalId]);
-    
+    const {selectedBoxes, handleChange} = useCheckbox({defaultVal: goal?.completeSteps}); // to tick / untick goals
     const stepOptions: CheckBoxOptions[] | undefined = goal?.steps?.map(step => ({
         id: step.id,
         description: step.description
     }));
 
-    const {selectedBoxes, handleChange} = useCheckbox({defaultVal: goal?.completeSteps}); // to tick / untick goals
+    useEffect(() => {
+        /* Makes sure the user has a valid goal selected */
+        if (!goal) {
+            console.warn(`Goal ${goalId} couldn't be found.`);
+            navigate(-1, { replace: true });
+            return
+        }
+    }, [goalId]);
     
+    /* Local check box change handler to submit data on change. */
     const checkboxChange = (values: string[] | null) => {
         handleChange(values);
         if (values && goalId) {

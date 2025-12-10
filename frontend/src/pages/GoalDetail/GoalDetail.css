@@ -49,7 +49,7 @@
     box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.5); 
 }
 
-/* Goal feature card stylign */
+/* Goal feature card styling */
 .goal-feature-section {
     display: flex;
     flex-direction: row;
@@ -113,4 +113,9 @@
     border-bottom: none;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
+}
+
+
+.checkbox-option[data-selected] .description-text {
+  text-decoration: line-through;
 }
