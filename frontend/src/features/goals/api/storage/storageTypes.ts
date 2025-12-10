@@ -7,8 +7,10 @@ import type { Goal, Step } from '@features/goals/index.js';
 export interface CompleteGoal extends Goal {
     id: string;
     steps?: Step[];
-    completeSteps?: Map<string, boolean>;
+    completeSteps?: CompleteStep;
 }
+
+type CompleteStep = string[];
 
 /**
  * The props the Add Steps in storage takes
@@ -32,5 +34,5 @@ export interface addGoalParams {
  */
 export interface toggleStepParams {
     goalId: string;
-    stepId: string;
+    completeSteps: CompleteStep;
 }

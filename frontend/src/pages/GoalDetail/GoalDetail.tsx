@@ -6,7 +6,7 @@ import { Card, CheckboxComponent } from "@root/components/ui/index.js";
 import { FeatureCard } from './components/featureCard.js';
 import './GoalDetail.css';
 import { getBreadCrumb } from "@features/goals/index.js";
-import { useCheckbox, type CheckBoxOptions } from '@features/goals/index.js';
+import { useCheckbox, type CheckBoxOptions, setStepsComplete } from '@features/goals/index.js';
 
 export const GoalDetail = () => {
 
@@ -28,16 +28,20 @@ export const GoalDetail = () => {
         }
 
     }, [goalId]);
-
+    
     const stepOptions: CheckBoxOptions[] | undefined = goal?.steps?.map(step => ({
         id: step.id,
         description: step.description
     }));
 
-    const {selectedBoxes, handleChange} = useCheckbox({defaultVal: 
-        goal?.steps?.filter(step => goal?.completeSteps?.get(step.id)).map(step => step.id)
-    }); // to tick / untick goals
+    const {selectedBoxes, handleChange} = useCheckbox({defaultVal: goal?.completeSteps}); // to tick / untick goals
     
+    const checkboxChange = (values: string[] | null) => {
+        handleChange(values);
+        if (values && goalId) {
+            setStepsComplete({goalId: goalId, completeSteps: values})
+        }
+    }
 
     if (goal) {return (
         <Card className='goal-detail-card'>
@@ -64,7 +68,7 @@ export const GoalDetail = () => {
             {/* Contains the list of steps & whether they're complete */}
             {(goal.steps && stepOptions) && 
                 <div className="goal-detail-steps">
-                    <CheckboxComponent curSelected={selectedBoxes} onChange={handleChange} options={stepOptions ?? []} name="step-checkbox" />
+                    <CheckboxComponent curSelected={selectedBoxes} onChange={checkboxChange} options={stepOptions ?? []} name="step-checkbox" />
                 </div>}
         </Card>
     );}
