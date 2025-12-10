@@ -12,21 +12,14 @@ export const GoalDetail = () => {
 
     const navigate = useAppNavigate();
 
-    // Takes the goalId from the url to get the goal, breadcrumb, goal steps
+    /* Takes the goalId from the url to get the 
+       goal, breadcrumb, goal steps */
     const { goalId } = useParams<{ goalId: string}>();
     const goal: CompleteGoal | undefined = getGoal(goalId);
+    const breadCrumb: string = getBreadCrumb(goal);
 
-    const steps: string[] | undefined = goal?.steps?.map(step => step.id);
-    const stepOptions: CheckBoxOptions[] | undefined = goal?.steps?.map(step => ({
-        id: step.id,
-        description: step.description
-    }));
-
-    const breadCrumb: string = getBreadCrumb(goal); // cread crumb string to display goal ancestors
-    const {selectedBoxes, handleChange} = useCheckbox({defaultVal: steps}); // to tick / untick goals
-    
-    /* Makes sure the user has a valid goal selected */
     useEffect(() => {
+        /* Makes sure the user has a valid goal selected */
 
         if (!goal) {
             console.warn(`Goal ${goalId} couldn't be found.`);
@@ -35,6 +28,16 @@ export const GoalDetail = () => {
         }
 
     }, [goalId]);
+
+    const stepOptions: CheckBoxOptions[] | undefined = goal?.steps?.map(step => ({
+        id: step.id,
+        description: step.description
+    }));
+
+    const {selectedBoxes, handleChange} = useCheckbox({defaultVal: 
+        goal?.steps?.filter(step => goal?.completeSteps?.get(step.id)).map(step => step.id)
+    }); // to tick / untick goals
+    
 
     if (goal) {return (
         <Card className='goal-detail-card'>
@@ -60,21 +63,9 @@ export const GoalDetail = () => {
 
             {/* Contains the list of steps & whether they're complete */}
             {(goal.steps && stepOptions) && 
-            <div className="goal-detail-steps">
-                <h2>Steps to complete</h2>
-                <div className="steps-border">
-                    {goal.steps?.map((data) => (
-                        <div key={data.id} className="goal-detail-step">
-                            <span>
-                                {data.description}
-                            </span>
-                            {data.recurrence?.startDate}
-                        </div>
-                    ))}
-                </div>
-
-                <CheckboxComponent curSelected={selectedBoxes} onChange={handleChange} options={stepOptions ?? []} name="step-checkbox" />
-            </div>}
+                <div className="goal-detail-steps">
+                    <CheckboxComponent curSelected={selectedBoxes} onChange={handleChange} options={stepOptions ?? []} name="step-checkbox" />
+                </div>}
         </Card>
     );}
 }

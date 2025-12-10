@@ -1,15 +1,5 @@
-/* Main container for the group */
-.react-aria-Checkbox {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  font-family: system-ui, -apple-system, sans-serif;
-  max-width: 400px;
-}
-
 /* The Label for the whole group */
 .checkbox-group-label {
-  font-size: 0.9rem;
   font-weight: 600;
   color: #333;
 }
@@ -19,20 +9,11 @@
   - gap creates space between items.
 */
 .checkbox-grid {
-  display: flex;
-  flex-direction: row;
   flex-wrap: wrap;
-  gap: 12px;
 }
 
 /* Individual Checkbox Item */
 .checkbox-option {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  cursor: pointer;
-  font-size: 0.9rem;
-  color: #444;
   /* Disable default text selection for better UX */
   user-select: none;
   -webkit-user-select: none;

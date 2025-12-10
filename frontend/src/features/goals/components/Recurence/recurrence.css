@@ -116,3 +116,20 @@
     background-color: #3B82F6;
     color: #F5F5F5;
 }
+
+/* DAY SELECTION STYLING */
+
+.recurrenceGroup .checkbox-grid {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    margin-top: 0.5rem;
+    gap: 1rem;
+}
+
+.recurrenceGroup .reactr-aria-Checkbox {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    max-width: 400px;
+}

@@ -5,7 +5,7 @@ interface useCheckboxProps {
 }
 
 /**
- * 
+ * Holds the selected options of a react-aria-components check box. 
  */
 function useCheckbox ({defaultVal}: useCheckboxProps) {
 
