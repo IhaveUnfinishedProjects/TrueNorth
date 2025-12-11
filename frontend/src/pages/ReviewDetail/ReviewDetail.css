@@ -1,0 +1,40 @@
+/* MAIN CONTAINER STYLING */
+.review-detail-container {
+    /* sizing */
+    width: 70%;
+    height: 90vh;
+    /* spacing */
+    overflow-y: scroll;
+    justify-content:flex-start;
+    padding: 0;
+    padding-top: 5rem;
+    margin-top: -5rem;
+    /* border & background */
+    background-color: transparent;
+    border: transparent;
+}
+
+.review-detail-container::-webkit-scrollbar {
+    display: none;
+}
+
+/* SECTION CARD STYLING */
+.review-detail-card {
+    /* size & spacing */
+    width: 100%;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    display: flex;
+    flex-direction: column;
+}
+
+/*  */
+.review-detail-card p {
+    align-self: start;
+    margin-top: 1rem;
+}
+
+.review-detail-card .quote {
+    align-self: center;
+    font-style: italic;
+}
