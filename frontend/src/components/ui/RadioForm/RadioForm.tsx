@@ -2,7 +2,7 @@ import {RadioGroup, Radio, Label} from 'react-aria-components';
 import './RadioForm.css';
 
 interface displayObj {
-    value: string;
+    value: string; // Used as the id & name of the radio option.
     displayLabel: string;
 }
 
