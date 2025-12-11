@@ -1,4 +1,4 @@
-import { getAncestor, type CompleteGoal } from '@features/goals/index.js';
+import { type CompleteGoal } from '@features/goals/index.js';
 import { getBreadCrumb, getColour } from './components/index.js';
 import { useFormatDate, useAppNavigate } from '@hooks/index.js';
 import { MdCalendarToday } from "react-icons/md";

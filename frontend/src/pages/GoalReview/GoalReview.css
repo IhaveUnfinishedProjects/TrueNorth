@@ -1,0 +1,55 @@
+
+/* PAGE CONTAINER STYLING */
+.goal-review-container {
+    margin-top: -5rem;
+    padding-top: 5rem;
+    padding-bottom: 5rem;
+    height: 90vh;
+    overflow: auto;
+}
+
+.goal-review-container::-webkit-scrollbar {
+    display: none;
+}
+
+/* HEADER STYLING */
+.goal-review-container h1 {
+    margin-left: 25%;
+}
+
+/* TEXT DIV STYLING */
+.review-text-container {
+    /* Flex & spacing */
+    display: flex;
+    flex-direction: row;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 1rem;
+    padding: 0.4rem;
+    align-items: start;
+    justify-content: space-between;
+
+    /* Div sizing */
+    width: 50%;
+
+    /* Border & Appearance */
+    border-radius: 7px;
+    border: 1px solid black;
+    box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.2);
+    background-color: #c1ccd3;
+    border-left: 5px solid rgb(83, 200, 77); 
+}
+
+.review-text-container:hover {
+    box-shadow: 0 0 0 3px rgb(83, 200, 77); 
+    border: 1px solid none;
+    transform: translateY(-3px);
+    cursor:pointer;
+}
+
+.review-text-container .details {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    gap: 1rem;
+}

@@ -28,7 +28,7 @@ export const featureCardData: featureCardData[] = [
     {
         title: "Track Goal",
         details: "Reflect on the progress you've made in order to refine the direction of your goals, and improve your strategies.",
-        link: "https://www.youtube.com/",
+        link: "/GoalReview",
         SvgImage: TrackGoal,
         buttonText: "Review"
     },

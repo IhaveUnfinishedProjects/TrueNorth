@@ -7,8 +7,7 @@ import { GoalCard } from '@features/goals/index.js';
 export const GoalView = () => {
 
     /** All leaf goals as a Map<id, goal> for quick lookup */
-    const goals: Map<string, CompleteGoal> = getLeafGoals();
-    const leafGoals: CompleteGoal[] = [...goals.values()];
+    const leafGoals: CompleteGoal[] = getLeafGoals().values().toArray();
     /** Allows formatting of the date strings */
 
     return (
