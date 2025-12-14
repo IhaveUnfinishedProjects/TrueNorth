@@ -1,6 +1,7 @@
 import { Card } from '@components/ui/index.js';
 import type { CompleteGoal } from '@root/features/goals/index.js';
 import { useInput } from '@hooks/index.js';
+
 interface BehindProps {
     goal: CompleteGoal;
 }
