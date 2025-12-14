@@ -9,7 +9,7 @@ import { Ahead, Behind, OnTrack, FIRST_INPUT_NAME, SECOND_INPUT_NAME } from './c
 export const ReviewDetail = () => {
 
     const RADIO_FORM_NAME = 'reviewDetailRadio';
-    const newRadioOptions = REVIEW_TYPES.map(option => ({
+    const radioOptions = REVIEW_TYPES.map(option => ({
         value: option,
         displayLabel: option
     }));
@@ -46,7 +46,9 @@ export const ReviewDetail = () => {
             console.warn("Invalid Review Object");
             return;
         }
+
         AddReview({goalId, reviewType, firstInput, secondInput});
+        navigate(-1);
     }
 
     if (goal) {return (
@@ -63,9 +65,9 @@ export const ReviewDetail = () => {
                 <p>Based on that, did I hit my target?</p>
             </Card>
 
-            <form onSubmit={submissionHandler}>
+            <form className='review-detail-form' onSubmit={submissionHandler}>
                 <Card className='review-detail-card'>
-                    <RadioForm label={""} options={newRadioOptions} selected={selected} onChange={handleChange} name={RADIO_FORM_NAME}/>
+                    <RadioForm label={""} options={radioOptions} selected={selected} onChange={handleChange} name={RADIO_FORM_NAME}/>
                 </Card>
         
                 {selected === "behind" && <Behind goal={goal} />}

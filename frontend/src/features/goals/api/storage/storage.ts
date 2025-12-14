@@ -175,6 +175,7 @@ export const AddReview = ({goalId, reviewType, firstInput, secondInput}: Incompl
     }
 
     if (!isReviewType(reviewType)){
+        console.warn("reviewType passed is not valid");
         return;
     }
 

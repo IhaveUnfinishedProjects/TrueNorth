@@ -13,7 +13,7 @@ export const Behind = ({goal}: BehindProps) => {
     
 
     return(
-        <Card className='review-detail-card behind-track-card'>
+        <Card className='review-detail-card'>
             <h2>Behind progress</h2>
             <p><b>Focusing on what I can do:</b> Here's what I said I'd achieve:</p>
             <p className='quote'><i>"{goal.desiredAchievement}"</i></p>
