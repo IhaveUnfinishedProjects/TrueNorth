@@ -42,13 +42,15 @@ export const ReviewDetail = () => {
                 <p>Based on that, did I hit my target?</p>
             </Card>
 
-            <Card className='review-detail-card'>
-                <RadioForm label={""} options={radioOptions} selected={selected} onChange={handleChange} name={"review-detail-radio"}/>
-            </Card>
+            <form>
+                <Card className='review-detail-card'>
+                    <RadioForm label={""} options={radioOptions} selected={selected} onChange={handleChange} name={"review-detail-radio"}/>
+                </Card>
 
-            {selected === "behind" && <Behind goal={goal} />}
-            {selected === "on-track" && <OnTrack goal={goal} />}
-            {selected === "ahead" && <Ahead goal={goal} />}
+                {selected === "behind" && <Behind goal={goal} />}
+                {selected === "on-track" && <OnTrack goal={goal} />}
+                {selected === "ahead" && <Ahead goal={goal} />}
+            </form>
         </Card>
     );}
 }

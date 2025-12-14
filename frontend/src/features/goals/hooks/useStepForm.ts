@@ -10,7 +10,6 @@ import type { CompleteGoal, RecurrenceSchedule, Step } from "@features/goals/ind
  */
 export function useStepForm(goal: CompleteGoal | undefined) {
 
-    console.log(goal);
     const [steps, setSteps] = useState<Step[]>(() => {
         return goal?.steps ? [staticStep,  ...goal.steps] : [staticStep];
     });
