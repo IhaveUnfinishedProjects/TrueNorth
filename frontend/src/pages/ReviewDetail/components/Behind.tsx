@@ -8,6 +8,7 @@ export const Behind = ({goal}: BehindProps) => {
     const ID: string = goal.id + "behind";
     const firstInput = useInput();
     const secondInput = useInput();
+    
 
     return(
         <Card className='review-detail-card behind-track-card'>
@@ -24,7 +25,7 @@ export const Behind = ({goal}: BehindProps) => {
                 placeholder={''}
                 onChange={firstInput.onChange}
             />
-
+            <p>How do you get around this?</p>
             <input 
                 className='input'
                 key={'input2'}
@@ -33,9 +34,6 @@ export const Behind = ({goal}: BehindProps) => {
                 placeholder={''}
                 onChange={secondInput.onChange}
             />
-
-            <p>How do you get around this?</p>
-            <p className='quote'>text box goes here.</p>
         </Card>
     );
 }

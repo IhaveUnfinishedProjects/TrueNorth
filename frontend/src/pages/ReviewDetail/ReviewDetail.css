@@ -49,3 +49,8 @@
     display: flex;
     flex-direction: column;
 }
+
+.submit-button {
+    border: 1px solid black;
+    background-color: antiquewhite;
+}
