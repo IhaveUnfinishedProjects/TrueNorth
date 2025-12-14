@@ -1,6 +1,7 @@
 import { Card } from '@components/ui/index.js';
 import type { CompleteGoal } from '@root/features/goals/index.js';
 import { useInput } from '@hooks/index.js';
+import { FIRST_INPUT_NAME, SECOND_INPUT_NAME} from './index.js';
 
 interface AheadProps {
     goal: CompleteGoal;
@@ -16,8 +17,8 @@ export const Ahead = ({goal}: AheadProps) => {
             <p>Awesome! I did more than I thought I could. Even though I'm ahead, how could I do better next week?</p>
             <input 
                 className='input'
-                key={'input1'}
-                name={'input1'}
+                key={FIRST_INPUT_NAME}
+                name={FIRST_INPUT_NAME}
                 value={firstInput.selected}
                 placeholder={''}
                 onChange={firstInput.onChange}
@@ -25,8 +26,8 @@ export const Ahead = ({goal}: AheadProps) => {
             <p>Set a new target for next week (optional)</p>
             <input 
                 className='input'
-                key={'input2'}
-                name={'input2'}
+                key={SECOND_INPUT_NAME}
+                name={SECOND_INPUT_NAME}
                 value={secondInput.selected}
                 placeholder={''}
                 onChange={secondInput.onChange}

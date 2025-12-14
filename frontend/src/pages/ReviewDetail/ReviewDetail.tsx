@@ -1,12 +1,18 @@
 import './ReviewDetail.css';
 import { useParams } from 'react-router-dom';
 import { Card, RadioForm } from '@components/ui/index.js';
-import { getGoal, type CompleteGoal } from '@root/features/goals/index.js';
-import { useEffect, type FormEvent } from 'react';
+import { getGoal, type CompleteGoal, AddReview, REVIEW_TYPES } from '@root/features/goals/index.js';
+import { useEffect } from 'react';
 import { useRadio, useAppNavigate } from '@root/hooks/index.js';
-import { Ahead, Behind, OnTrack, radioOptions } from './components/index.js';
+import { Ahead, Behind, OnTrack, FIRST_INPUT_NAME, SECOND_INPUT_NAME } from './components/index.js';
 
 export const ReviewDetail = () => {
+
+    const RADIO_FORM_NAME = 'reviewDetailRadio';
+    const newRadioOptions = REVIEW_TYPES.map(option => ({
+        value: option,
+        displayLabel: option
+    }));
 
     /* Get the specific goal to validate it & potential route user */
     const { goalId } = useParams<{ goalId: string}>();
@@ -31,8 +37,16 @@ export const ReviewDetail = () => {
         const target = event.currentTarget;
         const formData = new FormData(target);
         const data = Object.fromEntries(formData.entries());
+        
+        const reviewType = data[RADIO_FORM_NAME]?.toString();
+        const firstInput = data[FIRST_INPUT_NAME]?.toString();
+        const secondInput = data[SECOND_INPUT_NAME]?.toString();
 
-        console.log(data);
+        if (!(goalId && reviewType && firstInput && secondInput)){
+            console.warn("Invalid Review Object");
+            return;
+        }
+        AddReview({goalId, reviewType, firstInput, secondInput});
     }
 
     if (goal) {return (
@@ -51,7 +65,7 @@ export const ReviewDetail = () => {
 
             <form onSubmit={submissionHandler}>
                 <Card className='review-detail-card'>
-                    <RadioForm label={""} options={radioOptions} selected={selected} onChange={handleChange} name={"review-detail-radio"}/>
+                    <RadioForm label={""} options={newRadioOptions} selected={selected} onChange={handleChange} name={RADIO_FORM_NAME}/>
                 </Card>
         
                 {selected === "behind" && <Behind goal={goal} />}

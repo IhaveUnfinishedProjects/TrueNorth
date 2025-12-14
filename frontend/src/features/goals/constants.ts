@@ -39,3 +39,8 @@ export const TIME_OPTIONS = Array.from({ length: 24 }, (_, i) => {
  * of a goal. 
  */
 export const REPEATING_FREQUENCY = Array.from({ length: 99 }, (_, i) => (i + 1).toString());
+
+/**
+ * the options for the radio form in goal review
+ */
+export const REVIEW_TYPES = ['behind', 'on track', 'ahead'] as const;

@@ -1,13 +1,16 @@
-import type { CompleteGoal, addStepsProps, addGoalParams, toggleStepParams, Goal, Step } from "@features/goals/index.js";
+import type { CompleteGoal, addStepsProps, addGoalParams, toggleStepParams, Goal } from "@features/goals/index.js";
+import type { Review, IncompleteReview } from '@root/types/index.js';
+import { isReviewType } from "../../utils/index.js";
 
-const DB_KEY = 'app_goals_database';
+const DB_GOALS_KEY = 'app_goals_database';
+const DB_REVIEW_KEY = 'app_reviews_database'
 
 
 /**
  * @returns an array of complete goals as stored in the local storage
  */
 export const getGoals = (): CompleteGoal[] => {
-    const data = localStorage.getItem(DB_KEY);
+    const data = localStorage.getItem(DB_GOALS_KEY);
     return data ? JSON.parse(data) : [];
 }
 
@@ -75,7 +78,7 @@ export const addGoal = ({newGoal, curParentId}: addGoalParams): string => {
     }
 
     const currentGoals = getGoals();
-    localStorage.setItem(DB_KEY, JSON.stringify([...currentGoals, completeGoal]));
+    localStorage.setItem(DB_GOALS_KEY, JSON.stringify([...currentGoals, completeGoal]));
 
     return completeGoal.id;
 }
@@ -99,7 +102,7 @@ export const updateGoal = (goalId: string | undefined, newGoal: Goal) => {
             achievementDate: newGoal.achievementDate
         }: goal});
 
-    localStorage.setItem(DB_KEY, JSON.stringify(newGoals));
+    localStorage.setItem(DB_GOALS_KEY, JSON.stringify(newGoals));
 }
 
 /**
@@ -114,7 +117,7 @@ export const addSteps = ({newSteps, curParentId}: addStepsProps) => {
         return goal.id === curParentId ? { ...goal, steps: newSteps} : goal;
     })
 
-    localStorage.setItem(DB_KEY, JSON.stringify(newGoals))
+    localStorage.setItem(DB_GOALS_KEY, JSON.stringify(newGoals))
 }
 
 /**
@@ -150,5 +153,37 @@ export const setStepsComplete = ({ goalId, completeSteps }: toggleStepParams) =>
 
     console.log("Change made");
 
-    localStorage.setItem(DB_KEY, JSON.stringify(newGoals));
+    localStorage.setItem(DB_GOALS_KEY, JSON.stringify(newGoals));
 };
+
+/**
+ * @returns Array of Review items from storage
+ */
+export const getReviews = (): Review[] => {
+    const data = localStorage.getItem(DB_REVIEW_KEY);
+    return data ? JSON.parse(data) : [];
+}
+
+/**
+ * Used to add a review object to storage.
+ * Associates it with the goal id. 
+ */
+export const AddReview = ({goalId, reviewType, firstInput, secondInput}: IncompleteReview) => {
+    if (!isGoal(goalId)) {
+        console.warn("Goal didn't exist to add review");
+        return;
+    }
+
+    if (!isReviewType(reviewType)){
+        return;
+    }
+
+    const allReviews = getReviews();
+    const newReview: Review = {
+        goalId: goalId,
+        reviewType: reviewType,
+        firstInput: firstInput,
+        secondInput: secondInput
+    }
+    localStorage.setItem(DB_REVIEW_KEY, JSON.stringify([...allReviews, newReview]));
+}

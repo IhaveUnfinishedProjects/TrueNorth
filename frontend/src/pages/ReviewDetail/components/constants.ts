@@ -1,14 +1,2 @@
-export const radioOptions = [
-    {
-        value: "behind",
-        displayLabel: "behind"
-    },
-    {
-        value: "on-track",
-        displayLabel: "on track"
-    },
-    {
-        value: "ahead",
-        displayLabel: "ahead"
-    }
-]
+export const FIRST_INPUT_NAME = 'input1';
+export const SECOND_INPUT_NAME = 'input2';
