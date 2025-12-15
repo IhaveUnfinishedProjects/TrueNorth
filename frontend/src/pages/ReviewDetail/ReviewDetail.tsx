@@ -4,7 +4,7 @@ import { Card, RadioForm } from '@components/ui/index.js';
 import { getGoal, type CompleteGoal, AddReview, REVIEW_TYPES } from '@root/features/goals/index.js';
 import { useEffect } from 'react';
 import { useRadio, useAppNavigate } from '@root/hooks/index.js';
-import { Ahead, Behind, OnTrack, FIRST_INPUT_NAME, SECOND_INPUT_NAME } from './components/index.js';
+import { FIRST_INPUT_NAME, SECOND_INPUT_NAME, ReviewSection } from './components/index.js';
 
 export const ReviewDetail = () => {
 
@@ -70,9 +70,7 @@ export const ReviewDetail = () => {
                     <RadioForm label={""} options={radioOptions} selected={selected} onChange={handleChange} name={RADIO_FORM_NAME}/>
                 </Card>
         
-                {selected === "behind" && <Behind goal={goal} />}
-                {selected === "on-track" && <OnTrack goal={goal} />}
-                {selected === "ahead" && <Ahead goal={goal} />}
+                {selected && <ReviewSection goal={goal} status={selected} />}
                 <button className='submit-button' type='submit'>Here</button>
             </form>
         </Card>

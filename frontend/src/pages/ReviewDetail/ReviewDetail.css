@@ -2,14 +2,14 @@
 .review-detail-container {
     /* sizing */
     width: 70%;
-    height: 90vh;
+    height: auto;
     /* spacing */
     overflow-y: scroll;
     justify-content:flex-start;
     padding: 0;
     padding-top: 5rem;
     margin-top: -5rem;
-
+    padding-bottom: 5rem;
     /* border & background */
     background-color: transparent;
     border: transparent;
