@@ -11,7 +11,7 @@ export const GoalPlanning = () => {
     /* For navigating the user if the parent id is invalid */ 
     const navigate = useNavigate(); // To redirect when an id is invalid. 
     const { curParentId } = useParams<{ curParentId: string }>();
-    const { goBack } = useGoBack();
+    const goBack = useGoBack();
     /* Hooks for displaying & hiding this pages modals */
     const { isOpen:isBackOpen, onOpen:onBackOpen, onClose:onBackClose } = useToggleModal();
     const { isOpen:isSubmitOpen, onOpen:onSubmitOpen, onClose:onSubmitClose, name } = useToggleModal();

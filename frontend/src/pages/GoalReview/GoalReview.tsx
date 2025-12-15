@@ -13,7 +13,6 @@ export const GoalReview = () => {
         if (goal.steps && goal.completeSteps) {
             return (goal.completeSteps.length / goal.steps.length)*100;
         }
-        console.log("return none");
         return 0;
     }
 
@@ -21,7 +20,7 @@ export const GoalReview = () => {
         <div className='goal-review-container'>
             <h1>Select Goal to Review</h1>
             {goals.map(goal => (
-                <button key={'goal-review-button'} className="review-text-container" onClick={() => navigate(`/ReviewDetail/${goal.id}`)}>
+                <button key={goal.id} className="review-text-container" onClick={() => navigate(`/ReviewDetail/${goal.id}`)}>
                     <div className='details'>
                         <h3>{goal.goalName}</h3>
                         <p>{goal.desiredAchievement}</p>

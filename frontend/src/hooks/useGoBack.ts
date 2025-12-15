@@ -18,7 +18,7 @@ export function useGoBack() {
         }
     }
 
-    return { goBack };
+    return goBack;
 }
 
 export default useGoBack;

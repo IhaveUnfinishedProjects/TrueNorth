@@ -18,7 +18,7 @@ const GoalCreation = () => {
     const backModal = useToggleModal();
     const subModal = useToggleModal();
     const { formValues, handleChange, resetForm } = useForm(initialValues);
-    const { goBack } = useGoBack();
+    const goBack = useGoBack();
     const { curParentId } = useParams<{ curParentId?: string, goalId?: string }>();
     const isEditMode = location.pathname.includes("/EditGoal");
     console.log(isEditMode);
@@ -57,7 +57,7 @@ const GoalCreation = () => {
         if (isEditMode && buttonName === yesButtonName) {
             console.log("This runs");
             updateGoal(curParentId, newGoal);
-            navigate(-1);
+            goBack();
         } else if (!isEditMode){
             const goalId = addGoal({newGoal, curParentId});
             navigate(`/EditGoal/${goalId}`, {replace: true});

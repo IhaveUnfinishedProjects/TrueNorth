@@ -1,5 +1,5 @@
 import type { CompleteGoal, addStepsProps, addGoalParams, toggleStepParams, Goal } from "@features/goals/index.js";
-import type { Review, IncompleteReview } from '@root/types/index.js';
+import type { Review } from '@root/types/index.js';
 import { isReviewType } from "../../utils/index.js";
 
 const DB_GOALS_KEY = 'app_goals_database';
@@ -168,14 +168,9 @@ export const getReviews = (): Review[] => {
  * Used to add a review object to storage.
  * Associates it with the goal id. 
  */
-export const AddReview = ({goalId, reviewType, firstInput, secondInput}: IncompleteReview) => {
+export const AddReview = ({goalId, reviewType, firstInput, secondInput}: Review) => {
     if (!isGoal(goalId)) {
         console.warn("Goal didn't exist to add review");
-        return;
-    }
-
-    if (!isReviewType(reviewType)){
-        console.warn("reviewType passed is not valid");
         return;
     }
 

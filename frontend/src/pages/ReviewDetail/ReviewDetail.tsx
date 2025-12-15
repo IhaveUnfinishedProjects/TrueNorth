@@ -3,52 +3,53 @@ import { useParams } from 'react-router-dom';
 import { Card, RadioForm } from '@components/ui/index.js';
 import { getGoal, type CompleteGoal, AddReview, REVIEW_TYPES } from '@root/features/goals/index.js';
 import { useEffect } from 'react';
-import { useRadio, useAppNavigate } from '@root/hooks/index.js';
-import { FIRST_INPUT_NAME, SECOND_INPUT_NAME, ReviewSection } from './components/index.js';
+import { useRadio, useAppNavigate, useInput, useGoBack } from '@root/hooks/index.js';
+import { ReviewSection } from './components/index.js';
+import { isReviewType } from '@root/features/goals/utils/index.js';
 
 export const ReviewDetail = () => {
 
+    /* CONSTANTS */
+    const { goalId } = useParams<{ goalId: string}>();
+    const goal: CompleteGoal | undefined = getGoal(goalId);
+    const navigate = useAppNavigate();
+    const goBack = useGoBack();
     const RADIO_FORM_NAME = 'reviewDetailRadio';
     const radioOptions = REVIEW_TYPES.map(option => ({
         value: option,
         displayLabel: option
     }));
 
-    /* Get the specific goal to validate it & potential route user */
-    const { goalId } = useParams<{ goalId: string}>();
-    const goal: CompleteGoal | undefined = getGoal(goalId);
-    const navigate = useAppNavigate();
-
-    /* Handling Radio input */
-    const {selected, handleChange} = useRadio();
-
+    const {selected: reviewType, handleChange} = useRadio();
+    const firstInputHook = useInput();
+    const secondInputHook = useInput();
 
     useEffect(() => {
-        /* Makes sure the user has a valid goal selected */
+        // Validates the goal id by checking goal is real.
         if (!goal) {
             console.warn(`Goal ${goalId} couldn't be found.`);
-            navigate(-1, { replace: true });
+            goBack();
             return
         }
     }, [goalId]);
 
     const submissionHandler = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        const target = event.currentTarget;
-        const formData = new FormData(target);
-        const data = Object.fromEntries(formData.entries());
-        
-        const reviewType = data[RADIO_FORM_NAME]?.toString();
-        const firstInput = data[FIRST_INPUT_NAME]?.toString();
-        const secondInput = data[SECOND_INPUT_NAME]?.toString();
+        const firstInput = firstInputHook.selected;
+        const secondInput = secondInputHook.selected;
 
         if (!(goalId && reviewType && firstInput && secondInput)){
             console.warn("Invalid Review Object");
             return;
         }
 
-        AddReview({goalId, reviewType, firstInput, secondInput});
-        navigate(-1);
+        if (!isReviewType(reviewType)){
+            console.warn("reviewType passed is not valid");
+            return;
+        }
+
+        AddReview({ goalId, reviewType, firstInput, secondInput });
+        goBack();
     }
 
     if (goal) {return (
@@ -67,10 +68,10 @@ export const ReviewDetail = () => {
 
             <form className='review-detail-form' onSubmit={submissionHandler}>
                 <Card className='review-detail-card'>
-                    <RadioForm label={""} options={radioOptions} selected={selected} onChange={handleChange} name={RADIO_FORM_NAME}/>
+                    <RadioForm label={""} options={radioOptions} selected={reviewType} onChange={handleChange} name={RADIO_FORM_NAME}/>
                 </Card>
         
-                {selected && <ReviewSection goal={goal} status={selected} />}
+                {reviewType && <ReviewSection goal={goal} status={reviewType} firstInputHook={firstInputHook} secondInputHook={secondInputHook}/>}
                 <button className='submit-button' type='submit'>Here</button>
             </form>
         </Card>

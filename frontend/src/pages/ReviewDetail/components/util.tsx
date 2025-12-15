@@ -1,7 +1,9 @@
 import type { ReviewSectionProps } from './index.js';
 import { REVIEW_TYPES} from '@features/goals/index.js';
 
-export const getContent = ({goal, status}: ReviewSectionProps) => {
+type contentProps = Pick<ReviewSectionProps, 'goal' | 'status'>
+
+export const getContent = ({goal, status}: contentProps) => {
     switch (status) {
         case REVIEW_TYPES[0]:
             return {
