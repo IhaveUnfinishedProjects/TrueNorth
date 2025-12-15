@@ -38,7 +38,7 @@ export const ReviewDetail = () => {
         const firstInput = firstInputHook.selected;
         const secondInput = secondInputHook.selected;
 
-        if (!(goalId && reviewType && firstInput && secondInput)){
+        if (!(goalId && reviewType && firstInput && secondInput) || secondInput === '' || firstInput === ''){
             console.warn("Invalid Review Object");
             return;
         }
