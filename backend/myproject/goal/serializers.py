@@ -41,7 +41,7 @@ class GoalSerializer(serializers.ModelSerializer):
                 steps.save()
         return goal
     
-    def get_completed_steps_ids(self, obj):
+    def get_completed_step_ids(self, obj):
         return [str(steps.id) for steps in obj.steps.filter(is_complete=True)]
 
     def update(self, instance, validated_data):
