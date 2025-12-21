@@ -1,5 +1,5 @@
 import type { CompleteGoal, addStepsProps, addGoalParams, toggleStepParams, Goal } from "@features/goals/index.js";
-import type { Review } from '@root/types/index.js';
+import type { Review } from '@root/lib/types/index.js';
 import { isReviewType } from "../../utils/index.js";
 
 const DB_GOALS_KEY = 'app_goals_database';

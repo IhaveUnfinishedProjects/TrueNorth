@@ -1,6 +1,6 @@
-import { type InputFieldConfig } from "@root/types/InputTag.js";
+import { type InputFieldConfig } from "@root/lib/types/InputTag.js";
 import { type Goal } from "./types.js";
-import type { ModalButtonProps } from "@root/types/index.js";
+import type { ModalButtonProps } from "@root/lib/types/index.js";
 
 /*
     This file contains the static data for GoalCreation.tsx
