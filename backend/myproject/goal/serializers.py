@@ -26,6 +26,7 @@ class GoalSerializer(serializers.ModelSerializer):
             'measurement', 'achievement_date', 'parent',
             'created_at', 'steps', 'completed_step_ids'
         ]
+        read_only_fields = ['user']
 
     def create(self, validated_data):
         steps_data = validated_data.pop('steps', None)

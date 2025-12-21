@@ -60,3 +60,14 @@ class GoalUpdateTests(APITestCase):
         # Check completion sync
         self.step.refresh_from_db()
         self.assertTrue(self.step.is_complete)
+
+    def test_cannot_update_others_goal(self):
+        # 1. Create a "Hacker" user and authenticate as them
+        hacker = User.objects.create_user(username='hacker', password='password')
+        self.client.force_authenticate(user=hacker)
+        
+        # 2. Try to update the original goal (which belongs to 'testuser')
+        response = self.client.put(self.url, {"goal_name": "Hacked!"}, format='json')
+        
+        # 3. Assert that the hacker gets a 404, not a 200
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
