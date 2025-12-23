@@ -1,5 +1,5 @@
 import './GoalReview.css';
-import '@root/styles/circle-progress-bar.css';
+import '@root/lib/styles/circle-progress-bar.css';
 import { getGoals, type CompleteGoal } from "@root/features/goals/index.js";
 import { CircularProgressbar } from 'react-circular-progressbar';
 import { useAppNavigate } from '@hooks/index.js';

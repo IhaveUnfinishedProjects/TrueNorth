@@ -1,18 +1,23 @@
 import Header from './layouts/Header/Header.js';
 import HomePageContent from "./pages/Home/Home.js";
 import { GoalCreation, GoalPlanning, GoalView, GoalDetail, GoalReview, ReviewDetail } from '@pages/index.js';
-import { fetchUser } from './features/index.js';
+import { fetchUser, AuthScreen } from './features/index.js';
 import { useGoBack } from '@hooks/index.js';
+import { Spinner } from '@components/index.js';
 import { useEffect, useState } from "react";
 import { Routes, Route } from 'react-router-dom';
 import { BackgroundURL } from '@assets/index.js';
+import { type User } from '@root/lib/index.js';
 
 function App() {
 
     const [headerHeight, setHeaderHeight] = useState(0); 
-    const [user, setUser] = useState(null);
+    const [user, setUser] = useState<User | null>(null);
     const [loading, setLoading] = useState<Boolean>(true);
-    const goBack = useGoBack();
+
+    const changeUser = (value: User | null) => {
+        setUser(value);
+    }
 
     useEffect(() => {
         const checkAuth = async () => {
@@ -21,7 +26,6 @@ function App() {
                 setUser(userData);
             } catch (error) {
                 setUser(null);
-                goBack();
             } finally {
                 setLoading(false);
             }
@@ -35,7 +39,7 @@ function App() {
     }
 
     if (!user) {
-        return <AuthScreen />
+        return <AuthScreen changeUser={changeUser}/>
     }
 
     return (

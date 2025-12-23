@@ -21,7 +21,6 @@ const GoalCreation = () => {
     const goBack = useGoBack();
     const { curParentId } = useParams<{ curParentId?: string, goalId?: string }>();
     const isEditMode = location.pathname.includes("/EditGoal");
-    console.log(isEditMode);
 
     /**
      * Resets the form when the parent id changes.
@@ -55,7 +54,6 @@ const GoalCreation = () => {
         const newGoal: Goal = {...formValues};
 
         if (isEditMode && buttonName === yesButtonName) {
-            console.log("This runs");
             updateGoal(curParentId, newGoal);
             goBack();
         } else if (!isEditMode){

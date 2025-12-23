@@ -1,0 +1,30 @@
+.auth-screen {
+    width: 40%;
+    padding: 2rem;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.input-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+    width: 100%;
+}
+
+.auth-screen input {
+    margin-bottom: 1rem;
+}
+
+.auth-screen .login {
+    border: 2px solid red;
+}
+
+.sign-up {
+    display: flex;
+    flex-direction: row;
+    gap: 0.25rem;
+    justify-content: right;
+}

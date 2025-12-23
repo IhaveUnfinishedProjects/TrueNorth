@@ -19,8 +19,8 @@ export function useFormatDate () {
         if (typeof(dateObj )=== "string") {
             try {
                 dateObj = parseDate(dateObj);
-            } catch (e) {
-                console.log(e);
+            } catch (error) {
+                console.log(error);
                 return undefined;
             }
         }

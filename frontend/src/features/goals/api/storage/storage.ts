@@ -151,8 +151,6 @@ export const setStepsComplete = ({ goalId, completeSteps }: toggleStepParams) =>
         };
     });
 
-    console.log("Change made");
-
     localStorage.setItem(DB_GOALS_KEY, JSON.stringify(newGoals));
 };
 
