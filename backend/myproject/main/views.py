@@ -11,7 +11,7 @@ def get_current_user(request):
             "email": request.user.email
         }, status=200)
     else:
-        return Response({"athenticated: False"}, status=200)
+        return Response({"athenticated: False"}, status=403)
     
 
 @api_view(['POST'])

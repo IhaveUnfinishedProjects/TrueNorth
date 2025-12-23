@@ -9,13 +9,12 @@ export const login = async ({username, password}: LoginProps) => {
 
     const response = await fetch(API_BASE, {
         method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
+        headers: {"Content-Type": "application/json"},
         body: JSON.stringify({
             username: username,
             password: password,
         }),
+        credentials: 'include'
     });
 
     if (!response.ok) {

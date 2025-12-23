@@ -117,6 +117,17 @@ CSRF_TRUSTED_ORIGINS = [
     "http://localhost:5173",
 ]
 
+# Tells the browser: "It's okay to send this cookie across different ports"
+SESSION_COOKIE_SAMESITE = 'Lax' 
+CSRF_COOKIE_SAMESITE = 'Lax'
+
+# Tells the browser: "You don't need HTTPS to save this cookie"
+SESSION_COOKIE_SECURE = False 
+CSRF_COOKIE_SECURE = False
+
+# Optional: ensures the cookie isn't blocked by iframe protection
+SESSION_COOKIE_HTTPONLY = True
+
 # Internationalization
 # https://docs.djangoproject.com/en/5.2/topics/i18n/
 
