@@ -1,6 +1,6 @@
 import { Card } from '@components/ui/index.js';
 
-const signup = () => {
+const Signup = () => {
     return (
         <Card className='auth-page'>
             <p>Hello</p>
@@ -8,4 +8,4 @@ const signup = () => {
     );
 }
 
-export default signup;
+export default Signup;

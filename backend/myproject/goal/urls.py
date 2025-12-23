@@ -6,5 +6,5 @@ router = DefaultRouter()
 router.register(r'goals', GoalViewSet, basename='goal')
 
 urlpatterns = [
-    path('', include(router.urls)),
+    path('goal', include(router.urls)),
 ]

@@ -1,14 +1,42 @@
 import Header from './layouts/Header/Header.js';
 import HomePageContent from "./pages/Home/Home.js";
 import { GoalCreation, GoalPlanning, GoalView, GoalDetail, GoalReview, ReviewDetail } from '@pages/index.js';
-
-import { useState } from "react";
+import { fetchUser } from './features/index.js';
+import { useGoBack } from '@hooks/index.js';
+import { useEffect, useState } from "react";
 import { Routes, Route } from 'react-router-dom';
 import { BackgroundURL } from '@assets/index.js';
 
 function App() {
 
     const [headerHeight, setHeaderHeight] = useState(0); 
+    const [user, setUser] = useState(null);
+    const [loading, setLoading] = useState<Boolean>(true);
+    const goBack = useGoBack();
+
+    useEffect(() => {
+        const checkAuth = async () => {
+            try {
+                const userData = await fetchUser();
+                setUser(userData);
+            } catch (error) {
+                setUser(null);
+                goBack();
+            } finally {
+                setLoading(false);
+            }
+        }
+
+        checkAuth();
+    },[])
+
+    if (loading) {
+        return <Spinner />;
+    }
+
+    if (!user) {
+        return <AuthScreen />
+    }
 
     return (
         <>

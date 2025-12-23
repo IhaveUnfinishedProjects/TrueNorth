@@ -1,8 +1,6 @@
-import { useGoBack } from '@hooks/index.js';
 const API_BASE = "http://localhost:8000/api/goals/";
 
 export const fetchGoals = async () => {
-    const goBack = useGoBack();
 
     const response = await fetch(API_BASE, {
         method: "GET",
@@ -15,8 +13,7 @@ export const fetchGoals = async () => {
     });
 
     if (!response.ok) {
-        console.warn("Failed to fetch goals");
-        goBack();
+        throw new Error("Failed to fetch goals");
     }
     return response.json();
 };
