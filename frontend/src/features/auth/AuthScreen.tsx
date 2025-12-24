@@ -1,6 +1,6 @@
 import { Card } from "@components/ui/index.js";
 import { useInput } from "@hooks/index.js";
-import { login } from './index.js';
+import { login, signUp } from './index.js';
 import './auth.css';
 import type { User } from "@root/lib/index.js";
 import { useState } from "react";
@@ -15,6 +15,7 @@ const AuthScreen = ({changeUser}: AuthScreenProps) => {
     const emailInput = useInput();
     const confirmInput = useInput();
     const [signup, setSignup] = useState(false);
+    const [warning, setWarning] = useState("");
 
     const toggleSignup = () => {
         // Allows the page to toggle between a login & signup
@@ -24,16 +25,19 @@ const AuthScreen = ({changeUser}: AuthScreenProps) => {
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
+
+        if (signup && passwordInput !== confirmInput) {
+            setWarning("Passwords do not match");
+            return;
+        }
+        
         try {
-            let response = null;
-            if (!signup){
-                response = await login({username: usernameInput.selected, password: passwordInput.selected});
-            } else {
-                response = await login({username: usernameInput.selected, password: passwordInput.selected});
-            }
+            const response = signup ? 
+                await signUp({username: usernameInput.selected, password: passwordInput.selected, email: emailInput.selected})
+                :await login({username: usernameInput.selected, password: passwordInput.selected});
             changeUser(response);
-        } catch (error){
-            console.warn(error);
+        } catch (error: any){
+            setWarning(error.error);
         }
     }
     
@@ -48,13 +52,14 @@ const AuthScreen = ({changeUser}: AuthScreenProps) => {
                     <>
                         <p>Email</p>
                         <input 
-                        className="input"
-                        key="email"
-                        name="email"
-                        type="email"
-                        placeholder="name@example.com"
-                        value={emailInput.selected}
-                        onChange={emailInput.onChange}
+                            className="input"
+                            key="email"
+                            name="email"
+                            type="email"
+                            placeholder="name@example.com"
+                            value={emailInput.selected}
+                            onChange={emailInput.onChange}
+                            required
                         />
                     </>
                 }
@@ -67,6 +72,7 @@ const AuthScreen = ({changeUser}: AuthScreenProps) => {
                     value={usernameInput.selected}
                     placeholder={signup ? "Choose a username" : "Username"}
                     onChange={usernameInput.onChange}
+                    required
                 />
 
                 <p>Password</p>
@@ -78,6 +84,7 @@ const AuthScreen = ({changeUser}: AuthScreenProps) => {
                     value={passwordInput.selected}
                     placeholder={signup ? "Create a password" : "Enter your password"}
                     onChange={passwordInput.onChange}
+                    required
                 />
 
                 {signup &&
@@ -91,15 +98,17 @@ const AuthScreen = ({changeUser}: AuthScreenProps) => {
                             value={confirmInput.selected}
                             placeholder="Confirm your password"
                             onChange={confirmInput.onChange}
+                            required
                         />
                     </>
 }
-                <button className='login'>{signup ? "Sign Up" : "Log In"}</button>
+                <button type="submit" className='login'>{signup ? "Sign Up" : "Log In"}</button>
                 <div className='sign-up'>
                     <p>{signup ? "H" : "Don't h"}ave an account?</p>
-                    <button onClick={toggleSignup}>{signup ? "Log In" : "Sign Up"}</button>
+                    <button type="button" onClick={toggleSignup}>{signup ? "Log In" : "Sign Up"}</button>
                 </div>
             </form>
+            <p>{warning}</p>
         </Card>
     );
 }

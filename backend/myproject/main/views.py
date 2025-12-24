@@ -1,6 +1,7 @@
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from django.contrib.auth import authenticate, login, logout
+from .models import User
 
 @api_view(['GET'])
 def get_current_user(request):
@@ -21,7 +22,7 @@ def login_view(request):
     user = authenticate(username=username, password=password)
 
     if not user:
-        return Response({"error": "Invalid Credentials"}, status=400)
+        return Response({"error": "Invalid username or password"}, status=400)
     
     login(request, user)
     return Response({"message": "Login Successful", "user": user.username})
@@ -31,3 +32,20 @@ def login_view(request):
 def logout_view(request):
     logout(request)
     return Response({"Message": "Logout Successful"}, status=200)
+
+
+@api_view(['POST'])
+def signup_view(request):
+    username = request.data.get('username')
+    password = request.data.get('password')
+    email = request.data.get('email')
+
+    if User.objects.filter(username=username).exists():
+        return Response({"error": "Username already exists"}, status=400)
+    
+    if User.objects.filter(email=email).exists():
+        return Response({"error": "Email already already exists"}, status=400)
+    
+    user = User.objects.create_user(username=username, email=email, password=password)
+    login(request, user)
+    return Response({"Message": "User create and logged in", "user": user.username}, status = 201)

@@ -1,11 +1,12 @@
-const API_BASE = "http://localhost:8000/api/login/";
+const API_BASE = "http://localhost:8000/api/signup/";
 
-interface LoginProps {
+interface SignUpProps {
     username: string;
     password: string;
+    email: string;
 }
 
-export const login = async ({username, password}: LoginProps) => {
+export const signUp = async ({username, password, email}: SignUpProps) => {
 
     const response = await fetch(API_BASE, {
         method: "POST",
@@ -13,6 +14,7 @@ export const login = async ({username, password}: LoginProps) => {
         body: JSON.stringify({
             username: username,
             password: password,
+            email: email,
         }),
         credentials: 'include'
     });
@@ -22,8 +24,7 @@ export const login = async ({username, password}: LoginProps) => {
     if (!response.ok) {
         throw data;
     }
-
     return data;
 }
 
-export default login;
+export default signUp;
