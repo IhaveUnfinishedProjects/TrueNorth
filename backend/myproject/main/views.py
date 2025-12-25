@@ -2,6 +2,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from django.contrib.auth import authenticate, login, logout
 from .models import User
+import time
 
 @api_view(['GET'])
 def get_current_user(request):
@@ -31,11 +32,12 @@ def login_view(request):
         return Response({"error": "Invalid username or password"}, status=400)
     
     login(request, user)
-    return Response({"message": "Login Successful", "user": user.username})
+    return Response({"message": "Login Successful", "user": {"id": user.id, "username": user.username, "email": user.email}})
 
 
 @api_view(['POST'])
 def logout_view(request):
+    time.sleep(5)
     logout(request)
     return Response({"Message": "Logout Successful"}, status=200)
 

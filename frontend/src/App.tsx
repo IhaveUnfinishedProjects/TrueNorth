@@ -1,7 +1,7 @@
 import Header from './layouts/Header/Header.js';
 import HomePageContent from "./pages/Home/Home.js";
 import { GoalCreation, GoalPlanning, GoalView, GoalDetail, GoalReview, ReviewDetail } from '@pages/index.js';
-import { fetchUser, AuthScreen, logout } from './features/index.js';
+import { fetchUser, AuthScreen } from './features/index.js';
 import { Spinner } from '@components/index.js';
 import { useEffect, useState } from "react";
 import { Routes, Route } from 'react-router-dom';
@@ -41,8 +41,9 @@ function App() {
                     marginTop: `${headerHeight * 2}`,
                     backgroundImage: `url(${BackgroundURL})`,
                 }}>  
-                    {!user && <AuthScreen />}
-                    {user &&
+                    {!user ? 
+                        <AuthScreen />
+                        :user &&
                         <Routes>
                             <Route path="/" element={<HomePageContent />} />
                             <Route path="/CreateGoal/:curParentId?" element={<GoalCreation/>} />

@@ -11,7 +11,7 @@ const AuthScreen = () => {
     const confirmInput = useInput();
     const [signup, setSignup] = useState(false);
     const [warning, setWarning] = useState("");
-    const { login: globalLogin, logout } = useUser();
+    const { login: globalLogin } = useUser();
 
     const toggleSignup = () => {
         // Allows the page to toggle between a login & signup
@@ -30,8 +30,8 @@ const AuthScreen = () => {
         try {
             const response = signup ? 
                 await signUp({username: usernameInput.selected, password: passwordInput.selected, email: emailInput.selected})
-                :await login({username: usernameInput.selected, password: passwordInput.selected});            
-            globalLogin(response);
+                :await login({username: usernameInput.selected, password: passwordInput.selected});     
+            globalLogin(response.user);
         } catch (error: any){
             setWarning(error.error);
         }
