@@ -1,5 +1,5 @@
 import { Card } from "@components/ui/index.js";
-import { useInput, useUser } from "@hooks/index.js";
+import { useInput, useUser, useLoading } from "@hooks/index.js";
 import { login, signUp } from './index.js';
 import './auth.css';
 import { useState } from "react";
@@ -12,6 +12,7 @@ const AuthScreen = () => {
     const [signup, setSignup] = useState(false);
     const [warning, setWarning] = useState("");
     const { login: globalLogin } = useUser();
+    const { setLoading } = useLoading.getState();
 
     const toggleSignup = () => {
         // Allows the page to toggle between a login & signup
@@ -28,17 +29,23 @@ const AuthScreen = () => {
         }
         
         try {
+            setLoading(true);
             const response = signup ? 
-                await signUp({username: usernameInput.selected, password: passwordInput.selected, email: emailInput.selected})
-                :await login({username: usernameInput.selected, password: passwordInput.selected});     
+            await signUp({username: usernameInput.selected, password: passwordInput.selected, email: emailInput.selected})
+            :await login({username: usernameInput.selected, password: passwordInput.selected});    
             globalLogin(response.user);
         } catch (error: any){
             setWarning(error.error);
+            console.log(error.error);
+        } finally {
+            setLoading(false);
         }
     }
     
     return(
         <Card className='auth-screen'>
+            <h1>{signup ? "Create Account" : "Welcome Back"}</h1>
+            <p className = 'mt-[0.5rem] mb-[0.5rem]'>{signup ? "Sign up to begin" : "Log in to continue"}</p>
             <form 
                 className='input-form'
                 onSubmit={handleSubmit}
@@ -101,7 +108,7 @@ const AuthScreen = () => {
                 <button type="submit" className='login'>{signup ? "Sign Up" : "Log In"}</button>
                 <div className='sign-up'>
                     <p>{signup ? "H" : "Don't h"}ave an account?</p>
-                    <button type="button" onClick={toggleSignup}>{signup ? "Log In" : "Sign Up"}</button>
+                    <button className='sign-button' type="button" onClick={toggleSignup}><u>{signup ? "Log In" : "Sign Up"}</u></button>
                 </div>
             </form>
             <p>{warning}</p>

@@ -1,18 +1,18 @@
 import Header from './layouts/Header/Header.js';
 import HomePageContent from "./pages/Home/Home.js";
 import { GoalCreation, GoalPlanning, GoalView, GoalDetail, GoalReview, ReviewDetail } from '@pages/index.js';
-import { fetchUser, AuthScreen } from './features/index.js';
+import { fetchUser, AuthScreen } from '@features/index.js';
 import { Spinner } from '@components/index.js';
 import { useEffect, useState } from "react";
 import { Routes, Route } from 'react-router-dom';
 import { BackgroundURL } from '@assets/index.js';
-import { useUser } from '@hooks/useUser.js';
+import { useUser, useLoading } from '@hooks/index.js';
 
 function App() {
 
     const [headerHeight, setHeaderHeight] = useState(0); 
     const { user, login } = useUser();
-    const [loading, setLoading] = useState<Boolean>(true);
+    const { loading, setLoading } = useLoading();
 
     useEffect(() => {
         const checkAuth = async () => {
@@ -27,24 +27,24 @@ function App() {
         }
         checkAuth();
     },[])
-
-    if (loading) {
-        return <Spinner />;
-    }
-
     return (
         <>
+            {loading && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
+                    <Spinner />
+                </div>
+            )}
+
             {user && <Header onHeightMeasured={({height}) => setHeaderHeight(height)}/>}
+            
             <main 
                 className="min-h-screen bg-cover" 
                 style={{ 
                     marginTop: `${headerHeight * 2}`,
                     backgroundImage: `url(${BackgroundURL})`,
                 }}>  
-                    {!user ? 
-                        <AuthScreen />
-                        :user &&
-                        <Routes>
+                    {!user ? <AuthScreen />
+                        :<Routes>
                             <Route path="/" element={<HomePageContent />} />
                             <Route path="/CreateGoal/:curParentId?" element={<GoalCreation/>} />
                             <Route path="/EditGoal/:curParentId" element={<GoalCreation/>} />

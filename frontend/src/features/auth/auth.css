@@ -1,10 +1,10 @@
 .auth-screen {
     width: 40%;
-    padding: 2rem;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    display: flex;
+    align-items: center; 
+    justify-content: center; 
+    padding: 2rem; 
+    margin-top: 4rem;
 }
 
 .input-form {
@@ -18,8 +18,30 @@
     margin-bottom: 1rem;
 }
 
-.auth-screen .login {
-    border: 2px solid red;
+.auth-screen p {
+    color: #4f5257;
+}
+
+.login {
+    text-align: center;
+    border: 1px solid white;
+    border-radius: 5px;
+    width: 100%;
+    height: 2rem;
+    margin-top:0.5rem;
+}
+
+.login:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+    transform: translateY(-1px); 
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+}
+
+.login:focus {
+    outline: none; 
+    box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.5); 
+    background-color: rgba(0, 0, 0, 0.02);
 }
 
 .sign-up {
@@ -27,4 +49,9 @@
     flex-direction: row;
     gap: 0.25rem;
     justify-content: right;
+    margin-top: 0.5rem;
+}
+
+.sign-button:hover {
+    color: blue;
 }

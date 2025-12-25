@@ -2,6 +2,7 @@ import { Audio } from 'react-loader-spinner';
 import './auth.css';
 
 function Spinner() {
+    
     return (
         <div className="spinner-div">
             <Audio

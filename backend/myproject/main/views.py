@@ -37,7 +37,6 @@ def login_view(request):
 
 @api_view(['POST'])
 def logout_view(request):
-    time.sleep(5)
     logout(request)
     return Response({"Message": "Logout Successful"}, status=200)
 

@@ -44,7 +44,7 @@ const Header = ( { onHeightMeasured }: HeaderProps) => {
                         </button>
                     </Link>
                 ))}
-                <button type='button' onClick={logout}>Log out</button>
+                <button className="header-button" type='button' onClick={logout}>Log out</button>
             </nav>
         </header>
     )

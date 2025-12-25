@@ -1,28 +1,30 @@
 import type { User } from '@root/lib/index.js'
 import { create } from 'zustand'
-import { logout } from '@features/index.js';
+import { logout as apiLogout } from '@features/index.js'; 
+import { useLoading } from '@hooks/index.js';
 
 interface UserState {
     user: User | null;
     login: (userData: User | null) => void;
-    logout: () => void;
+    logout: () => Promise<void>;
 }
 
 export const useUser = create<UserState>((set) => ({
     user: null,
     login: (userData) => {
-        try {
-            set({ user: userData });
-        } catch (error) {
-            console.warn("User couldn't be set");
-        }
+        set({ user: userData });
     },
     logout: async () => {
+        const { setLoading } = useLoading.getState(); 
+
         try {
-            await logout();
+            setLoading(true);
+            await apiLogout();
             set({ user: null });
         } catch {
             console.warn('failed to log user out');
+        } finally {
+            setLoading(false);
         }
     }
 }))

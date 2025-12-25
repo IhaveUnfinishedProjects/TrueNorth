@@ -1,6 +1,5 @@
 const API_BASE = "http://localhost:8000/api/logout/";
 import Cookies from 'js-cookie';
-//import { useUser } from '@hooks/index.js';
 
 export const logout = async () => {
 
