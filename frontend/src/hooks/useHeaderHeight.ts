@@ -1,14 +1,11 @@
 import { useEffect, type RefObject } from "react";
 
-/*
-    Date: 11/10/2025
-
-    This hook is used to grab the height of the header pass it to a callback. 
-
-    The intent is to offset main by the height of the header so the background 
-    is in full view. 
-*/ 
-
+/**
+ *  This hook is used to grab the height of the header pass it to a callback. 
+ *
+ *  The intent is to offset main by the height of the header so the background 
+ *  is in full view.
+ */
 export function useHeaderDetails(ref: RefObject<HTMLElement | null>, callback: (details: {height: number}) => void){
     useEffect(() => {
         if (ref.current) {
@@ -23,3 +20,5 @@ export function useHeaderDetails(ref: RefObject<HTMLElement | null>, callback: (
         }
     }, [ref, callback]);
 }
+
+export default useHeaderDetails;

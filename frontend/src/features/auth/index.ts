@@ -1,4 +1,5 @@
 export { fetchUser } from './api/userService.js';
-export { login } from './api/authService.js';
+export { login } from './api/loginService.js';
 export { signUp } from './api/signupService.js';
+export { logout } from './api/logoutService.js';
 export { default as AuthScreen } from './AuthScreen.js';

@@ -15,9 +15,9 @@ export const useAppNavigate = () => {
         const existingState = options?.state || {};
 
         // Merge the default flag (fromApp: true) with any other state passed in
-        const newState = {
-        ...existingState,
-        fromApp: true,
+            const newState = {
+            ...existingState,
+            fromApp: true,
         };
 
         // Calling the original function with the modified options

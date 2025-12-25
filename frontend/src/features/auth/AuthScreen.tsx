@@ -1,21 +1,17 @@
 import { Card } from "@components/ui/index.js";
-import { useInput } from "@hooks/index.js";
+import { useInput, useUser } from "@hooks/index.js";
 import { login, signUp } from './index.js';
 import './auth.css';
-import type { User } from "@root/lib/index.js";
 import { useState } from "react";
 
-interface AuthScreenProps {
-    changeUser: (value: User | null) => void;
-}
-
-const AuthScreen = ({changeUser}: AuthScreenProps) => {
+const AuthScreen = () => {
     const usernameInput = useInput();
     const passwordInput = useInput();
     const emailInput = useInput();
     const confirmInput = useInput();
     const [signup, setSignup] = useState(false);
     const [warning, setWarning] = useState("");
+    const { login: globalLogin, logout } = useUser();
 
     const toggleSignup = () => {
         // Allows the page to toggle between a login & signup
@@ -34,8 +30,8 @@ const AuthScreen = ({changeUser}: AuthScreenProps) => {
         try {
             const response = signup ? 
                 await signUp({username: usernameInput.selected, password: passwordInput.selected, email: emailInput.selected})
-                :await login({username: usernameInput.selected, password: passwordInput.selected});
-            changeUser(response);
+                :await login({username: usernameInput.selected, password: passwordInput.selected});            
+            globalLogin(response);
         } catch (error: any){
             setWarning(error.error);
         }

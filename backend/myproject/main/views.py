@@ -19,6 +19,12 @@ def get_current_user(request):
 def login_view(request):
     username = request.data.get('username')
     password = request.data.get('password')
+    if '@' in username:
+        try:
+            user_obj = User.objects.get(email=username)
+            username = user_obj.username
+        except User.DoesNotExist:
+            pass
     user = authenticate(username=username, password=password)
 
     if not user:

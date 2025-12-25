@@ -22,7 +22,6 @@ export const login = async ({username, password}: LoginProps) => {
     if (!response.ok) {
         throw data;
     }
-
     return data;
 }
 

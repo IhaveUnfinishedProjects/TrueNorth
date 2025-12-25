@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import '@root/index.css';
 import './Header.css';
 import Logo from "@assets/logo.svg?react";
-import { useHeaderDetails } from '@root/hooks/useHeaderHeight.js';
+import { useHeaderDetails, useUser } from '@hooks/index.js';
 import { NavBarData } from './config.js';
 
 /*
@@ -27,6 +27,7 @@ const Header = ( { onHeightMeasured }: HeaderProps) => {
     // Creates a ref & attaches it to the root html element
     const headerRef = useRef<HTMLElement>(null);
     useHeaderDetails(headerRef, onHeightMeasured);
+    const { logout } = useUser();
 
     return(
         <header ref={headerRef} className="header">
@@ -43,6 +44,7 @@ const Header = ( { onHeightMeasured }: HeaderProps) => {
                         </button>
                     </Link>
                 ))}
+                <button type='button' onClick={logout}>Log out</button>
             </nav>
         </header>
     )
