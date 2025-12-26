@@ -4,7 +4,6 @@ import Cookies from 'js-cookie';
 export const logout = async () => {
 
     const csrfToken = Cookies.get('csrftoken');
-    console.log(csrfToken, 'token');
 
     const response = await fetch(API_BASE, {
         method: "POST",

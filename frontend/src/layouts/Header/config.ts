@@ -14,7 +14,7 @@ export const NavBarData: NavBarData[] = [
         name: "Goals"
     },
     {
-        linkTo: "/",
+        linkTo: "/GoalReview",
         name: "Review"
     },
     {

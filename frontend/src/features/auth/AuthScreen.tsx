@@ -1,8 +1,8 @@
 import { Card } from "@components/ui/index.js";
 import { useInput, useUser, useLoading } from "@hooks/index.js";
 import { login, signUp } from './index.js';
-import './auth.css';
 import { useState } from "react";
+import './auth.css';
 
 const AuthScreen = () => {
     const usernameInput = useInput();

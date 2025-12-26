@@ -1,10 +1,16 @@
 import type { CompleteGoal, addStepsProps, addGoalParams, toggleStepParams, Goal } from "@features/goals/index.js";
 import type { Review } from '@root/lib/types/index.js';
 import { isReviewType } from "../../utils/index.js";
+import { createGoal } from '../index.js';
+import { useLoading } from '@hooks/index.js';
 
 const DB_GOALS_KEY = 'app_goals_database';
-const DB_REVIEW_KEY = 'app_reviews_database'
+const DB_REVIEW_KEY = 'app_reviews_database';
+const { setLoading } = useLoading.getState();
 
+/**
+ * This file routes the API requests. 
+ */
 
 /**
  * @returns an array of complete goals as stored in the local storage
@@ -68,19 +74,17 @@ export const getAncestor = (id: string): CompleteGoal | undefined => {
  * @param newGoal This is the newly submitted goal. 
  * @returns The newly created goal so the ID can be accessed. 
  */
-export const addGoal = ({newGoal, curParentId}: addGoalParams): string => {
-
-    const completeGoal: CompleteGoal = {
-        ...newGoal,
-        id: crypto.randomUUID(),
-        steps: [],
-        parent: curParentId ?? ''
+export const addGoal = async ({newGoal, curParentId}: addGoalParams): Promise<string> => {
+    try {
+        setLoading(true);
+        const parentId = await createGoal({newGoal, curParentId});
+        return parentId;
+    } catch (error) {
+        console.warn(error);
+        return '';
+    } finally {
+        setLoading(false);
     }
-
-    const currentGoals = getGoals();
-    localStorage.setItem(DB_GOALS_KEY, JSON.stringify([...currentGoals, completeGoal]));
-
-    return completeGoal.id;
 }
 
 export const updateGoal = (goalId: string | undefined, newGoal: Goal) => {

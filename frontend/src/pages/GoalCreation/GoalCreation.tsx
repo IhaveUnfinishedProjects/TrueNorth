@@ -50,14 +50,14 @@ const GoalCreation = () => {
      * * Routes the user to where they need to be. 
      * @param buttonName Name of the button pressed to decide route. 
      */
-    const submitData = (buttonName: string | undefined) => {
+    const submitData = async (buttonName: string | undefined) => {
         const newGoal: Goal = {...formValues};
 
         if (isEditMode && buttonName === yesButtonName) {
             updateGoal(curParentId, newGoal);
             goBack();
         } else if (!isEditMode){
-            const goalId = addGoal({newGoal, curParentId});
+            const goalId = await addGoal({newGoal, curParentId});
             navigate(`/EditGoal/${goalId}`, {replace: true});
 
             if (buttonName === addStepsButName) {
