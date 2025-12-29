@@ -25,6 +25,27 @@ export const fetchGoals = async () => {
 };
 
 /**
+ * API call to fetch a single goal from the backend. 
+ */
+export const fetchGoal = async (goalId: string | number) => {
+
+    const csrfToken = Cookies.get('csrftoken');
+    const response = await fetch(`${API_BASE}${goalId}/`, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+            "X-CSRFToken": csrfToken || "",
+        },
+        credentials: "include", 
+    });
+
+    if (!response.ok) {
+        throw new Error(`Failed to fetch goal with id: ${goalId}`);
+    }
+    return response.json();
+};
+
+/**
  * API call to create goal in the backend & recieve the parent id. 
  */
 export const createGoal = async ({ newGoal, curParentId }: addGoalParams) => {

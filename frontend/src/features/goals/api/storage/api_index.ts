@@ -1,7 +1,6 @@
 import type { CompleteGoal, addStepsProps, addGoalParams, toggleStepParams, Goal } from "@features/goals/index.js";
 import type { Review } from '@root/lib/types/index.js';
-import { isReviewType } from "../../utils/index.js";
-import { createGoal } from '../index.js';
+import { createGoal, isReviewType, fetchGoals, fetchGoal } from '@features/goals/index.js';
 import { useLoading } from '@hooks/index.js';
 
 const DB_GOALS_KEY = 'app_goals_database';
@@ -15,13 +14,13 @@ const { setLoading } = useLoading.getState();
 /**
  * @returns an array of complete goals as stored in the local storage
  */
-export const getGoals = (): CompleteGoal[] => {
-    const data = localStorage.getItem(DB_GOALS_KEY);
-    return data ? JSON.parse(data) : [];
+export const getGoals = async (): Promise<CompleteGoal[]> => {
+    const goals = await fetchGoals();
+    return goals;
 }
 
-export const getGoalsMap = (): Map<string, CompleteGoal> => {
-    const goals = getGoals();
+export const getGoalsMap = async(): Promise<Map<string, CompleteGoal>> => {
+    const goals = await getGoals();
     const mappedGoals = new Map(goals.map(goal => [goal.id, goal]));
     return mappedGoals;
 }
@@ -29,10 +28,13 @@ export const getGoalsMap = (): Map<string, CompleteGoal> => {
 /**
  * @param id the id of the goal to get
  */
-export const getGoal = (id: string | undefined): CompleteGoal | undefined => {
-    const goals = getGoals();
-    const goal = goals.find(goal => goal.id === id);
+export const getGoal = async (id: string | undefined): Promise<CompleteGoal | undefined> => {
+    if (!id) {
+        console.warn("Goal id was not specified");
+        return undefined;
+    }
 
+    const goal = await fetchGoal(id);
     return goal;
 }
 

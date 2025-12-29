@@ -3,7 +3,6 @@ export { default as GoalStepsForm } from './components/GoalStepForm.js';
 export { default as GoalCreationForm } from './components/GoalCreationForm.js';
 export { default as Form } from './components/GoalCreationForm.js';
 export { default as StepRecurrenceModal } from './components/Recurence/StepRecurrenceModal.js'
-export { default as OrdinalRadio } from './utils/OrdinalRadio/OrdinalRadio.js';
 export { default as GoalCard } from './components/GoalView/GoalCard.js'
 
 /* Exporting the main Hooks for pages*/
@@ -29,3 +28,6 @@ export * from './api/index.js';
 
 /* Specific smart components */
 export * from './components/index.js';
+
+/* Util */
+export * from './utils/index.js';
