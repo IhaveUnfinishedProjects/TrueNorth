@@ -1,6 +1,6 @@
 import type { CompleteGoal, addStepsProps, addGoalParams, toggleStepParams, Goal } from "@features/goals/index.js";
 import type { Review } from '@root/lib/types/index.js';
-import { createGoal, isReviewType, fetchGoals, fetchGoal } from '@features/goals/index.js';
+import { createGoal, isReviewType, fetchGoals, fetchGoal, updateSteps } from '@features/goals/index.js';
 import { useLoading } from '@hooks/index.js';
 
 const DB_GOALS_KEY = 'app_goals_database';
@@ -39,8 +39,8 @@ export const getGoal = async (id: string | undefined): Promise<CompleteGoal | un
 }
 
 /** Returns any goal that isn't a parent */
-export const getLeafGoals = () => {
-    const goals: CompleteGoal[] = getGoals();
+export const getLeafGoals = async () => {
+    const goals: CompleteGoal[] = await getGoals();
     const mappedGoals = new Map(goals.map(data => [data.id, data]));
 
     goals.forEach(goal => {
@@ -57,8 +57,8 @@ export const getLeafGoals = () => {
  * @param id The id of the goal to find the oldest ancestor of 
  * @param goalMap a map to pass through for quicker run time
  */
-export const getAncestor = (id: string): CompleteGoal | undefined => {
-    const mappedGoals: Map<string, CompleteGoal> = getGoalsMap();
+export const getAncestor = async (id: string): Promise<CompleteGoal | undefined> => {
+    const mappedGoals: Map<string, CompleteGoal> = await getGoalsMap();
 
     const findAncestor = (id: string) => {
         const parent = mappedGoals.get(id)?.parent;
@@ -89,7 +89,7 @@ export const addGoal = async ({newGoal, curParentId}: addGoalParams): Promise<st
     }
 }
 
-export const updateGoal = (goalId: string | undefined, newGoal: Goal) => {
+export const updateGoal = async (goalId: string | undefined, newGoal: Goal) => {
     const goalToUpdate = getGoal(goalId);
     
     if (!goalToUpdate || !newGoal) {
@@ -97,7 +97,7 @@ export const updateGoal = (goalId: string | undefined, newGoal: Goal) => {
         return;
     }
 
-    const allGoals = getGoals();
+    const allGoals = await getGoals();
     const newGoals = allGoals.map(goal => {
         return goal.id === goalId ? {
             ...goal, 
@@ -116,14 +116,15 @@ export const updateGoal = (goalId: string | undefined, newGoal: Goal) => {
  * @param newSteps - The steps to add the the goal object
  * @param curParentId - The parent object id to add steps to.
  */
-export const addSteps = ({newSteps, curParentId}: addStepsProps) => {
-    const completeGoals = getGoals();
-    
-    const newGoals = completeGoals.map(goal => {
-        return goal.id === curParentId ? { ...goal, steps: newSteps} : goal;
-    })
+export const addSteps = async ({newSteps, curParentId}: addStepsProps) => {
+    const goal: CompleteGoal | undefined = await getGoal(curParentId);
 
-    localStorage.setItem(DB_GOALS_KEY, JSON.stringify(newGoals))
+    if (!goal?.steps) {
+        return;
+    }
+
+    const combinedSteps = [...goal.steps, ...newSteps];
+    updateSteps(combinedSteps, goal);
 }
 
 /**

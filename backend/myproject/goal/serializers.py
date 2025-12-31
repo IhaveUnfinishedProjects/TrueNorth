@@ -46,7 +46,7 @@ class GoalSerializer(serializers.ModelSerializer):
         return [str(steps.id) for steps in obj.steps.filter(is_complete=True)]
 
     def update(self, instance, validated_data):
-        steps_data = validated_data.pop('steps', [])
+        steps_data = validated_data.pop('steps', None)
         
         for attr, value in validated_data.items():
             setattr(instance, attr, value)

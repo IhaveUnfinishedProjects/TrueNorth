@@ -1,5 +1,5 @@
 import Cookies from 'js-cookie';
-import type { addGoalParams, CompleteGoal } from '@features/index.js';
+import type { addGoalParams, Step, CompleteGoal, Goal } from '@features/index.js';
 const API_BASE = "http://localhost:8000/api/goals/";
 
 
@@ -78,3 +78,59 @@ export const createGoal = async ({ newGoal, curParentId }: addGoalParams) => {
     }
     return data.id;
 };
+
+/**
+ * API call to update an existing, non-complete goal without steps
+ */
+export const updateGoalPartial = async (goalId: string | undefined, newGoal: Goal) => {
+
+    const csrfToken = Cookies.get('csrftoken');
+    const payload = {
+        ...(newGoal.goalName && { goal_name: newGoal.goalName}),
+        ...(newGoal.desiredAchievement && { desired_achievement: newGoal.desiredAchievement }),
+        ...(newGoal.importance && { importance: newGoal.importance }),
+        ...(newGoal.measurement && { measurement: newGoal.measurement }),
+        ...(newGoal.achievementDate && { achievement_date: newGoal.achievementDate }),
+    }
+
+    const response = await fetch(`${API_BASE}${goalId}/`, {
+        method: "PATCH",
+        headers: {
+            "Content-Type": "application/json",
+            "X-CSRFToken": csrfToken || "",
+        },
+        credentials: "include",
+        body: JSON.stringify(payload)
+    });
+
+    if (!response.ok) {
+        throw new Error(`Failed to update goal with id: ${goalId}`);
+    }
+    return response.json();
+}
+
+/**
+ * API Call to add steps. Passes in a patch so we don't have to pass in the rest of the goal. 
+ */
+export const updateSteps = async (newSteps: Step[], goal: CompleteGoal) => {
+        
+    const csrfToken = Cookies.get('csrftoken');
+    const payload = {
+        steps: newSteps
+    }
+
+    const response = await fetch(`${API_BASE}${goal.id}/`, {
+        method: "PATCH",
+        headers: {
+            "Content-Type": "application/json",
+            "X-CSRFToken": csrfToken || "",
+        },
+        credentials: "include",
+        body: JSON.stringify(payload)
+    });
+
+    if (!response.ok) {
+        throw new Error(`Failed to add steps to goal with id: ${goal.id}`);
+    }
+    return response.json();
+}
