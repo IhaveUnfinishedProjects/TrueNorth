@@ -10,7 +10,7 @@ export interface CompleteGoal extends Goal {
     completeSteps?: CompleteStep;
 }
 
-type CompleteStep = string[];
+export type CompleteStep = string[];
 
 /**
  * The props the Add Steps in storage takes

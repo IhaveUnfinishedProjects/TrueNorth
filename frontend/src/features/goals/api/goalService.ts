@@ -1,5 +1,5 @@
 import Cookies from 'js-cookie';
-import type { addGoalParams, Step, CompleteGoal, Goal } from '@features/index.js';
+import type { addGoalParams, Step, CompleteGoal, Goal, CompleteStep } from '@features/index.js';
 const API_BASE = "http://localhost:8000/api/goals/";
 
 
@@ -134,3 +134,15 @@ export const updateSteps = async (newSteps: Step[], goal: CompleteGoal) => {
     }
     return response.json();
 }
+
+export const updateStepCompletion = async (goalId: number, allCompletedStepIds: CompleteStep) => {
+    const payload = {
+        completed_step_ids: allCompletedStepIds
+    };
+
+    return await fetch(`${API_BASE}${goalId}/`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+    });
+};

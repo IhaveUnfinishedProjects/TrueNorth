@@ -132,10 +132,8 @@ export const addSteps = async ({newSteps, curParentId}: addStepsProps) => {
  * @param id The id of the goal we want to check
  * @returns Return true if the goal exists, false if it doesn't
  */
-export const isGoal = (id: string): boolean => {
-    const goals = getGoals();
-    const goal = goals.find(goal => goal.id === id);
-    return (goal !== undefined);
+export const isGoal = async (id: string): Promise<boolean> => {
+    return await (getGoal(id) !== undefined);
 }
 
 
@@ -143,10 +141,9 @@ export const isGoal = (id: string): boolean => {
  * Used to toggle whether a step is completed or not.
  * Allows progress to be measured. 
  */
-export const setStepsComplete = ({ goalId, completeSteps }: toggleStepParams) => {
-    const allGoals = getGoals();
+export const setStepsComplete = async ({ goalId, completeSteps }: toggleStepParams) => {
     
-    const goal = allGoals.find(g => g.id === goalId);
+    const goal = await getGoal(goalId);
     if (!goal) throw new Error("Goal couldn't be found");
 
     const newGoals = allGoals.map(g => {
