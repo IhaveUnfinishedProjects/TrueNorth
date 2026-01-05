@@ -1,50 +1,34 @@
-import './ReviewDetail.css';
+import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Card, RadioForm } from '@components/ui/index.js';
-import { getGoal, type CompleteGoal, AddReview, REVIEW_TYPES } from '@root/features/goals/index.js';
-import { useEffect } from 'react';
-import { useRadio, useAppNavigate, useInput, useGoBack } from '@root/hooks/index.js';
 import { ReviewSection } from './components/index.js';
-import { isReviewType } from '@root/features/goals/utils/index.js';
+import { useRadio, useInput, useGoBack, useLoading } from '@hooks/index.js';
+import { getGoal, AddReview, REVIEW_TYPES, isReviewType, type CompleteGoal } from '@features/goals/index.js';
+import './ReviewDetail.css';
 
 export const ReviewDetail = () => {
 
-    /* CONSTANTS */
-    const { goalId } = useParams<{ goalId: string}>();
-    const goal: CompleteGoal | undefined = getGoal(goalId);
-    const navigate = useAppNavigate();
+    /* HOOKS & PARAMS */
+    const { goalId } = useParams<{ goalId: string }>();
     const goBack = useGoBack();
-    const RADIO_FORM_NAME = 'reviewDetailRadio';
-    const radioOptions = REVIEW_TYPES.map(option => ({
-        value: option,
-        displayLabel: option
-    }));
+    
+    /* STATE */
+    const [goal, setGoal] = useState<CompleteGoal>();
+    const { loading, setLoading } = useLoading.getState();
 
-    const {selected: reviewType, handleChange} = useRadio();
+    /* FORM HOOKS */
+    const { selected: reviewType, handleChange } = useRadio();
     const firstInputHook = useInput();
     const secondInputHook = useInput();
-
-    useEffect(() => {
-        // Validates the goal id by checking goal is real.
-        if (!goal) {
-            console.warn(`Goal ${goalId} couldn't be found.`);
-            goBack();
-            return
-        }
-    }, [goalId]);
-
+    
+    /* HELPER FUNCTION */
     const submissionHandler = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const firstInput = firstInputHook.selected;
         const secondInput = secondInputHook.selected;
 
-        if (!(goalId && reviewType && firstInput && secondInput) || secondInput === '' || firstInput === ''){
-            console.warn("Invalid Review Object");
-            return;
-        }
-
-        if (!isReviewType(reviewType)){
-            console.warn("reviewType passed is not valid");
+        if (!goalId || !isReviewType(reviewType) || !firstInput || !secondInput) {
+            console.warn("Invalid Review Object or Type");
             return;
         }
 
@@ -52,6 +36,32 @@ export const ReviewDetail = () => {
         goBack();
     }
 
+    /* CONSTANTS */
+    const RADIO_FORM_NAME = 'reviewDetailRadio';
+    const radioOptions = REVIEW_TYPES.map(option => ({
+        value: option,
+        displayLabel: option
+    }));
+
+    /* SIDE EFFECTS */
+    useEffect(() => {
+        const loadGoal = async () => {
+            try {
+                setLoading(true);
+                const goalObj = await getGoal(goalId);
+                setGoal(goalObj);
+            } catch (error) {
+                console.warn(`Goal ${goalId} couldn't be found. ` + error);
+                goBack();
+            } finally {
+                setLoading(false);
+            }
+        }
+        loadGoal();
+    }, [goalId]);
+
+
+    if (loading) {return null}
     if (goal) {return (
         <Card className='review-detail-container'>
 

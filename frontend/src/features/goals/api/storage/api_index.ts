@@ -1,11 +1,10 @@
 import type { CompleteGoal, addStepsProps, addGoalParams, toggleStepParams, Goal } from "@features/goals/index.js";
 import type { Review } from '@root/lib/types/index.js';
-import { createGoal, isReviewType, fetchGoals, fetchGoal, updateSteps } from '@features/goals/index.js';
+import { createGoal, isReviewType, fetchGoals, fetchGoal, updateSteps, updateStepCompletion } from '@features/goals/index.js';
 import { useLoading } from '@hooks/index.js';
 
 const DB_GOALS_KEY = 'app_goals_database';
 const DB_REVIEW_KEY = 'app_reviews_database';
-const { setLoading } = useLoading.getState();
 
 /**
  * This file routes the API requests. 
@@ -77,6 +76,7 @@ export const getAncestor = async (id: string): Promise<CompleteGoal | undefined>
  * @returns The newly created goal so the ID can be accessed. 
  */
 export const addGoal = async ({newGoal, curParentId}: addGoalParams): Promise<string> => {
+    const { setLoading } = useLoading.getState();
     try {
         setLoading(true);
         const parentId = await createGoal({newGoal, curParentId});
@@ -146,16 +146,7 @@ export const setStepsComplete = async ({ goalId, completeSteps }: toggleStepPara
     const goal = await getGoal(goalId);
     if (!goal) throw new Error("Goal couldn't be found");
 
-    const newGoals = allGoals.map(g => {
-        if (g.id !== goalId) return g;
-        
-        return {
-            ...g,
-            completeSteps: completeSteps
-        };
-    });
-
-    localStorage.setItem(DB_GOALS_KEY, JSON.stringify(newGoals));
+    await updateStepCompletion(goalId, completeSteps);
 };
 
 /**

@@ -135,7 +135,7 @@ export const updateSteps = async (newSteps: Step[], goal: CompleteGoal) => {
     return response.json();
 }
 
-export const updateStepCompletion = async (goalId: number, allCompletedStepIds: CompleteStep) => {
+export const updateStepCompletion = async (goalId: string, allCompletedStepIds: CompleteStep) => {
     const payload = {
         completed_step_ids: allCompletedStepIds
     };
