@@ -9,7 +9,7 @@ import { useEffect, useState } from 'react';
 export const GoalView = () => {
 
     const { loading, setLoading } = useLoading.getState();
-    const [goals, setGoals] = useState<CompleteGoal[]>([])
+    const [goals, setGoals] = useState<CompleteGoal[]>()
 
     useEffect(() => {
         const loadGoals = async () => {
@@ -27,8 +27,7 @@ export const GoalView = () => {
         loadGoals();
     }, [])
 
-    if (loading) {return null;}
-    console.log(goals);
+    if (loading || !goals) {return null;}
     return (
         <>
             <h1 className="headerGoal"> Goals Overview </h1>

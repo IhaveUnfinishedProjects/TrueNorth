@@ -1,45 +1,63 @@
-import { getGoal, type CompleteGoal } from "@root/features/goals/index.js";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { useAppNavigate } from "@hooks/index.js";
-import { Card, CheckboxComponent } from "@root/components/ui/index.js";
+import { useAppNavigate, useGoBack, useLoading } from "@hooks/index.js";
+import { Card, CheckboxComponent } from "@components/ui/index.js";
+import { useCheckbox, type CheckBoxOptions, setStepsComplete, getGoal, getGoals, getBreadCrumb, type CompleteGoal } from '@features/goals/index.js';
 import { FeatureCard } from './components/featureCard.js';
 import './GoalDetail.css';
-import { getBreadCrumb } from "@features/goals/index.js";
-import { useCheckbox, type CheckBoxOptions, setStepsComplete } from '@features/goals/index.js';
 
 export const GoalDetail = () => {
 
+    /*  HOOKS & PARAMS  */
+    const { goalId } = useParams<{ goalId: string }>();
+    const [goal, setGoal] = useState<CompleteGoal>();
     const navigate = useAppNavigate();
+    const goBack = useGoBack();
+    const { loading, setLoading } = useLoading.getState(); 
+    let breadCrumb: string | null = null;
+    
+    // State management hooks
+    const { selectedBoxes, handleChange } = useCheckbox({ defaultVal: goal?.completeSteps });
 
-    /* Takes the goalId from the url to get the 
-       goal, breadcrumb, goal steps */
-    const { goalId } = useParams<{ goalId: string}>();
-    const goal: CompleteGoal | undefined = getGoal(goalId);
-    const breadCrumb: string = getBreadCrumb(goal);
-    const {selectedBoxes, handleChange} = useCheckbox({defaultVal: goal?.completeSteps}); // to tick / untick goals
+    /*  DERIVED STATE  */
     const stepOptions: CheckBoxOptions[] | undefined = goal?.steps?.map(step => ({
         id: step.id,
         description: step.description
     }));
 
-    useEffect(() => {
-        /* Makes sure the user has a valid goal selected */
-        if (!goal) {
-            console.warn(`Goal ${goalId} couldn't be found.`);
-            navigate(-1, { replace: true });
-            return
-        }
-    }, [goalId]);
-    
-    /* Local check box change handler to submit data on change. */
+    /*  HANDLERS  */
     const checkboxChange = (values: string[] | null) => {
         handleChange(values);
         if (values && goalId) {
-            setStepsComplete({goalId: goalId, completeSteps: values})
+            setStepsComplete({ goalId: goalId, completeSteps: values });
         }
-    }
+    };
 
+    /*  SIDE EFFECTS  */
+    useEffect(() => {
+        const loadGoal = async () => {
+            try {
+                setLoading(true);
+                const goalResult = await getGoal(goalId);
+                const goals = await getGoals();
+                setGoal(goalResult);
+
+                if (!goalResult) {
+                    throw new Error(`Goal with ID ${goalId} not found`);
+                }
+
+                breadCrumb = getBreadCrumb({goal: goalResult, goals});
+            } catch (error) {
+                console.warn(`Goal of ${goalId} couldn't be found + `, error);
+                goBack();
+            } finally {
+                setLoading(false);
+            }
+        }
+        loadGoal();
+    }, [goalId]);
+
+    if (loading) {return null}
     if (goal) {return (
         <Card className='goal-detail-card'>
             <p className='goal-detail-crumb'> {breadCrumb}</p>

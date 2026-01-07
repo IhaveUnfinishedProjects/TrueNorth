@@ -13,13 +13,12 @@ export const GoalCard = ({goals}: GoalCardProps) => {
 
     const navigate = useAppNavigate();
     const { formatISO8601 } = useFormatDate();
-
     return (
         <div className='CardContainer'>
             {goals.map((goal, index) => (
                 <div key={goal.id} onClick={() => navigate(`/GoalDetail/${goal.id}`)} className={`GoalViewCard ${getColour(index)}`}>
                     <div>
-                        <p className='goal-card-crumb'> {getBreadCrumb(goal)}</p>
+                        <p className='goal-card-crumb'> {getBreadCrumb({goal, goals})}</p>
                         <h2 className='GoalViewH2'>{goal.goalName}</h2>
                     </div>
                     <p>{goal.desiredAchievement}</p>

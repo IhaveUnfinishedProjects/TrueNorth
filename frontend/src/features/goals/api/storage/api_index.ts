@@ -1,6 +1,6 @@
 import type { CompleteGoal, addStepsProps, addGoalParams, toggleStepParams, Goal } from "@features/goals/index.js";
 import type { Review } from '@root/lib/types/index.js';
-import { createGoal, isReviewType, fetchGoals, fetchGoal, updateSteps, updateStepCompletion } from '@features/goals/index.js';
+import { createGoal, fetchGoals, fetchGoal, updateSteps, updateStepCompletion } from '@features/goals/index.js';
 import { useLoading } from '@hooks/index.js';
 
 const DB_GOALS_KEY = 'app_goals_database';
@@ -16,12 +16,6 @@ const DB_REVIEW_KEY = 'app_reviews_database';
 export const getGoals = async (): Promise<CompleteGoal[]> => {
     const goals = await fetchGoals();
     return goals;
-}
-
-export const getGoalsMap = async(): Promise<Map<string, CompleteGoal>> => {
-    const goals = await getGoals();
-    const mappedGoals = new Map(goals.map(goal => [goal.id, goal]));
-    return mappedGoals;
 }
 
 /**
@@ -49,25 +43,6 @@ export const getLeafGoals = async () => {
     });
 
     return mappedGoals;
-}
-
-/**
- * Returns the oldest ancestor for a goal. 
- * @param id The id of the goal to find the oldest ancestor of 
- * @param goalMap a map to pass through for quicker run time
- */
-export const getAncestor = async (id: string): Promise<CompleteGoal | undefined> => {
-    const mappedGoals: Map<string, CompleteGoal> = await getGoalsMap();
-
-    const findAncestor = (id: string) => {
-        const parent = mappedGoals.get(id)?.parent;
-        if (!parent) {
-            return mappedGoals.get(id);
-        } else {
-            return findAncestor(parent)
-        }
-    }
-    return findAncestor(id);
 }
 
 /**
