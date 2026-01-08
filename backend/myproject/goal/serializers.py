@@ -47,12 +47,19 @@ class GoalSerializer(serializers.ModelSerializer):
 
     def update(self, instance, validated_data):
         steps_data = validated_data.pop('steps', None)
-        
         for attr, value in validated_data.items():
             setattr(instance, attr, value)
         instance.save()
 
+        if steps_data is not None:
+            self._update_steps_list(instance, steps_data)
+
+        self._update_completion_status(instance)
+        return instance
+
+    def _update_steps_list(self, instance, steps_data):
         keep_ids = set()
+        
         for step_data in steps_data:
             step_id = step_data.get('id')
             recurrence_data = step_data.pop('recurrence', None)
@@ -64,18 +71,20 @@ class GoalSerializer(serializers.ModelSerializer):
                 step.save()
             else:
                 step = Step.objects.create(**step_data, goal=instance)
-            
+
             keep_ids.add(step.id)
 
             if recurrence_data:
                 self._update_recurrence(step, recurrence_data)
 
         instance.steps.exclude(id__in=keep_ids).delete()
+        
         instance.steps.update(is_complete=False)
+
+    def _update_completion_status(self, instance):
         completed_ids = set(self.initial_data.get('completed_step_ids', []))
         if completed_ids:
             instance.steps.filter(id__in=completed_ids).update(is_complete=True)
-        return instance
 
     def _update_recurrence(self, step, recurrence_data):
         if step.recurrence:

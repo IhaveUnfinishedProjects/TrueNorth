@@ -1,6 +1,6 @@
 import type { CompleteGoal, addStepsProps, addGoalParams, toggleStepParams, Goal } from "@features/goals/index.js";
 import type { Review } from '@root/lib/types/index.js';
-import { createGoal, fetchGoals, fetchGoal, updateSteps, updateStepCompletion } from '@features/goals/index.js';
+import { createGoal, fetchGoals, fetchGoal, updateSteps, updateStepCompletion, updateGoalPartial } from '@features/goals/index.js';
 import { useLoading } from '@hooks/index.js';
 
 const DB_GOALS_KEY = 'app_goals_database';
@@ -26,9 +26,13 @@ export const getGoal = async (id: string | undefined): Promise<CompleteGoal | un
         console.warn("Goal id was not specified");
         return undefined;
     }
-
-    const goal = await fetchGoal(id);
-    return goal;
+    try {
+        const goal = await fetchGoal(id);
+        return goal;
+    } catch (error) {
+        console.warn(`Goal of ID '${id}' could not be found.`, error);
+        return undefined;
+    }
 }
 
 /** Returns any goal that isn't a parent */
@@ -65,25 +69,15 @@ export const addGoal = async ({newGoal, curParentId}: addGoalParams): Promise<st
 }
 
 export const updateGoal = async (goalId: string | undefined, newGoal: Goal) => {
-    const goalToUpdate = getGoal(goalId);
-    
-    if (!goalToUpdate || !newGoal) {
-        throw new Error ("Goal couldn't be found");
-        return;
+    try {
+        const goalToUpdate = await getGoal(goalId);
+        if (goalToUpdate && goalId) {
+            await updateGoalPartial(goalId, goalToUpdate);
+        }
+    } catch (error) {
+        console.warn(`Goal of ID '${goalId}' couldn't be updated.`, goalId);
     }
 
-    const allGoals = await getGoals();
-    const newGoals = allGoals.map(goal => {
-        return goal.id === goalId ? {
-            ...goal, 
-            goalName: newGoal.goalName,
-            desiredAchievement: newGoal.desiredAchievement,
-            importance: newGoal.importance,
-            measurement: newGoal.measurement,
-            achievementDate: newGoal.achievementDate
-        }: goal});
-
-    localStorage.setItem(DB_GOALS_KEY, JSON.stringify(newGoals));
 }
 
 /**

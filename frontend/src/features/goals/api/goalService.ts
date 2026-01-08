@@ -115,9 +115,16 @@ export const updateGoalPartial = async (goalId: string | undefined, newGoal: Goa
 export const updateSteps = async (newSteps: Step[], goal: CompleteGoal) => {
         
     const csrfToken = Cookies.get('csrftoken');
-    const payload = {
-        steps: newSteps
-    }
+
+    const payloadSteps = newSteps.map(step => {
+        const isTempId = isNaN(Number(step.id));
+        return {
+            ...step,
+            id: isTempId ? undefined : step.id 
+        };
+    });
+
+    const payload = { steps: payloadSteps };
 
     const response = await fetch(`${API_BASE}${goal.id}/`, {
         method: "PATCH",
@@ -132,7 +139,8 @@ export const updateSteps = async (newSteps: Step[], goal: CompleteGoal) => {
     if (!response.ok) {
         throw new Error(`Failed to add steps to goal with id: ${goal.id}`);
     }
-    return response.json();
+    const data = await response.json();
+    return data;
 }
 
 export const updateStepCompletion = async (goalId: string, allCompletedStepIds: CompleteStep) => {
