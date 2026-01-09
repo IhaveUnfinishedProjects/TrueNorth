@@ -26,10 +26,10 @@ export const GoalDetail = () => {
     }));
 
     /*  HANDLERS  */
-    const checkboxChange = (values: string[] | null) => {
+    const checkboxChange = async (values: string[] | null) => {
         handleChange(values);
         if (values && goalId) {
-            setStepsComplete({ goalId: goalId, completeSteps: values });
+            await setStepsComplete({ goalId: goalId, completeSteps: values });
         }
     };
 

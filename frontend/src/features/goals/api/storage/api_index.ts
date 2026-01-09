@@ -130,8 +130,9 @@ export const getReviews = (): Review[] => {
  * Used to add a review object to storage.
  * Associates it with the goal id. 
  */
-export const AddReview = ({goalId, reviewType, firstInput, secondInput}: Review) => {
-    if (!isGoal(goalId)) {
+export const AddReview = async ({goalId, reviewType, firstInput, secondInput}: Review) => {
+    const goalBool = await isGoal(goalId);
+    if (!goalBool) {
         console.warn("Goal didn't exist to add review");
         return;
     }

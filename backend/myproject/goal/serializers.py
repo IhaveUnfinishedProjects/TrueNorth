@@ -9,7 +9,8 @@ class RecurrenceSerializer(serializers.ModelSerializer):
 
 class StepSerializer(serializers.ModelSerializer):
     recurrence = RecurrenceSerializer(required=False)
-
+    id = serializers.CharField(required=False)
+    
     class Meta: 
         model = Step
         fields=['id', 'description', 'recurrence', 'is_complete']
