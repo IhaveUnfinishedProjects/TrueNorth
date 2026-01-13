@@ -94,9 +94,7 @@ const GoalCreation = () => {
         if (buttonName === yesButtonName) {
             goBack();
         }
-
         backModal.onClose();
-        return;
     }
 
     if (loading) {return null}

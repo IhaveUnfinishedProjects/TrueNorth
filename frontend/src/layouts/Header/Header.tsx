@@ -4,8 +4,10 @@ import { Link } from "react-router-dom";
 import '@root/index.css';
 import './Header.css';
 import Logo from "@assets/logo.svg?react";
-import { useHeaderDetails, useUser } from '@hooks/index.js';
+import { useHeaderDetails, useUser, useToggleModal } from '@hooks/index.js';
 import { NavBarData } from './config.js';
+import { ConfirmationModal} from '@components/index.js';
+import { confirmationButtons, yesButtonName } from "@root/features/index.js";
 
 /*
     This file is responsible for rendering the Header component.
@@ -23,30 +25,46 @@ interface HeaderProps {
 }
 
 const Header = ( { onHeightMeasured }: HeaderProps) => {
+    const backModal = useToggleModal();
 
     // Creates a ref & attaches it to the root html element
     const headerRef = useRef<HTMLElement>(null);
     useHeaderDetails(headerRef, onHeightMeasured);
     const { logout } = useUser();
 
-    return(
-        <header ref={headerRef} className="header">
-            <div className="flex gap-3">
-                <Logo/>
-                <h1 className="flex items-center text-[24px] font-bold">TrueNorth</h1>
-            </div>
+    const localBackHandler = (buttonName: string | undefined) => {
+        if (buttonName === yesButtonName) {
+            logout();
+        }
 
-            <nav className="flex gap-5 items-center">
-                {NavBarData.map((data, index) => (
-                    <Link key={index} to={data.linkTo} state={{ fromApp: true }}>
-                        <button className="header-button">
-                            {data.name}
-                        </button>
-                    </Link>
-                ))}
-                <button className="header-button" type='button' onClick={logout}>Log out</button>
-            </nav>
-        </header>
+        backModal.onClose();
+    }
+
+    return(
+        <>
+            {backModal.isOpen && <ConfirmationModal 
+                header = "Are you sure?"
+                buttons={confirmationButtons}
+                onClose={localBackHandler}
+            />}
+            <header ref={headerRef} className="header">
+                <div className="flex gap-3">
+                    <Logo/>
+                    <h1 className="flex items-center text-[24px] font-bold">TrueNorth</h1>
+                </div>
+
+                <nav className="flex gap-5 items-center">
+                    {NavBarData.map((data, index) => (
+                        <Link key={index} to={data.linkTo} state={{ fromApp: true }}>
+                            <button className="header-button">
+                                {data.name}
+                            </button>
+                        </Link>
+                    ))}
+                    <button className="header-button" type='button' onClick={backModal.onOpen}>Log out</button>
+                </nav>
+            </header>
+        </>
     )
 }
 
