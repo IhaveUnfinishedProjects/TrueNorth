@@ -13,19 +13,19 @@ class StepSerializer(serializers.ModelSerializer):
     
     class Meta: 
         model = Step
-        fields=['id', 'description', 'recurrence', 'is_complete']
+        fields=['id', 'description', 'recurrence']
         extra_kwargs = {'id': {'read_only': False, 'required': False}}
 
 class GoalSerializer(serializers.ModelSerializer):
     steps = StepSerializer(many=True)
-    completed_step_ids = serializers.SerializerMethodField()
+    complete_steps = serializers.SerializerMethodField()
     
     class Meta:
         model = Goal
         fields=[
             'id', 'goal_name', 'desired_achievement', 
             'importance', 'measurement', 'achievement_date', 
-            'parent', 'created_at', 'steps', 'completed_step_ids'
+            'parent', 'created_at', 'steps', 'complete_steps'
         ]
         read_only_fields = ['user']
 
@@ -43,7 +43,7 @@ class GoalSerializer(serializers.ModelSerializer):
                 steps.save()
         return goal
     
-    def get_completed_step_ids(self, obj):
+    def get_complete_steps(self, obj):
         return [str(steps.id) for steps in obj.steps.filter(is_complete=True)]
 
     def update(self, instance, validated_data):
@@ -83,7 +83,10 @@ class GoalSerializer(serializers.ModelSerializer):
         instance.steps.update(is_complete=False)
 
     def _update_completion_status(self, instance):
-        completed_ids = set(self.initial_data.get('completed_step_ids', []))
+        raw_ids = self.initial_data.get('complete_steps') or self.initial_data.get('completeSteps', [])
+        completed_ids = set(raw_ids)
+        
+        instance.steps.all().update(is_complete=False)
         if completed_ids:
             instance.steps.filter(id__in=completed_ids).update(is_complete=True)
 

@@ -44,3 +44,8 @@ export const REPEATING_FREQUENCY = Array.from({ length: 99 }, (_, i) => (i + 1).
  * the options for the radio form in goal review
  */
 export const REVIEW_TYPES = ['behind', 'on_track', 'ahead'] as const;
+export const OPTION_MAPPING = {
+    'behind': 'Behind',
+    'on_track': 'On Track',
+    'ahead': 'Ahead'
+};

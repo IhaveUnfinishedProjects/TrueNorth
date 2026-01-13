@@ -17,7 +17,7 @@ export const GoalDetail = () => {
     let breadCrumb: string | null = null;
     
     // State management hooks
-    const { selectedBoxes, handleChange } = useCheckbox({ defaultVal: goal?.completeSteps });
+    const { selectedBoxes, handleChange } = useCheckbox({ value: goal?.completeSteps });
 
     /*  DERIVED STATE  */
     const stepOptions: CheckBoxOptions[] | undefined = goal?.steps?.map(step => ({
@@ -27,7 +27,7 @@ export const GoalDetail = () => {
 
     /*  HANDLERS  */
     const checkboxChange = async (values: string[] | null) => {
-        handleChange(values);
+        handleChange({value: values});
         if (values && goalId) {
             await setStepsComplete({ goalId: goalId, completeSteps: values });
         }
@@ -40,12 +40,12 @@ export const GoalDetail = () => {
                 setLoading(true);
                 const goalResult = await getGoal(goalId);
                 const goals = await getGoals();
-                setGoal(goalResult);
 
                 if (!goalResult) {
                     throw new Error(`Goal with ID ${goalId} not found`);
                 }
-
+                handleChange({value: goalResult.completeSteps});
+                setGoal(goalResult);
                 breadCrumb = getBreadCrumb({goal: goalResult, goals});
             } catch (error) {
                 console.warn(`Goal of ${goalId} couldn't be found + `, error);

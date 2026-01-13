@@ -144,13 +144,19 @@ export const updateSteps = async (newSteps: Step[], goal: CompleteGoal) => {
 }
 
 export const updateStepCompletion = async (goalId: string, allCompletedStepIds: CompleteStep) => {
+    
+    const csrfToken = Cookies.get('csrftoken');
     const payload = {
-        completed_step_ids: allCompletedStepIds
+        completeSteps: allCompletedStepIds
     };
 
     return await fetch(`${API_BASE}${goalId}/`, {
         method: "PATCH",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload)
+        headers: { 
+            "Content-Type": "application/json",
+            "X-CSRFToken": csrfToken || "",
+        },
+        body: JSON.stringify(payload),
+        credentials: "include"
     });
 };

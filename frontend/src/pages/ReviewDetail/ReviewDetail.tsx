@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { Card, RadioForm } from '@components/ui/index.js';
 import { ReviewSection } from './components/index.js';
 import { useRadio, useInput, useGoBack, useLoading } from '@hooks/index.js';
-import { getGoal, AddReview, REVIEW_TYPES, isReviewType, type CompleteGoal } from '@features/index.js';
+import { getGoal, AddReview, REVIEW_TYPES, OPTION_MAPPING, isReviewType, type CompleteGoal } from '@features/index.js';
 import './ReviewDetail.css';
 
 export const ReviewDetail = () => {
@@ -46,9 +46,9 @@ export const ReviewDetail = () => {
 
     /* CONSTANTS */
     const RADIO_FORM_NAME = 'reviewDetailRadio';
-    const radioOptions = REVIEW_TYPES.map(option => ({
-        value: option,
-        displayLabel: option
+    const radioOptions = Object.entries(OPTION_MAPPING).map(([value, label]) => ({
+        value: value,    
+        displayLabel: label 
     }));
 
     /* SIDE EFFECTS */
