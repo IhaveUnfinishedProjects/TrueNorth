@@ -20,7 +20,7 @@ interface ModalProps {
     onClose: (name: string | undefined) => void;
 }
 
-const ConfirmationModal:React.FC<ModalProps> = ({ header, paragraph, buttons, onClose }) => {
+const ConfirmationModal = ({ header, paragraph, buttons, onClose }: ModalProps) => {
     return ReactDOM.createPortal(
         <>
             <ModalWrapper>
