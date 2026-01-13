@@ -1,4 +1,4 @@
-import type { Goal, Step } from '@features/goals/index.js';
+import type { Goal, Step } from '@features/index.js';
 
 /**
  * An extension of Goal for after a goal 

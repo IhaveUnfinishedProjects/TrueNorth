@@ -1,10 +1,6 @@
-import type { CompleteGoal, addStepsProps, addGoalParams, toggleStepParams, Goal } from "@features/goals/index.js";
-import type { Review } from '@root/lib/types/index.js';
-import { createGoal, fetchGoals, fetchGoal, updateSteps, updateStepCompletion, updateGoalPartial } from '@features/goals/index.js';
+import type { CompleteGoal, addStepsProps, addGoalParams, toggleStepParams, Goal } from "@features/index.js";
+import { createGoal, fetchGoals, fetchGoal, updateSteps, updateStepCompletion, updateGoalPartial } from '@features/index.js';
 import { useLoading } from '@hooks/index.js';
-
-const DB_GOALS_KEY = 'app_goals_database';
-const DB_REVIEW_KEY = 'app_reviews_database';
 
 /**
  * This file routes the API requests. 
@@ -117,32 +113,3 @@ export const setStepsComplete = async ({ goalId, completeSteps }: toggleStepPara
 
     await updateStepCompletion(goalId, completeSteps);
 };
-
-/**
- * @returns Array of Review items from storage
- */
-export const getReviews = (): Review[] => {
-    const data = localStorage.getItem(DB_REVIEW_KEY);
-    return data ? JSON.parse(data) : [];
-}
-
-/**
- * Used to add a review object to storage.
- * Associates it with the goal id. 
- */
-export const AddReview = async ({goalId, reviewType, firstInput, secondInput}: Review) => {
-    const goalBool = await isGoal(goalId);
-    if (!goalBool) {
-        console.warn("Goal didn't exist to add review");
-        return;
-    }
-
-    const allReviews = getReviews();
-    const newReview: Review = {
-        goalId: goalId,
-        reviewType: reviewType,
-        firstInput: firstInput,
-        secondInput: secondInput
-    }
-    localStorage.setItem(DB_REVIEW_KEY, JSON.stringify([...allReviews, newReview]));
-}

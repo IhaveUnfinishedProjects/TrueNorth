@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { OrdinalEnum, type OrdinalType } from '@features/goals/index.js';
+import { OrdinalEnum, type OrdinalType } from '@features/index.js';
 
 interface ordinalProps {
     defaultVal: OrdinalType | undefined | null;

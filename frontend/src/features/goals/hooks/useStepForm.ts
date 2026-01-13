@@ -1,7 +1,7 @@
 import { useState, type ChangeEvent } from "react";
 import { staticStep } from "../constants.js";
 import { type DropResult } from "@hello-pangea/dnd";
-import type { CompleteGoal, RecurrenceSchedule, Step } from "@features/goals/index.js";
+import type { CompleteGoal, RecurrenceSchedule, Step } from "@features/index.js";
 
 
 /**

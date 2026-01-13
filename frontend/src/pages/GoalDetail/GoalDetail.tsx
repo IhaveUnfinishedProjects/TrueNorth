@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useAppNavigate, useGoBack, useLoading } from "@hooks/index.js";
 import { Card, CheckboxComponent } from "@components/ui/index.js";
-import { useCheckbox, type CheckBoxOptions, setStepsComplete, getGoal, getGoals, getBreadCrumb, type CompleteGoal } from '@features/goals/index.js';
+import { useCheckbox, type CheckBoxOptions, setStepsComplete, getGoal, getGoals, getBreadCrumb, type CompleteGoal } from '@features/index.js';
 import { FeatureCard } from './components/featureCard.js';
 import './GoalDetail.css';
 

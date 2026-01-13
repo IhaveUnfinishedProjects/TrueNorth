@@ -1,5 +1,5 @@
 import { ConfirmationModal, Card, CardHeader } from '@components/ui/index.js';
-import { confirmationButtons, createSubmissionButtons, initialValues, InputFieldData, Form, type Goal, addGoal, addStepsButName, addSubGoalButName, getGoal, yesButtonName, type CompleteGoal, updateGoal} from "@features/goals/index.js";
+import { confirmationButtons, createSubmissionButtons, initialValues, InputFieldData, Form, type Goal, addGoal, addStepsButName, addSubGoalButName, getGoal, yesButtonName, type CompleteGoal, updateGoal} from "@features/index.js";
 import { useToggleModal, useForm, useGoBack, useAppNavigate, useLoading } from '@hooks/index.js';
 import "./GoalCreation.css";
 import "@root/index.css";

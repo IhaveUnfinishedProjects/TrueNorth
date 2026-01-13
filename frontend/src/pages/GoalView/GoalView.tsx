@@ -1,7 +1,7 @@
 import '@root/index.css';
 import './GoalView.css';
-import { getLeafGoals, type CompleteGoal } from '@features/goals/index.js';
-import { GoalCard } from '@features/goals/index.js';
+import { getLeafGoals, type CompleteGoal } from '@features/index.js';
+import { GoalCard } from '@features/index.js';
 import { useLoading } from '@hooks/index.js';
 import { useEffect, useState } from 'react';
 

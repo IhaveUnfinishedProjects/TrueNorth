@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { CircularProgressbar } from 'react-circular-progressbar';
 import { useAppNavigate, useLoading, useGoBack } from '@hooks/index.js';
-import { getGoals, type CompleteGoal } from "@features/goals/index.js";
+import { getGoals, type CompleteGoal } from "@features/index.js";
 import '@root/lib/styles/circle-progress-bar.css';
 import './GoalReview.css';
 

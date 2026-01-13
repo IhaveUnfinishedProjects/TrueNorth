@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { Card, RadioForm } from '@components/ui/index.js';
 import { ReviewSection } from './components/index.js';
 import { useRadio, useInput, useGoBack, useLoading } from '@hooks/index.js';
-import { getGoal, AddReview, REVIEW_TYPES, isReviewType, type CompleteGoal } from '@features/goals/index.js';
+import { getGoal, AddReview, REVIEW_TYPES, isReviewType, type CompleteGoal } from '@features/index.js';
 import './ReviewDetail.css';
 
 export const ReviewDetail = () => {
@@ -22,7 +22,7 @@ export const ReviewDetail = () => {
     const secondInputHook = useInput();
     
     /* HELPER FUNCTION */
-    const submissionHandler = (event: React.FormEvent<HTMLFormElement>) => {
+    const submissionHandler = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const firstInput = firstInputHook.selected;
         const secondInput = secondInputHook.selected;
@@ -32,8 +32,16 @@ export const ReviewDetail = () => {
             return;
         }
 
-        AddReview({ goalId, reviewType, firstInput, secondInput });
-        goBack();
+        try {
+            setLoading(true);
+            await AddReview({ goalId, reviewType, firstInput, secondInput });
+            goBack();
+            
+        } catch (error) {
+            console.warn("There was a problem submitting review.", error);
+        } finally {
+            setLoading(false);
+        }
     }
 
     /* CONSTANTS */

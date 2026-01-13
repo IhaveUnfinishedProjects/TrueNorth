@@ -1,16 +1,14 @@
 import { ComboBox, ModalWrapper, CalendarSelection, CheckboxComponent } from "@components/ui/index.js";
 import { useSelectDate } from '@hooks/index.js';
-import { MeridianEnum, OrdinalRadio, useCheckbox, DayOfWeek, type RecurrenceSchedule, type MeridianType } from '@features/goals/index.js';
+import { MeridianEnum, OrdinalRadio, useCheckbox, DayOfWeek, type RecurrenceSchedule, type MeridianType } from '@features/index.js';
 import {
     REPEATING_FREQUENCY,
     TIME_OPTIONS,
     REPEATING_INTERVALS,
     useComboBox,
     useOrdinalRadio
-} from '@features/goals/index.js';
-import { parseDate } from '@internationalized/date'; 
+} from '@features/index.js';
 import '@features/goals/components/Recurence/recurrence.css'
-import { useEffect } from "react";
 
 interface RepeatProps {
     submissionHandler: (recurrence: RecurrenceSchedule) => void;

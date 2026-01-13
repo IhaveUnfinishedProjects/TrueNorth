@@ -1,7 +1,7 @@
 import type { DateValue } from '@internationalized/date';
 import { RadioForm } from '@components/ui/index.js';
 import useOrdinalRadio from './useOrdinalRadio.js';
-import type { OrdinalType } from '@features/goals/index.js';
+import type { OrdinalType } from '@features/index.js';
 
 interface OrdinalRadioProps {
     ordinalChoice: OrdinalType;

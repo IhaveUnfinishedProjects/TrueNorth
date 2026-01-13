@@ -1,6 +1,6 @@
 import { Card, CardHeader, ConfirmationModal } from "@components/ui/index.js";
 import { useGoBack, useToggleModal, useLoading, useAppNavigate } from "@hooks/index.js";
-import { GoalStepsForm, confirmationButtons, type Step, addSteps, yesButtonName, type CompleteGoal, getGoal } from "@features/goals/index.js";
+import { GoalStepsForm, confirmationButtons, type Step, addSteps, yesButtonName, type CompleteGoal, getGoal } from "@features/index.js";
 import PlanningHeader from "./components/PlanningHeader.js";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";

@@ -1,5 +1,5 @@
 import type { ReviewSectionProps } from './index.js';
-import { REVIEW_TYPES} from '@features/goals/index.js';
+import { REVIEW_TYPES} from '@features/index.js';
 
 type contentProps = Pick<ReviewSectionProps, 'goal' | 'status'>
 
