@@ -1,5 +1,5 @@
 from django.db import models
-from ..goal.models import Goal
+from goal.models import Goal
 
 class Review(models.Model):
     REVIEW_OPTIONS = [

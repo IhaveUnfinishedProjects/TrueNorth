@@ -23,4 +23,5 @@ urlpatterns = [
     path('api-auth/', include('rest_framework.urls')),
     path('api/', include('goal.urls')), # adds /api/goals/
     path('api/', include('main.urls')),
+    path('api/', include('review.urls')),
 ]
