@@ -16,13 +16,9 @@ export const GoalReview = () => {
 
     /* HELPER FUNCITONS */
     const calcProgress = (goal: CompleteGoal) => {
-        console.log('Gets the calcProgress');
         if (goal.steps && goal.steps.length > 0 && goal.completeSteps) {
-            console.log("Doesn't get pass checks");
             return Math.round((goal.completeSteps.length / goal.steps.length) * 100);
         }
-        console.log('It returns null instead');
-        console.log(goal.steps, goal.completeSteps);
         return 0;
     }
 

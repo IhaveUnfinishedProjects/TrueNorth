@@ -75,23 +75,18 @@ export const ReviewDetail = () => {
 
             <Card className='review-detail-card'>
                 <h1>Review of '{goal.goalName}'</h1>
+                <p className="mb-[-1rem]">
+                    <b>Progress Measurement:</b> {goal.measurement}</p>
+                <p><b>Target Achievement:</b> {goal.desiredAchievement}</p>
             </Card>
 
             <Card className='review-detail-card'>
-                <h2>How did you do this week?</h2>
-                <p><b>This was how I said I'd measure progress:</b></p>
-                <p className='quote'>"<i>{goal.measurement}</i>"</p>
-                <p>Based on that, did I hit my target?</p>
+                <form className='review-detail-form' onSubmit={submissionHandler}>
+                    <RadioForm label={""} options={radioOptions} selected={reviewType} onChange={handleChange} name={RADIO_FORM_NAME} className='review-radio'/>
+                    {reviewType && <ReviewSection goal={goal} status={reviewType} firstInputHook={firstInputHook} secondInputHook={secondInputHook}/>}
+                    <button className='submit-button' type='submit'>Complete</button>
+                </form>
             </Card>
-
-            <form className='review-detail-form' onSubmit={submissionHandler}>
-                <Card className='review-detail-card'>
-                    <RadioForm label={""} options={radioOptions} selected={reviewType} onChange={handleChange} name={RADIO_FORM_NAME}/>
-                </Card>
-        
-                {reviewType && <ReviewSection goal={goal} status={reviewType} firstInputHook={firstInputHook} secondInputHook={secondInputHook}/>}
-                <button className='submit-button' type='submit'>Here</button>
-            </form>
         </Card>
     );}
 }

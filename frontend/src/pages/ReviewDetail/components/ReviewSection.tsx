@@ -4,7 +4,7 @@ import { getContent } from './index.js';
 
 export interface InputHook {
     selected: string;
-    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    onChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
 }
 
 export interface ReviewSectionProps {
@@ -21,27 +21,29 @@ export const ReviewSection = ({ goal, status, firstInputHook,  secondInputHook}:
     if (!content) return null;
 
     return (
-        <Card className={`review-detail-card ${content.className}`}>
+        <>
             <h2>{content.title}</h2>
             {content.intro}
-            <input 
-                className='input'
+            <textarea 
+                className='input textarea'
                 key={FIRST_INPUT_NAME}
                 name={FIRST_INPUT_NAME}
                 value={firstInputHook.selected}
                 placeholder={''}
                 onChange={firstInputHook.onChange}
+                required
             />
             <p>{content.midText}</p>
-            <input 
-                className='input'
+            <textarea 
+                className='input textarea'
                 key={SECOND_INPUT_NAME}
                 name={SECOND_INPUT_NAME}
                 value={secondInputHook.selected}
                 placeholder={''}
                 onChange={secondInputHook.onChange}
-            />            
-        </Card>
+                required
+            />   
+        </>         
     );
 };
 
