@@ -1,11 +1,10 @@
 import type { Review } from '@root/lib/types/index.js';
 import { fetchReviewAPI, postReviewAPI } from './reviewService.js';
-import { useGoBack } from '@hooks/index.js';
 
 /**
  * @returns Array of Review items from storage
  */
-export const getReviews = async (goalId: string | number): Promise<Review[]> => {
+export const getReviews = async (goalId: string | number ): Promise<Review[]> => {
 
     try {
         const reviews = await fetchReviewAPI(goalId);

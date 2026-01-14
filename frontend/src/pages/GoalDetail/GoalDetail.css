@@ -1,11 +1,21 @@
+/* WRAPPER STYLING */
+.goal-section-wrapper {
+    display: flex;
+    flex-direction: row;
+}
+
 /* Custom styling of encompassing <Card/>*/
 .goal-detail-card {
     background-color: #F5F5F5;
     min-width: min-content;
     width: 80%;
     border: none;
-
     gap: 2rem;
+}
+
+.cardDiv.showing-sidebar {
+    margin-right: 0.5rem;
+    margin-left: auto;
 }
 
 /* Styling of the breadcrumb */
@@ -119,3 +129,11 @@
 .checkbox-option[data-selected] .description-text {
   text-decoration: line-through;
 } 
+
+
+/* SIDE REVIEW BAR STYLING */
+.side-review-bar {
+    max-width: fit-content;
+    margin-left: 0;
+    margin-right: auto;
+}

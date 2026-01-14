@@ -2,9 +2,10 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useAppNavigate, useGoBack, useLoading } from "@hooks/index.js";
 import { Card, CheckboxComponent } from "@components/ui/index.js";
-import { useCheckbox, type CheckBoxOptions, setStepsComplete, getGoal, getGoals, getBreadCrumb, type CompleteGoal } from '@features/index.js';
+import { useCheckbox, type CheckBoxOptions, setStepsComplete, getGoal, getGoals, getBreadCrumb, type CompleteGoal, getReviews, OPTION_MAPPING } from '@features/index.js';
 import { FeatureCard } from './components/featureCard.js';
 import './GoalDetail.css';
+import { type Review } from "@root/lib/index.js";
 
 export const GoalDetail = () => {
 
@@ -14,7 +15,9 @@ export const GoalDetail = () => {
     const navigate = useAppNavigate();
     const goBack = useGoBack();
     const { loading, setLoading } = useLoading.getState(); 
-    let breadCrumb: string | null = null;
+    const [displayReview, setDisplayReview]  = useState<boolean>(false);
+    const [reviews, setReviews] = useState<Review[]>();
+    const [breadCrumb, setBreadCrumb] = useState<string>();
     
     // State management hooks
     const { selectedBoxes, handleChange } = useCheckbox({ value: goal?.completeSteps });
@@ -33,22 +36,21 @@ export const GoalDetail = () => {
         }
     };
 
-    /*  SIDE EFFECTS  */
     useEffect(() => {
         const loadGoal = async () => {
+            setLoading(true);
             try {
-                setLoading(true);
-                const goalResult = await getGoal(goalId);
                 const goals = await getGoals();
+                const goalResult = await goals.find(goal => String(goal.id) === String(goalId));
 
-                if (!goalResult) {
-                    throw new Error(`Goal with ID ${goalId} not found`);
-                }
+                if (!goalResult) throw new Error(`Goal with ID ${goalId} not found`);
+
                 handleChange({value: goalResult.completeSteps});
                 setGoal(goalResult);
-                breadCrumb = getBreadCrumb({goal: goalResult, goals});
+                setBreadCrumb(getBreadCrumb({goal: goalResult, goals}));
+
             } catch (error) {
-                console.warn(`Goal of ${goalId} couldn't be found + `, error);
+                console.warn(`Goal of ${goalId} couldn't be found +`, error);
                 goBack();
             } finally {
                 setLoading(false);
@@ -57,35 +59,74 @@ export const GoalDetail = () => {
         loadGoal();
     }, [goalId]);
 
+    useEffect(() => {
+
+        if (!goalId) {
+            goBack();
+            return;
+        }
+
+        const loadReviews = async () => {
+            setLoading(true);
+
+            try {
+                const reviewResults = await getReviews(goalId)
+                if (!reviewResults) {
+                    throw reviewResults;
+                }
+                setReviews(reviewResults);
+            } catch (error) {
+                console.warn("Couldn't fetch reviews + " + error);
+            } finally {
+                setLoading(false);
+            }
+        }
+
+        loadReviews();
+    }, [goalId])
+
     if (loading) {return null}
     if (goal) {return (
-        <Card className='goal-detail-card'>
-            <p className='goal-detail-crumb'> {breadCrumb}</p>
+        <div className='goal-section-wrapper'>
+            <Card className={`goal-detail-card  ${displayReview ? 'showing-sidebar': ''}`}>
+                <p className='goal-detail-crumb'> {breadCrumb}</p>
 
-            {/* This contains the header section */}
-            <div className='goal-detail-header'>
-                <h1>{goal.goalName}</h1>
-                <div>
-                    <button className="" onClick={() => navigate(`/EditGoal/${goal.id}`)}>Edit</button>
-                    <button className="" onClick={() => navigate(`/PlanGoal/${goal.id}`)}>+ Add Step</button>
+                {/* This contains the header section */}
+                <div className='goal-detail-header'>
+                    <h1>{goal.goalName}</h1>
+                    <div>
+                        <button className="" onClick={() => navigate(`/EditGoal/${goal.id}`)}>Edit</button>
+                        <button className="" onClick={() => navigate(`/PlanGoal/${goal.id}`)}>+ Add Step</button>
+                        <button className="" onClick={() => setDisplayReview(!displayReview)}>Reviews</button>
+                    </div>
                 </div>
-            </div>
 
-            {/* This contains the goal info card section (The why, what when cards etc) */}
-            <div className='goal-feature-section'>
-                <FeatureCard title={"Why I want to achieve this"} content={goal.importance} />
-                <FeatureCard title={"What the goal is"} content={goal.desiredAchievement} />
-                <FeatureCard title={"How I'm measuring progress"} content={goal.measurement} />
-                <FeatureCard title={"Due achievement date"} content={goal.achievementDate} />
-            </div>
+                {/* This contains the goal info card section (The why, what when cards etc) */}
+                <div className='goal-feature-section'>
+                    <FeatureCard title={"Why I want to achieve this"} content={goal.importance} />
+                    <FeatureCard title={"What the goal is"} content={goal.desiredAchievement} />
+                    <FeatureCard title={"How I'm measuring progress"} content={goal.measurement} />
+                    <FeatureCard title={"Due achievement date"} content={goal.achievementDate} />
+                </div>
 
 
-            {/* Contains the list of steps & whether they're complete */}
-            {(goal.steps && stepOptions) && 
-                <div className="goal-detail-steps">
-                    <CheckboxComponent curSelected={selectedBoxes} onChange={checkboxChange} options={stepOptions ?? []} name="step-checkbox" />
-                </div>}
-        </Card>
+                {/* Contains the list of steps & whether they're complete */}
+                {(goal.steps && stepOptions) && 
+                    <div className="goal-detail-steps">
+                        <CheckboxComponent curSelected={selectedBoxes} onChange={checkboxChange} options={stepOptions ?? []} name="step-checkbox" />
+                    </div>}
+            </Card>
+
+            {displayReview && reviews &&
+                <Card className="side-review-bar">
+                    {reviews.map((review, index) => {
+                        return (
+                            <p>Week {index + 1} - {OPTION_MAPPING[review.reviewType as keyof typeof OPTION_MAPPING]}</p>
+                        )
+                    })}
+                </Card>
+            }
+        </div>
     );}
 }
 
