@@ -75,7 +75,7 @@ export const ReviewDetail = () => {
 
             <Card className='review-detail-card'>
                 <h1>Review of '{goal.goalName}'</h1>
-                <p className="mb-[-1rem]">
+                <p>
                     <b>Progress Measurement:</b> {goal.measurement}</p>
                 <p><b>Target Achievement:</b> {goal.desiredAchievement}</p>
             </Card>
@@ -84,7 +84,7 @@ export const ReviewDetail = () => {
                 <form className='review-detail-form' onSubmit={submissionHandler}>
                     <RadioForm label={""} options={radioOptions} selected={reviewType} onChange={handleChange} name={RADIO_FORM_NAME} className='review-radio'/>
                     {reviewType && <ReviewSection goal={goal} status={reviewType} firstInputHook={firstInputHook} secondInputHook={secondInputHook}/>}
-                    <button className='submit-button' type='submit'>Complete</button>
+                    <button className='submit-button mt-[1rem]' type='submit'>Complete</button>
                 </form>
             </Card>
         </Card>

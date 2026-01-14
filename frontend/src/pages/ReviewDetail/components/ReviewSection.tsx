@@ -1,4 +1,3 @@
-import { Card } from '@components/ui/index.js';
 import type { CompleteGoal } from '@root/features/goals/index.js';
 import { getContent } from './index.js';
 
@@ -22,10 +21,9 @@ export const ReviewSection = ({ goal, status, firstInputHook,  secondInputHook}:
 
     return (
         <>
-            <h2>{content.title}</h2>
             {content.intro}
             <textarea 
-                className='input textarea'
+                className='input textarea mb-[1rem]'
                 key={FIRST_INPUT_NAME}
                 name={FIRST_INPUT_NAME}
                 value={firstInputHook.selected}

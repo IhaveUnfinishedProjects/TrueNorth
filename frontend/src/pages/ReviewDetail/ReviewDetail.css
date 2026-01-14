@@ -2,6 +2,7 @@
 .review-detail-container {
     /* sizing */
     width: fit-content;
+    max-width: 70%;
     height: auto;
     /* spacing */
     overflow-y: scroll;
@@ -32,8 +33,7 @@
 
 /*  */
 .review-detail-card p {
-    align-self: center;
-    margin-top: 1rem;
+    align-self: flex-start;
 }
 
 .review-detail-card .quote {
@@ -94,6 +94,7 @@
     flex-direction: row;
     width: 100%;
     justify-content: space-evenly;
+    padding-bottom: 1rem;
 }
 
 .radio-option {
