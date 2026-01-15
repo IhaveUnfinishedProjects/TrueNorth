@@ -22,10 +22,12 @@ def login_view(request):
     password = request.data.get('password')
     if '@' in username:
         try:
-            user_obj = User.objects.get(email=username)
+            user_obj = User.objects.filter(email__iexact=username).first()
             username = user_obj.username
         except User.DoesNotExist:
             pass
+    else:
+        user_obj = User.objects.filter(username__iexact=username).first()
     user = authenticate(username=username, password=password)
 
     if not user:
@@ -47,10 +49,10 @@ def signup_view(request):
     password = request.data.get('password')
     email = request.data.get('email')
 
-    if User.objects.filter(username=username).exists():
+    if User.objects.filter(username__iexact=username).exists():
         return Response({"error": "Username already exists"}, status=400)
     
-    if User.objects.filter(email=email).exists():
+    if User.objects.filter(email__iexact=email).exists():
         return Response({"error": "Email already already exists"}, status=400)
     
     user = User.objects.create_user(username=username, email=email, password=password)

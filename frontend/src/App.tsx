@@ -11,12 +11,13 @@ import { useUser, useLoading } from '@hooks/index.js';
 function App() {
 
     const [headerHeight, setHeaderHeight] = useState(0); 
-    const { user, login } = useUser();
+    const { user, login } = useUser.getState();
     const { loading, setLoading } = useLoading();
 
     useEffect(() => {
         const checkAuth = async () => {
             try {
+                setLoading(true);
                 const userData = await fetchUser();
                 login(userData);
             } catch (error) {
