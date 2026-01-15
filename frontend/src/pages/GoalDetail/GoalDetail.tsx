@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useAppNavigate, useGoBack, useLoading } from "@hooks/index.js";
-import { Card, CheckboxComponent } from "@components/ui/index.js";
-import { useCheckbox, type CheckBoxOptions, setStepsComplete, getGoal, getGoals, getBreadCrumb, type CompleteGoal, getReviews, OPTION_MAPPING } from '@features/index.js';
+import { Card, CheckboxComponent, GeneralModal } from "@components/ui/index.js";
+import { useCheckbox, type CheckBoxOptions, setStepsComplete, getGoals, getBreadCrumb, type CompleteGoal, getReviews, OPTION_MAPPING } from '@features/index.js';
 import { FeatureCard } from './components/featureCard.js';
 import './GoalDetail.css';
 import { type Review } from "@root/lib/index.js";
@@ -16,6 +16,7 @@ export const GoalDetail = () => {
     const goBack = useGoBack();
     const { loading, setLoading } = useLoading.getState(); 
     const [displayReview, setDisplayReview]  = useState<boolean>(false);
+    const [reviewModal, setReviewModal]  = useState<Review | undefined>();
     const [reviews, setReviews] = useState<Review[]>();
     const [breadCrumb, setBreadCrumb] = useState<string>();
     
@@ -119,12 +120,23 @@ export const GoalDetail = () => {
 
             {displayReview && reviews &&
                 <Card className="side-review-bar">
+                    <h3>Reviews</h3>
                     {reviews.map((review, index) => {
+                        const displayWeek = reviews.length - index
+                        const reviewType = OPTION_MAPPING[review.reviewType as keyof typeof OPTION_MAPPING];
                         return (
-                            <p>Week {index + 1} - {OPTION_MAPPING[review.reviewType as keyof typeof OPTION_MAPPING]}</p>
+                            <button onClick={() => setReviewModal(review)}><b>Week {displayWeek}</b> - {reviewType}</button>
                         )
                     })}
                 </Card>
+            }
+
+            {reviewModal && 
+                <GeneralModal onClose={() => setReviewModal(undefined)}>
+                    <h2 className='mt-[-0.5rem]'>{OPTION_MAPPING[reviewModal.reviewType as keyof typeof OPTION_MAPPING]}</h2>
+                    <p className="review-inputs">{reviewModal.firstInput}</p>
+                    <p className="review-inputs">{reviewModal.secondInput}</p>
+                </GeneralModal>
             }
         </div>
     );}

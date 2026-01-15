@@ -1,5 +1,5 @@
 // ModalWrapper.tsx (or ConfirmationModal.tsx for consistency)
-import { useEffect, type ReactNode } from "react";
+import { type ReactNode } from "react";
 import ReactDOM from 'react-dom';
 import "@root/index.css";
 import "./ModalWrapper.css";
