@@ -1,6 +1,6 @@
 import { ConfirmationModal, Card, CardHeader } from '@components/ui/index.js';
-import { confirmationButtons, createSubmissionButtons, initialValues, InputFieldData, Form, type Goal, addGoal, addStepsButName, addSubGoalButName, isGoal, getGoal, yesButtonName, type CompleteGoal, updateGoal} from "@features/goals/index.js";
-import { useToggleModal, useForm, useGoBack, useAppNavigate } from '@hooks/index.js';
+import { confirmationButtons, createSubmissionButtons, initialValues, InputFieldData, Form, type Goal, addGoal, addStepsButName, addSubGoalButName, getGoal, yesButtonName, type CompleteGoal, updateGoal} from "@features/index.js";
+import { useToggleModal, useForm, useGoBack, useAppNavigate, useLoading } from '@hooks/index.js';
 import "./GoalCreation.css";
 import "@root/index.css";
 import { useEffect } from 'react';
@@ -14,12 +14,16 @@ import { useParams } from "react-router-dom";
 
 const GoalCreation = () => {
 
+    /* HOOKS & PARAMS */
     const navigate = useAppNavigate();
     const backModal = useToggleModal();
     const subModal = useToggleModal();
     const { formValues, handleChange, resetForm } = useForm(initialValues);
+    const { loading, setLoading } = useLoading.getState();
     const goBack = useGoBack();
     const { curParentId } = useParams<{ curParentId?: string, goalId?: string }>();
+
+    /* DERIVED STATE */
     const isEditMode = location.pathname.includes("/EditGoal");
 
     /**
@@ -28,20 +32,27 @@ const GoalCreation = () => {
      * and if the form we're making is a sub goal.
      */
     useEffect(() => {
-        if (curParentId) {
-            if (isGoal(curParentId)) {
-                if (isEditMode) {
-                    const goal: CompleteGoal | undefined = getGoal(curParentId);
-                    resetForm(goal);
-                } else {
-                    resetForm(undefined);
-                }
-            } else {
-                navigate('/CreateGoal', {replace: true});
-            }
-        } else {
+
+        if (!curParentId) {
             resetForm(undefined);
+            return;
         }
+
+        const loadGoal = async () => {
+            try {
+                setLoading(true);
+                const goal = await getGoal(curParentId);
+                resetForm(isEditMode ? goal : undefined);
+
+            } catch (error) {
+                navigate('/CreateGoal', {replace: true});
+
+            } finally {
+                setLoading(false);
+            }
+        }
+
+        loadGoal();
     }, [curParentId, isEditMode])
 
     /**
@@ -83,11 +94,10 @@ const GoalCreation = () => {
         if (buttonName === yesButtonName) {
             goBack();
         }
-
         backModal.onClose();
-        return;
     }
 
+    if (loading) {return null}
     return (
         <Card> 
             <CardHeader onBackOpen={backModal.onOpen} />

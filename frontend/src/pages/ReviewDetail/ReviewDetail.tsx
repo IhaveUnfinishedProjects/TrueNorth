@@ -1,79 +1,92 @@
-import './ReviewDetail.css';
+import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Card, RadioForm } from '@components/ui/index.js';
-import { getGoal, type CompleteGoal, AddReview, REVIEW_TYPES } from '@root/features/goals/index.js';
-import { useEffect } from 'react';
-import { useRadio, useAppNavigate, useInput, useGoBack } from '@root/hooks/index.js';
 import { ReviewSection } from './components/index.js';
-import { isReviewType } from '@root/features/goals/utils/index.js';
+import { useRadio, useInput, useGoBack, useLoading } from '@hooks/index.js';
+import { getGoal, AddReview, REVIEW_TYPES, OPTION_MAPPING, isReviewType, type CompleteGoal } from '@features/index.js';
+import './ReviewDetail.css';
 
 export const ReviewDetail = () => {
 
-    /* CONSTANTS */
-    const { goalId } = useParams<{ goalId: string}>();
-    const goal: CompleteGoal | undefined = getGoal(goalId);
-    const navigate = useAppNavigate();
+    /* HOOKS & PARAMS */
+    const { goalId } = useParams<{ goalId: string }>();
     const goBack = useGoBack();
-    const RADIO_FORM_NAME = 'reviewDetailRadio';
-    const radioOptions = REVIEW_TYPES.map(option => ({
-        value: option,
-        displayLabel: option
-    }));
+    
+    /* STATE */
+    const [goal, setGoal] = useState<CompleteGoal>();
+    const { loading, setLoading } = useLoading.getState();
 
-    const {selected: reviewType, handleChange} = useRadio();
+    /* FORM HOOKS */
+    const { selected: reviewType, handleChange } = useRadio();
     const firstInputHook = useInput();
     const secondInputHook = useInput();
-
-    useEffect(() => {
-        // Validates the goal id by checking goal is real.
-        if (!goal) {
-            console.warn(`Goal ${goalId} couldn't be found.`);
-            goBack();
-            return
-        }
-    }, [goalId]);
-
-    const submissionHandler = (event: React.FormEvent<HTMLFormElement>) => {
+    
+    /* HELPER FUNCTION */
+    const submissionHandler = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const firstInput = firstInputHook.selected;
         const secondInput = secondInputHook.selected;
 
-        if (!(goalId && reviewType && firstInput && secondInput) || secondInput === '' || firstInput === ''){
-            console.warn("Invalid Review Object");
+        if (!goalId || !isReviewType(reviewType) || !firstInput || !secondInput) {
+            console.warn("Invalid Review Object or Type");
             return;
         }
 
-        if (!isReviewType(reviewType)){
-            console.warn("reviewType passed is not valid");
-            return;
+        try {
+            setLoading(true);
+            await AddReview({ goalId, reviewType, firstInput, secondInput });
+            goBack();
+            
+        } catch (error) {
+            console.warn("There was a problem submitting review.", error);
+        } finally {
+            setLoading(false);
         }
-
-        AddReview({ goalId, reviewType, firstInput, secondInput });
-        goBack();
     }
 
+    /* CONSTANTS */
+    const RADIO_FORM_NAME = 'reviewDetailRadio';
+    const radioOptions = Object.entries(OPTION_MAPPING).map(([value, label]) => ({
+        value: value,    
+        displayLabel: label 
+    }));
+
+    /* SIDE EFFECTS */
+    useEffect(() => {
+        const loadGoal = async () => {
+            try {
+                setLoading(true);
+                const goalObj = await getGoal(goalId);
+                setGoal(goalObj);
+            } catch (error) {
+                console.warn(`Goal ${goalId} couldn't be found. ` + error);
+                goBack();
+            } finally {
+                setLoading(false);
+            }
+        }
+        loadGoal();
+    }, [goalId]);
+
+
+    if (loading) {return null}
     if (goal) {return (
         <Card className='review-detail-container'>
 
             <Card className='review-detail-card'>
                 <h1>Review of '{goal.goalName}'</h1>
+                <p>
+                    <b>Progress Measurement:</b> {goal.measurement}</p>
+                <p><b>Target Achievement:</b> {goal.desiredAchievement}</p>
             </Card>
 
             <Card className='review-detail-card'>
-                <h2>How did you do this week?</h2>
-                <p><b>This was how I said I'd measure progress:</b></p>
-                <p className='quote'>"<i>{goal.measurement}</i>"</p>
-                <p>Based on that, did I hit my target?</p>
+                <form className='review-detail-form' onSubmit={submissionHandler}>
+                    <RadioForm label={""} options={radioOptions} selected={reviewType} onChange={handleChange} name={RADIO_FORM_NAME} className='review-radio'/>
+                    {reviewType && <ReviewSection goal={goal} status={reviewType} firstInputHook={firstInputHook} secondInputHook={secondInputHook}/>}
+                    <button className='submit-button mt-[1rem]' type='submit'>Complete</button>
+                </form>
             </Card>
-
-            <form className='review-detail-form' onSubmit={submissionHandler}>
-                <Card className='review-detail-card'>
-                    <RadioForm label={""} options={radioOptions} selected={reviewType} onChange={handleChange} name={RADIO_FORM_NAME}/>
-                </Card>
-        
-                {reviewType && <ReviewSection goal={goal} status={reviewType} firstInputHook={firstInputHook} secondInputHook={secondInputHook}/>}
-                <button className='submit-button' type='submit'>Here</button>
-            </form>
         </Card>
     );}
 }

@@ -36,7 +36,6 @@ const AuthScreen = () => {
             globalLogin(response.user);
         } catch (error: any){
             setWarning(error.error);
-            console.log(error.error);
         } finally {
             setLoading(false);
         }

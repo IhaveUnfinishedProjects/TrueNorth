@@ -1,4 +1,4 @@
-import type { Goal, Step } from '@features/goals/index.js';
+import type { Goal, Step } from '@features/index.js';
 
 /**
  * An extension of Goal for after a goal 
@@ -10,7 +10,7 @@ export interface CompleteGoal extends Goal {
     completeSteps?: CompleteStep;
 }
 
-type CompleteStep = string[];
+export type CompleteStep = string[];
 
 /**
  * The props the Add Steps in storage takes

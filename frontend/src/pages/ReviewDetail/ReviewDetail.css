@@ -1,7 +1,8 @@
 /* MAIN CONTAINER STYLING */
 .review-detail-container {
     /* sizing */
-    width: 70%;
+    width: fit-content;
+    max-width: 70%;
     height: auto;
     /* spacing */
     overflow-y: scroll;
@@ -32,18 +33,12 @@
 
 /*  */
 .review-detail-card p {
-    align-self: start;
-    margin-top: 1rem;
+    align-self: flex-start;
 }
 
 .review-detail-card .quote {
     align-self: center;
     font-style: italic;
-}
-
-/* RADIO FORM STYLING */
-.review-detail-card .radio-group-container{
-    gap: 3rem;
 }
 
 .review-detail-card .radio-option {
@@ -79,4 +74,37 @@
 /* FORM FIELD STYLING */
 .review-detail-form {
     display: contents;
+}
+
+.textarea {
+    width: 100%;
+    margin-top: 1rem;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid black;
+    font-family: inherit; 
+    resize: vertical; 
+    min-height: 80px;
+    line-height: 1.5;
+    touch-action: manipulation;
+}
+
+.review-radio {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-evenly;
+    padding-bottom: 1rem;
+}
+
+.radio-option {
+    padding-bottom: 5px;
+    padding-top: 5px;
+    border: 1px solid black;
+}
+
+.radio-option[data-selected] {
+    background-color: #3B82F6;
+    color: white;
+    border: 1px solid white;
 }

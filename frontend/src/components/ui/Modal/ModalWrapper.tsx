@@ -1,5 +1,5 @@
 // ModalWrapper.tsx (or ConfirmationModal.tsx for consistency)
-import React, { type ReactNode } from "react";
+import { type ReactNode } from "react";
 import ReactDOM from 'react-dom';
 import "@root/index.css";
 import "./ModalWrapper.css";
@@ -8,7 +8,7 @@ interface ModalWrapperProps {
     children: ReactNode;
 }
 
-const ModalWrapper: React.FC<ModalWrapperProps> = ({ children }) => {
+const ModalWrapper = ({ children }: ModalWrapperProps) => {
 
     return ReactDOM.createPortal(
         <>
@@ -17,7 +17,7 @@ const ModalWrapper: React.FC<ModalWrapperProps> = ({ children }) => {
                 {children}
             </div>
         </>,
-        document.getElementById('root')!
+        document.getElementById('portal')!
     );
 }
 

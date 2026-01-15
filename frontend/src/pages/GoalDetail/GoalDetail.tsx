@@ -1,73 +1,144 @@
-import { getGoal, type CompleteGoal } from "@root/features/goals/index.js";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { useAppNavigate } from "@hooks/index.js";
-import { Card, CheckboxComponent } from "@root/components/ui/index.js";
+import { useAppNavigate, useGoBack, useLoading } from "@hooks/index.js";
+import { Card, CheckboxComponent, GeneralModal } from "@components/ui/index.js";
+import { useCheckbox, type CheckBoxOptions, setStepsComplete, getGoals, getBreadCrumb, type CompleteGoal, getReviews, OPTION_MAPPING } from '@features/index.js';
 import { FeatureCard } from './components/featureCard.js';
 import './GoalDetail.css';
-import { getBreadCrumb } from "@features/goals/index.js";
-import { useCheckbox, type CheckBoxOptions, setStepsComplete } from '@features/goals/index.js';
+import { type Review } from "@root/lib/index.js";
 
 export const GoalDetail = () => {
 
+    /*  HOOKS & PARAMS  */
+    const { goalId } = useParams<{ goalId: string }>();
+    const [goal, setGoal] = useState<CompleteGoal>();
     const navigate = useAppNavigate();
+    const goBack = useGoBack();
+    const { loading, setLoading } = useLoading.getState(); 
+    const [displayReview, setDisplayReview]  = useState<boolean>(false);
+    const [reviewModal, setReviewModal]  = useState<Review | undefined>();
+    const [reviews, setReviews] = useState<Review[]>();
+    const [breadCrumb, setBreadCrumb] = useState<string>();
+    
+    // State management hooks
+    const { selectedBoxes, handleChange } = useCheckbox({ value: goal?.completeSteps });
 
-    /* Takes the goalId from the url to get the 
-       goal, breadcrumb, goal steps */
-    const { goalId } = useParams<{ goalId: string}>();
-    const goal: CompleteGoal | undefined = getGoal(goalId);
-    const breadCrumb: string = getBreadCrumb(goal);
-    const {selectedBoxes, handleChange} = useCheckbox({defaultVal: goal?.completeSteps}); // to tick / untick goals
+    /*  DERIVED STATE  */
     const stepOptions: CheckBoxOptions[] | undefined = goal?.steps?.map(step => ({
         id: step.id,
         description: step.description
     }));
 
-    useEffect(() => {
-        /* Makes sure the user has a valid goal selected */
-        if (!goal) {
-            console.warn(`Goal ${goalId} couldn't be found.`);
-            navigate(-1, { replace: true });
-            return
-        }
-    }, [goalId]);
-    
-    /* Local check box change handler to submit data on change. */
-    const checkboxChange = (values: string[] | null) => {
-        handleChange(values);
+    /*  HANDLERS  */
+    const checkboxChange = async (values: string[] | null) => {
+        handleChange({value: values});
         if (values && goalId) {
-            setStepsComplete({goalId: goalId, completeSteps: values})
+            await setStepsComplete({ goalId: goalId, completeSteps: values });
         }
-    }
+    };
 
+    useEffect(() => {
+        const loadGoal = async () => {
+            setLoading(true);
+            try {
+                const goals = await getGoals();
+                const goalResult = await goals.find(goal => String(goal.id) === String(goalId));
+
+                if (!goalResult) throw new Error(`Goal with ID ${goalId} not found`);
+
+                handleChange({value: goalResult.completeSteps});
+                setGoal(goalResult);
+                setBreadCrumb(getBreadCrumb({goal: goalResult, goals}));
+
+            } catch (error) {
+                console.warn(`Goal of ${goalId} couldn't be found +`, error);
+                goBack();
+            } finally {
+                setLoading(false);
+            }
+        }
+        loadGoal();
+    }, [goalId]);
+
+    useEffect(() => {
+
+        if (!goalId) {
+            goBack();
+            return;
+        }
+
+        const loadReviews = async () => {
+            setLoading(true);
+
+            try {
+                const reviewResults = await getReviews(goalId)
+                if (!reviewResults) {
+                    throw reviewResults;
+                }
+                setReviews(reviewResults);
+            } catch (error) {
+                console.warn("Couldn't fetch reviews + " + error);
+            } finally {
+                setLoading(false);
+            }
+        }
+
+        loadReviews();
+    }, [goalId])
+
+    if (loading) {return null}
     if (goal) {return (
-        <Card className='goal-detail-card'>
-            <p className='goal-detail-crumb'> {breadCrumb}</p>
+        <div className='goal-section-wrapper'>
+            <Card className={`goal-detail-card  ${displayReview ? 'showing-sidebar': ''}`}>
+                <p className='goal-detail-crumb'> {breadCrumb}</p>
 
-            {/* This contains the header section */}
-            <div className='goal-detail-header'>
-                <h1>{goal.goalName}</h1>
-                <div>
-                    <button className="" onClick={() => navigate(`/EditGoal/${goal.id}`)}>Edit</button>
-                    <button className="" onClick={() => navigate(`/PlanGoal/${goal.id}`)}>+ Add Step</button>
+                {/* This contains the header section */}
+                <div className='goal-detail-header'>
+                    <h1>{goal.goalName}</h1>
+                    <div>
+                        <button className="" onClick={() => navigate(`/EditGoal/${goal.id}`)}>Edit</button>
+                        <button className="" onClick={() => navigate(`/PlanGoal/${goal.id}`)}>+ Add Step</button>
+                        <button className="" onClick={() => setDisplayReview(!displayReview)}>Reviews</button>
+                    </div>
                 </div>
-            </div>
 
-            {/* This contains the goal info card section (The why, what when cards etc) */}
-            <div className='goal-feature-section'>
-                <FeatureCard title={"Why I want to achieve this"} content={goal.importance} />
-                <FeatureCard title={"What the goal is"} content={goal.desiredAchievement} />
-                <FeatureCard title={"How I'm measuring progress"} content={goal.measurement} />
-                <FeatureCard title={"Due achievement date"} content={goal.achievementDate} />
-            </div>
+                {/* This contains the goal info card section (The why, what when cards etc) */}
+                <div className='goal-feature-section'>
+                    <FeatureCard title={"Why I want to achieve this"} content={goal.importance} />
+                    <FeatureCard title={"What the goal is"} content={goal.desiredAchievement} />
+                    <FeatureCard title={"How I'm measuring progress"} content={goal.measurement} />
+                    <FeatureCard title={"Due achievement date"} content={goal.achievementDate} />
+                </div>
 
 
-            {/* Contains the list of steps & whether they're complete */}
-            {(goal.steps && stepOptions) && 
-                <div className="goal-detail-steps">
-                    <CheckboxComponent curSelected={selectedBoxes} onChange={checkboxChange} options={stepOptions ?? []} name="step-checkbox" />
-                </div>}
-        </Card>
+                {/* Contains the list of steps & whether they're complete */}
+                {(goal.steps && stepOptions) && 
+                    <div className="goal-detail-steps">
+                        <CheckboxComponent curSelected={selectedBoxes} onChange={checkboxChange} options={stepOptions ?? []} name="step-checkbox" />
+                    </div>}
+            </Card>
+
+            {displayReview && reviews &&
+                <Card className="side-review-bar">
+                    <h3>Reviews</h3>
+                    {reviews.map((review, index) => {
+                        const displayWeek = reviews.length - index
+                        const reviewType = OPTION_MAPPING[review.reviewType as keyof typeof OPTION_MAPPING];
+                        return (
+                            <button onClick={() => setReviewModal(review)}><b>Week {displayWeek}</b> - {reviewType}</button>
+                        )
+                    })}
+                </Card>
+            }
+
+            {reviewModal && 
+                <GeneralModal onClose={() => setReviewModal(undefined)}>
+                    <h2 className='mt-[-0.5rem]'>{OPTION_MAPPING[reviewModal.reviewType as keyof typeof OPTION_MAPPING]}</h2>
+                    <p className="review-inputs">{reviewModal.firstInput}</p>
+                    <p className="review-inputs">{reviewModal.secondInput}</p>
+                </GeneralModal>
+            }
+        </div>
     );}
 }
 

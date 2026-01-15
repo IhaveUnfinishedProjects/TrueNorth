@@ -7,3 +7,4 @@ export { default as ComboBox } from './ComboBox/ComboBox.js';
 export { default as CalendarSelection } from './CalendarSelection/CalendarSelection.js';
 export { default as RadioForm } from './RadioForm/RadioForm.js';
 export { default as CheckboxComponent } from './Checkbox/Checkbox.js';
+export { GeneralModal } from './Modal/GeneralModal.js';

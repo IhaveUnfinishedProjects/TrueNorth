@@ -1,5 +1,5 @@
 import BinSVG from "@assets/binButton.svg?react";
-import type { Step } from "@features/goals/index.js";
+import type { Step } from "@features/index.js";
 
 interface BinImageProps {
     step: Step;

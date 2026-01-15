@@ -20,7 +20,7 @@ export function useFormatDate () {
             try {
                 dateObj = parseDate(dateObj);
             } catch (error) {
-                console.log(error);
+                console.warn(error);
                 return undefined;
             }
         }

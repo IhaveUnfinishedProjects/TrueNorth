@@ -17,18 +17,20 @@ interface RadioFormProps {
     onChange: (value: string) => void;
     /** The name of the Radio component */
     name: string
+    /** Optional css class name for the RadioGroup */
+    className?: string;
 }
 
-export const RadioForm = ({ label, options, selected, onChange, name }: RadioFormProps) => {
+export const RadioForm = ({ label, options, selected, onChange, name, className }: RadioFormProps) => {
     return(
-        <RadioGroup value={selected} onChange={onChange} name={name} className="radio-group-container">
-            <Label>{label}</Label>
+        <RadioGroup value={selected} onChange={onChange} name={name} className={`radio-group-container ${className}`} aria-label='Radio Form'>
             {options.map(data => {
                 return (
                     <Radio 
                         key={data.value} 
                         value={data.value}
                         className="radio-option"
+                        aria-label={data.displayLabel}
                     >
                         <div className="radio-circle" />
                         {data.displayLabel}

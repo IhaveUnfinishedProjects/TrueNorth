@@ -22,6 +22,8 @@
     font-size: 0.95rem;
     color: #413737;
     outline: none;
+    width: 100%;
+    border-radius: 10px;
 }
 
 /* The "Circle" itself (Unchecked state) */
