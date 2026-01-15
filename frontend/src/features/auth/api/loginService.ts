@@ -1,3 +1,4 @@
+import Cookies from 'js-cookie';
 const API_BASE = "http://localhost:8000/api/login/";
 
 interface LoginProps {
@@ -7,14 +8,18 @@ interface LoginProps {
 
 export const login = async ({username, password}: LoginProps) => {
 
+    const csrfToken = Cookies.get('csrftoken');
     const response = await fetch(API_BASE, {
         method: "POST",
-        headers: {"Content-Type": "application/json"},
+        headers: {
+            "Content-Type": "application/json",
+            "X-CSRFToken": csrfToken || "",
+        },
         body: JSON.stringify({
             username: username,
             password: password,
         }),
-        credentials: 'include'
+        credentials: 'include',
     });
 
     const data = await response.json();

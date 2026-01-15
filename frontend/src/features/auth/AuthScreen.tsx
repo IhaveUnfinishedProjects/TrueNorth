@@ -11,7 +11,7 @@ const AuthScreen = () => {
     const confirmInput = useInput();
     const [signup, setSignup] = useState(false);
     const [warning, setWarning] = useState("");
-    const { login: globalLogin } = useUser();
+    const { login: globalLogin } = useUser.getState();
     const { setLoading } = useLoading.getState();
 
     const toggleSignup = () => {
@@ -22,8 +22,9 @@ const AuthScreen = () => {
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-
-        if (signup && passwordInput !== confirmInput) {
+        setWarning('');
+        
+        if (signup && String(passwordInput) !== String(confirmInput)) {
             setWarning("Passwords do not match");
             return;
         }
@@ -36,6 +37,24 @@ const AuthScreen = () => {
             globalLogin(response.user);
         } catch (error: any){
             setWarning(error.error);
+            globalLogin(null);
+        } finally {
+            setLoading(false);
+        }
+    }
+
+    /* Just lets demo users & recruiters log into basic account. */
+    const handleDemo = async (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault();
+        setWarning('');
+
+        try {
+            setLoading(true)
+            const response = await login({username: "DemoUser", password: "FVaPr7K4VNpVmkx"});
+            globalLogin(response.user);
+        } catch (error) {
+            setWarning("Couldn't log demo user in.");
+            globalLogin(null);
         } finally {
             setLoading(false);
         }
@@ -45,6 +64,10 @@ const AuthScreen = () => {
         <Card className='auth-screen'>
             <h1>{signup ? "Create Account" : "Welcome Back"}</h1>
             <p className = 'mt-[0.5rem] mb-[0.5rem]'>{signup ? "Sign up to begin" : "Log in to continue"}</p>
+
+            {!signup && 
+                <button type="button" onClick={handleDemo}>Demo Login</button>
+            }
             <form 
                 className='input-form'
                 onSubmit={handleSubmit}
