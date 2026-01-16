@@ -1,5 +1,5 @@
 import type { ChangeEvent } from "react";
-import { type InputFieldConfig } from "@root/lib/types/InputTag.js";
+import { type InputFieldConfig } from "@root/library/types/InputTag.js";
 
 type InputProps<T> = {
     formValues: T;

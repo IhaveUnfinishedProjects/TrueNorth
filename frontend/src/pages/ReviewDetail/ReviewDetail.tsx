@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { Card, RadioForm } from '@components/ui/index.js';
 import { ReviewSection } from './components/index.js';
 import { useRadio, useInput, useGoBack, useLoading } from '@hooks/index.js';
-import { getGoal, AddReview, REVIEW_TYPES, OPTION_MAPPING, isReviewType, type CompleteGoal } from '@features/index.js';
+import { getGoal, AddReview, OPTION_MAPPING, isReviewType, type CompleteGoal } from '@features/index.js';
 import './ReviewDetail.css';
 
 export const ReviewDetail = () => {

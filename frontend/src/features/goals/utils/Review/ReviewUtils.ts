@@ -1,4 +1,4 @@
-import type { ReviewType } from "@root/lib/types/index.js";
+import type { ReviewType } from "@root/library/types/index.js";
 import { REVIEW_TYPES } from "@features/index.js";
 
 export function isReviewType(val: string): val is ReviewType {

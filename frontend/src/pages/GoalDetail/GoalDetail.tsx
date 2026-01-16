@@ -5,7 +5,7 @@ import { Card, CheckboxComponent, GeneralModal } from "@components/ui/index.js";
 import { useCheckbox, type CheckBoxOptions, setStepsComplete, getGoals, getBreadCrumb, type CompleteGoal, getReviews, OPTION_MAPPING } from '@features/index.js';
 import { FeatureCard } from './components/featureCard.js';
 import './GoalDetail.css';
-import { type Review } from "@root/lib/index.js";
+import { type Review } from "@root/library/index.js";
 
 export const GoalDetail = () => {
 

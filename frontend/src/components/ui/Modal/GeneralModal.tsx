@@ -2,7 +2,7 @@ import { type ReactNode } from 'react';
 import ReactDOM from 'react-dom';
 import { Link } from "react-router-dom";
 import { ModalWrapper } from "@components/ui/index.js";
-import type { ModalButtonProps } from "@root/lib/types/index.js";
+import type { ModalButtonProps } from "@root/library/types/index.js";
 import {BackButton} from '@root/assets/index.js';
 import "@root/index.css";
 import './ModalWrapper.css';

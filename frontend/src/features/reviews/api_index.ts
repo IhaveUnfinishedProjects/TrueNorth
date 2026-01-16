@@ -1,4 +1,4 @@
-import type { Review } from '@root/lib/types/index.js';
+import type { Review } from '@root/library/types/index.js';
 import { fetchReviewAPI, postReviewAPI } from './reviewService.js';
 
 /**

@@ -1,4 +1,4 @@
-import type { Review } from '@root/lib/index.js';
+import type { Review } from '@root/library/index.js';
 import Cookies from 'js-cookie';
 const API_BASE = "http://localhost:8000/api/goals/";
 

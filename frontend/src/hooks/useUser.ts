@@ -1,4 +1,4 @@
-import type { User } from '@root/lib/index.js'
+import type { User } from '@root/library/index.js'
 import { create } from 'zustand'
 import { logout as apiLogout } from '@features/index.js'; 
 import { useLoading } from '@hooks/index.js';
