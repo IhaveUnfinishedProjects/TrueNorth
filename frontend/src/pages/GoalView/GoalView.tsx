@@ -4,6 +4,7 @@ import { getLeafGoals, type CompleteGoal } from '@features/index.js';
 import { GoalCard } from '@features/index.js';
 import { useLoading } from '@hooks/index.js';
 import { useEffect, useState } from 'react';
+import { Empty } from '@root/components/index.js';
 
 
 export const GoalView = () => {
@@ -27,7 +28,14 @@ export const GoalView = () => {
         loadGoals();
     }, [])
 
-    if (loading || !goals) {return null;}
+    if (loading) {return null;}
+    if (!goals || goals.length === 0    ) {
+        return(
+            <>
+                <Empty />
+            </>
+        );
+    }
     return (
         <>
             <h1 className="headerGoal"> Goals Overview </h1>

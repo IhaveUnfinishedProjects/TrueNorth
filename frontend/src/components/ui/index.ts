@@ -8,3 +8,4 @@ export { default as CalendarSelection } from './CalendarSelection/CalendarSelect
 export { default as RadioForm } from './RadioForm/RadioForm.js';
 export { default as CheckboxComponent } from './Checkbox/Checkbox.js';
 export { GeneralModal } from './Modal/GeneralModal.js';
+export { default as Empty } from './Empty/Empty.js';

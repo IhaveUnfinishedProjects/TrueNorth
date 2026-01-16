@@ -4,6 +4,7 @@ import { useAppNavigate, useLoading, useGoBack } from '@hooks/index.js';
 import { getGoals, type CompleteGoal } from "@features/index.js";
 import '@root/lib/styles/circle-progress-bar.css';
 import './GoalReview.css';
+import { Empty } from '@root/components/index.js';
 
 
 export const GoalReview = () => {
@@ -40,6 +41,7 @@ export const GoalReview = () => {
     }, []);
 
     if (loading || !goals) {return null}
+    if (goals.length === 0) { return <Empty/>}
     return(
         <div className='goal-review-container'>
             <h1>Select Goal to Review</h1>

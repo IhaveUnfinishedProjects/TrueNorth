@@ -9,6 +9,16 @@ type InputProps<T> = {
 };
 
 export const Form = <T extends Record<string, string>> ({ formValues, handleChange, InputFieldData, handleSubmit }: InputProps<T>) => {
+
+    const getLocalDate = () => {
+        const today = new Date();
+        const offset = today.getTimezoneOffset();
+        const localToday = new Date(today.getTime() - (offset * 60 * 1000));
+        return localToday.toISOString().split('T')[0];
+    };
+
+    const localToday = getLocalDate();
+
     return (
         <>
             <form onSubmit={handleSubmit}>
@@ -23,6 +33,7 @@ export const Form = <T extends Record<string, string>> ({ formValues, handleChan
                                 name = {name.toString()}
                                 value={String(formValues[data.name])}
                                 onChange={handleChange}
+                                min={data.type === "date" ? localToday : undefined}
                             />
                         </div>
                     )

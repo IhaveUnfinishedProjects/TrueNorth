@@ -98,7 +98,7 @@ export const GoalDetail = () => {
                     <div>
                         <button className="" onClick={() => navigate(`/EditGoal/${goal.id}`)}>Edit</button>
                         <button className="" onClick={() => navigate(`/PlanGoal/${goal.id}`)}>+ Add Step</button>
-                        <button className="" onClick={() => setDisplayReview(!displayReview)}>Reviews</button>
+                        {reviews && reviews.length > 0 && <button className="" onClick={() => setDisplayReview(!displayReview)}>Reviews</button>}
                     </div>
                 </div>
 

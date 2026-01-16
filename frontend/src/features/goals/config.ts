@@ -90,6 +90,6 @@ export const InputFieldData: InputFieldConfig<Goal>[] = [
         name: "achievementDate",
         placeholder: "achievementDate",
         required: false,
-        h3: "When do you want to achieve this by?"
+        h3: "When do you want to achieve this by?",
     },
 ]
