@@ -1,0 +1,23 @@
+services:
+  # --- DATABASE ---
+  db:
+  # --- DJANGO ---
+  backend:
+    build: ./backend
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    environment:
+      - DB_HOST=db
+      - DB_NAME=truenorth_db
+      - DB_USER=admin
+      - DB_PASSWORD=secret_pass
+  # --- REACT --- 
+  frontend:
+    build: ./frontend
+    ports:
+      - "3000:80"
+    volumes: 
+      - ./frontend/app
+    stdin_open: true # Check if it's needed for this version
