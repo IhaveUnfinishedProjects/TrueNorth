@@ -24,10 +24,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get('SECRET_KEY', 'localhost')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get('DEBUG', 'localhost')
+DEBUG = os.environ.get('DEBUG', 'True') == 'True'
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", "localhost").split(",")
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 # Application definition
 
@@ -80,20 +80,26 @@ WSGI_APPLICATION = "myproject.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": os.environ.get("DB_NAME", "truenorth_db"),
-        "USER": os.environ.get("DB_USER", "admin"),
-        "PASSWORD": os.environ.get("DB_PASSWORD", "secret"),
-        "HOST": os.environ.get("DB_HOST", "db"),
-        "PORT": "5432",
+if not DEBUG:
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.postgresql",
+            "NAME": os.environ.get("DB_NAME", "truenorth_db"),
+            "USER": os.environ.get("DB_USER", "admin"),
+            "PASSWORD": os.environ.get("DB_PASSWORD", "secret"),
+            "HOST": os.environ.get("DB_HOST", "db"),
+            "PORT": "5432",
+        }
     }
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+    
+else: 
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": BASE_DIR / "db.sqlite3",
+        }
     }
-}
+    
 
 
 # Password validation
@@ -116,12 +122,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",
-    "http://127.0.0.1:3000",
-    "http://localhost:5173",
-]
-
+CORS_ALLOWED_ORIGINS = os.environ.get("CORS_ORIGINS", "http://localhost:5173,http://localhost:3000").split(",")
 CORS_ALLOW_HEADERS = (
     "accept",
     "authorization",
@@ -134,17 +135,16 @@ CORS_ALLOW_HEADERS = (
 
 CORS_ALLOW_CREDENTIALS = True
 
-CSRF_TRUSTED_ORIGINS = [
-    "http://localhost:5173",
-]
+CSRF_TRUSTED_ORIGINS = os.environ.get("CSRF_ORIGINS", "http://localhost:5173,http://localhost:3000").split(",")
 
 # Tells the browser: "It's okay to send this cookie across different ports"
 SESSION_COOKIE_SAMESITE = 'Lax' 
 CSRF_COOKIE_SAMESITE = 'Lax'
+CSRF_COOKIE_DOMAIN = '.truenorthapp.org'
 
 # Tells the browser: "You don't need HTTPS to save this cookie"
-SESSION_COOKIE_SECURE = False 
-CSRF_COOKIE_SECURE = False
+SESSION_COOKIE_SECURE = not DEBUG
+CSRF_COOKIE_SECURE = not DEBUG
 
 # Optional: ensures the cookie isn't blocked by iframe protection
 SESSION_COOKIE_HTTPONLY = True

@@ -1,7 +1,6 @@
 import Cookies from 'js-cookie';
 import type { addGoalParams, Step, CompleteGoal, Goal, CompleteStep } from '@features/index.js';
-const API_BASE = "http://localhost:8000/api/goals/";
-
+import { GOALS_URL } from '@root/library/constants.js';
 
 /**
  * API call to fetch all goals from the backend. 
@@ -9,7 +8,7 @@ const API_BASE = "http://localhost:8000/api/goals/";
 export const fetchGoals = async () => {
 
     const csrfToken = Cookies.get('csrftoken');
-    const response = await fetch(API_BASE, {
+    const response = await fetch(GOALS_URL, {
         method: "GET",
         headers: {
             "Content-Type": "application/json",
@@ -30,7 +29,7 @@ export const fetchGoals = async () => {
 export const fetchGoal = async (goalId: string | number) => {
 
     const csrfToken = Cookies.get('csrftoken');
-    const response = await fetch(`${API_BASE}${goalId}/`, {
+    const response = await fetch(`${GOALS_URL}${goalId}/`, {
         method: "GET",
         headers: {
             "Content-Type": "application/json",
@@ -61,7 +60,7 @@ export const createGoal = async ({ newGoal, curParentId }: addGoalParams) => {
         steps: [] 
     }
 
-    const response = await fetch(API_BASE, {
+    const response = await fetch(GOALS_URL, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -93,7 +92,7 @@ export const updateGoalPartial = async (goalId: string | undefined, newGoal: Goa
         ...(newGoal.achievementDate && { achievement_date: newGoal.achievementDate }),
     }
 
-    const response = await fetch(`${API_BASE}${goalId}/`, {
+    const response = await fetch(`${GOALS_URL}${goalId}/`, {
         method: "PATCH",
         headers: {
             "Content-Type": "application/json",
@@ -126,7 +125,7 @@ export const updateSteps = async (newSteps: Step[], goal: CompleteGoal) => {
 
     const payload = { steps: payloadSteps };
 
-    const response = await fetch(`${API_BASE}${goal.id}/`, {
+    const response = await fetch(`${GOALS_URL}${goal.id}/`, {
         method: "PATCH",
         headers: {
             "Content-Type": "application/json",
@@ -150,7 +149,7 @@ export const updateStepCompletion = async (goalId: string, allCompletedStepIds: 
         completeSteps: allCompletedStepIds
     };
 
-    return await fetch(`${API_BASE}${goalId}/`, {
+    return await fetch(`${GOALS_URL}${goalId}/`, {
         method: "PATCH",
         headers: { 
             "Content-Type": "application/json",

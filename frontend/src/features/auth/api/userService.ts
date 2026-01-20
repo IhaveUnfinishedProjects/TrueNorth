@@ -1,8 +1,8 @@
-const API_BASE = "http://localhost:8000/api/user/";
+import { USER_URL } from "@root/library/constants.js";
 
 export const fetchUser = async () => {
 
-    const response = await fetch(API_BASE, {
+    const response = await fetch(USER_URL, {
         method: "GET",
         headers: {
             "Content-Type": "application/json",

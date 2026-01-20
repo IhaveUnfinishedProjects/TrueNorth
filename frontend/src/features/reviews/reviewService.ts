@@ -1,13 +1,12 @@
 import type { Review } from '@root/library/index.js';
 import Cookies from 'js-cookie';
-const API_BASE = "http://localhost:8000/api/goals/";
-
+import { GOALS_URL } from '@root/library/index.js';
 /**
  * API call to fetch a goals reviews from backend
  */
 export const fetchReviewAPI = async (goalId: string | number): Promise<Review[]> => {
     const csrfToken = Cookies.get('csrftoken');
-    const response = await fetch(`${API_BASE}${goalId}/reviews/`, {
+    const response = await fetch(`${GOALS_URL}${goalId}/reviews/`, {
         method: "GET",
         headers: {
             "content-type": "application/json",
@@ -34,7 +33,7 @@ export const postReviewAPI = async ({goalId, reviewType, firstInput, secondInput
         reviewType, firstInput, secondInput
     }
 
-    const response = await fetch(`${API_BASE}${goalId}/reviews/`, {
+    const response = await fetch(`${GOALS_URL}${goalId}/reviews/`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",

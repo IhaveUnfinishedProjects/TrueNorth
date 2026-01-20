@@ -1,5 +1,5 @@
 import Cookies from 'js-cookie';
-const API_BASE = "http://localhost:8000/api/signup/";
+import { SIGNUP_URL } from '@root/library/constants.js';
 
 interface SignUpProps {
     username: string;
@@ -10,7 +10,7 @@ interface SignUpProps {
 export const signUp = async ({username, password, email}: SignUpProps) => {
 
     const csrfToken = Cookies.get('csrftoken');
-    const response = await fetch(API_BASE, {
+    const response = await fetch(SIGNUP_URL, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",

@@ -1,10 +1,12 @@
 from rest_framework.decorators import api_view
+from django.views.decorators.csrf import ensure_csrf_cookie
 from rest_framework.response import Response
 from django.contrib.auth import authenticate, login, logout
 from .models import User
 import time
 
 @api_view(['GET'])
+@ensure_csrf_cookie
 def get_current_user(request):
     if request.user.is_authenticated:
         return Response({
@@ -13,7 +15,7 @@ def get_current_user(request):
             "email": request.user.email
         }, status=200)
     else:
-        return Response({"athenticated: False"}, status=403)
+        return Response({"authenticated: False"}, status=403)
     
 
 @api_view(['POST'])

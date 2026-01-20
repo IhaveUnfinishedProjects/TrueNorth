@@ -1,11 +1,10 @@
-const API_BASE = "http://localhost:8000/api/logout/";
+import { LOGOUT_URL } from '@root/library/index.js';
 import Cookies from 'js-cookie';
 
 export const logout = async () => {
 
     const csrfToken = Cookies.get('csrftoken');
-
-    const response = await fetch(API_BASE, {
+    const response = await fetch(LOGOUT_URL, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",

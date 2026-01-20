@@ -11,3 +11,12 @@ declare module '*.svg?url' {
   const content: string;
   export default content;
 }
+
+interface ImportMetaEnv {
+  readonly VITE_API_URL: string;
+  // Add other variables here as you create them
+}
+
+interface ImportMeta {
+  readonly env: ImportMetaEnv;
+}
