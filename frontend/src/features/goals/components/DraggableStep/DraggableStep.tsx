@@ -1,9 +1,8 @@
 import { RxDragHandleDots2 } from "react-icons/rx";
 import { MdEventRepeat } from "react-icons/md";
 import { type DraggableProvided, Draggable } from "@hello-pangea/dnd";
-import BinImage from "../StepDeleteButton.js";
-import type { Step } from "@features/index.js";
-import { useEffect, type ChangeEvent } from "react";
+import { type Step, BinImage } from "@features/index.js";
+import { type ChangeEvent } from "react";
 import './DraggableStep.css';
 
 interface DraggableProps {
@@ -37,7 +36,7 @@ export const DraggableSteps = ({step, index, handleChange, remove, onRepeatOpen,
                     ref={provided.innerRef}
                     {...provided.draggableProps}
                     key={step.id} 
-                    className="inputTags"
+                    className="input-tags"
                 >
                     <div {...provided.dragHandleProps}>
                         <RxDragHandleDots2 className="w-6 h-6"/>
@@ -62,7 +61,7 @@ export const DraggableSteps = ({step, index, handleChange, remove, onRepeatOpen,
                         onClick={ () => {setStep(step); onRepeatOpen()} }
                     />
 
-                    <BinImage step={step} remove={remove}/>
+                    <BinImage item={step} remove={remove}/>
                 </div> 
             )}
         </Draggable>

@@ -159,3 +159,24 @@ export const updateStepCompletion = async (goalId: string, allCompletedStepIds: 
         credentials: "include"
     });
 };
+
+/**
+ * API call to delete a goal. 
+ */
+export const deleteGoal = async (goalId: string | number) => {
+
+    const csrfToken = Cookies.get('csrftoken');
+    const response = await fetch(`${GOALS_URL}${goalId}/`, {
+        method: "DELETE",
+        headers: {
+            "Content-Type": "application/json",
+            "X-CSRFToken": csrfToken || "",
+        },
+        credentials: "include", 
+    });
+
+    if (!response.ok) {
+        throw new Error("Failed to delete goal");
+    }
+    return response.json();
+};

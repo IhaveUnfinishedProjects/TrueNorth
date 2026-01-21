@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useAppNavigate, useGoBack, useLoading } from "@hooks/index.js";
-import { Card, CheckboxComponent, GeneralModal } from "@components/ui/index.js";
-import { useCheckbox, type CheckBoxOptions, setStepsComplete, getGoals, getBreadCrumb, type CompleteGoal, getReviews, OPTION_MAPPING } from '@features/index.js';
+import { Card, CheckboxComponent, GeneralModal, ConfirmationModal } from "@components/ui/index.js";
+import { useCheckbox, type CheckBoxOptions, setStepsComplete, getGoals, getBreadCrumb, type CompleteGoal, getReviews, OPTION_MAPPING, BinImage, deleteGoal, confirmationButtons, noButtonName } from '@features/index.js';
 import { FeatureCard } from './components/featureCard.js';
 import './GoalDetail.css';
 import { type Review } from "@root/library/index.js";
@@ -19,6 +19,7 @@ export const GoalDetail = () => {
     const [reviewModal, setReviewModal]  = useState<Review | undefined>();
     const [reviews, setReviews] = useState<Review[]>();
     const [breadCrumb, setBreadCrumb] = useState<string>();
+    const [confirmation, setConfirmation] = useState<boolean>(false);
     
     // State management hooks
     const { selectedBoxes, handleChange } = useCheckbox({ value: goal?.completeSteps });
@@ -36,6 +37,27 @@ export const GoalDetail = () => {
             await setStepsComplete({ goalId: goalId, completeSteps: values });
         }
     };
+
+    /* HELPER & SIDE EFFECTS */
+    const removeGoal = async (name: string | undefined) => {
+        setConfirmation(false);
+        if (!goal || !name) {
+            goBack();
+            return;
+        }
+
+        if (name === noButtonName){return}
+
+        try {
+            setLoading(true);
+            const response = await deleteGoal(goal.id);
+        } catch (error) {
+            console.warn(error);
+        } finally {
+            setLoading(false);
+            goBack();
+        }
+    }
 
     useEffect(() => {
         const loadGoal = async () => {
@@ -99,6 +121,7 @@ export const GoalDetail = () => {
                         <button className="" onClick={() => navigate(`/EditGoal/${goal.id}`)}>Edit</button>
                         <button className="" onClick={() => navigate(`/PlanGoal/${goal.id}`)}>+ Add Step</button>
                         {reviews && reviews.length > 0 && <button className="" onClick={() => setDisplayReview(!displayReview)}>Reviews</button>}
+                        <BinImage item={goal} remove={() => setConfirmation(true)}/>
                     </div>
                 </div>
 
@@ -137,6 +160,10 @@ export const GoalDetail = () => {
                     <p className="review-inputs">{reviewModal.firstInput}</p>
                     <p className="review-inputs">{reviewModal.secondInput}</p>
                 </GeneralModal>
+            }
+
+            {confirmation && 
+                <ConfirmationModal header={'Delete Goal?'} buttons={confirmationButtons} onClose={removeGoal}/>
             }
         </div>
     );}

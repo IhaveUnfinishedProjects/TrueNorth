@@ -178,3 +178,7 @@
     cursor: pointer;
     filter: brightness(0.9);
 }
+
+.goal-detail-header .bin-button {
+    align-self: center;
+}
