@@ -1,5 +1,6 @@
 .auth-screen {
-    width: 40%;
+    width: 96%;
+    max-width: 600px;
     display: flex;
     align-items: center; 
     justify-content: center; 

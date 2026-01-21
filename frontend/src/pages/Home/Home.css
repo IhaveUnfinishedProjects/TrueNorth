@@ -1,3 +1,30 @@
+/* MAIN CARD STYLES */
+.card-container {
+    /* flex & placement */
+    display: flex;
+    flex-direction: row;
+    padding: 1rem;
+
+    /* sizing */
+    width: 95%;
+    height: 12rem;
+    max-width: 850px;
+
+    /* Colouring */
+    background-color: #D9D9D9;
+    border-radius: 20px;
+    box-shadow: var(--shadow-lg);
+}
+
+/* WELCOME TEXT STYLE */
+.welcome-text {
+    /* Spacing & sizing */
+    margin-bottom: 0;
+    width: 95%;
+    max-width: 850px;
+    padding-left: 0.5rem;
+}
+
 /* Button styling for the home page feature cards*/
 .home-button {
     text-align: center;
@@ -10,7 +37,7 @@
     background-color: rgba(0, 0, 0, 0.05);
     transform: translateY(-1px); 
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  cursor: pointer;
+    cursor: pointer;
 }
 
 .home-button:focus {
@@ -19,24 +46,6 @@
     background-color: rgba(0, 0, 0, 0.02);
 }
 
-/* Home card styling */
-.card-container {
-
-    /* flex & placement */
-    display: flex;
-    flex-direction: row;
-    padding: 1rem;
-
-    /* sizing */
-    width: 62%;
-    height: 12rem;
-
-    /* Colouring */
-    background-color: #D9D9D9;
-    border-radius: 20px;
-    box-shadow: var(--shadow-lg);
-
-}
 
 .card-container:hover {
     outline: none; 
@@ -53,5 +62,64 @@
 /* Svg image styling */
 .svg-image {
     max-width: 100%;
-    height: auto;
+    min-height: auto;
+}
+
+/* SMALL DEVICE STYLING */
+@media (max-width: 700px) {
+
+    /* WELCOME HEADER */
+    .welcome-text {
+        font-size: 20px;
+    }
+
+    /* MAIN CARD CONTAINER */
+    .main.card-container {
+        position: relative;
+        z-index: 0;
+        background-color: transparent;
+    }
+
+    .main.card-container:hover {
+        box-shadow: none;
+        outline: none;
+    }
+
+    /* SVG STYLING */
+    .svg-image {
+        display: none;
+    }
+
+    .svg-image-mobile {
+        display:inline;
+        position: absolute;
+        top: 0;
+        left: 0;   
+        min-width:101%;
+        height: 101%;
+        z-index: -1;
+        
+        transform: scaleX(1) scaleY(1);
+        object-fit: fill; 
+        overflow: hidden; 
+    }
+
+    /* CONTAINER FONT & TEXT */
+    .container-text {
+        color: white;
+        text-shadow: 
+            0 1px 2px rgba(0,0,0,0.8), 
+            0 0 1em rgba(0,0,0,0.5);
+        -webkit-text-stroke: 0.2px black;
+        z-index: 1;
+    }
+
+    .container-text button {
+        align-self: center;
+        width: 90%;
+    }
+
+    .container-text h2 {
+        align-self: center;
+    }
 }

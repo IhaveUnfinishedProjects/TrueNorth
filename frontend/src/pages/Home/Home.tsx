@@ -21,11 +21,10 @@ export const HomePageContent = () => {
          */ 
          
         <div className="flex flex-col items-center py-5 space-y-14">
-            <h1 className="mb-0 w-5/8 pl-3 text-start" >Welcome back, <span style={{ textTransform: "capitalize" }}>{user?.username ?? 'User'}</span></h1>
+            <h1 className="welcome-text" >Welcome back, <span style={{ textTransform: "capitalize" }}>{user?.username ?? 'User'}</span></h1>
             {featureCardData.map((data, index) => (
                 <FeatureCard 
                     key={index}
-
                     title={data.title}
                     details={data.details}
                     link={data.link}

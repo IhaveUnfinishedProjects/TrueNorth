@@ -26,6 +26,7 @@ interface HeaderProps {
 
 const Header = ( { onHeightMeasured }: HeaderProps) => {
     const backModal = useToggleModal();
+    const hideOnMobile = ['Goals', 'Review', '+ New Goal'];
 
     // Creates a ref & attaches it to the root html element
     const headerRef = useRef<HTMLElement>(null);
@@ -49,13 +50,13 @@ const Header = ( { onHeightMeasured }: HeaderProps) => {
             />}
             <header ref={headerRef} className="header">
                 <div className="flex gap-3">
-                    <Logo/>
-                    <h1 className="flex items-center text-[24px] font-bold">TrueNorth</h1>
+                    <Logo className="logo"/>
+                    <h1 className="header-h1">TrueNorth</h1>
                 </div>
 
                 <nav className="flex gap-5 items-center">
                     {NavBarData.map((data, index) => (
-                        <Link key={index} to={data.linkTo} state={{ fromApp: true }}>
+                        <Link className={hideOnMobile.includes(data.name) ? 'hide-link': ''} key={index} to={data.linkTo} state={{ fromApp: true }}>
                             <button className="header-button">
                                 {data.name}
                             </button>
