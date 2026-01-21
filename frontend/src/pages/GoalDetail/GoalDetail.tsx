@@ -119,7 +119,7 @@ export const GoalDetail = () => {
                     <h1>{goal.goalName}</h1>
                     <div>
                         <button className="" onClick={() => navigate(`/EditGoal/${goal.id}`)}>Edit</button>
-                        <button className="" onClick={() => navigate(`/PlanGoal/${goal.id}`)}>+ Add Step</button>
+                        <button className="" onClick={() => navigate(`/PlanGoal/${goal.id}`)}>+ Add Steps</button>
                         {reviews && reviews.length > 0 && <button className="" onClick={() => setDisplayReview(!displayReview)}>Reviews</button>}
                         <BinImage item={goal} remove={() => setConfirmation(true)}/>
                     </div>

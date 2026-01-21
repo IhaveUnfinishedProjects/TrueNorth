@@ -18,7 +18,7 @@ const GoalCreation = () => {
     const navigate = useAppNavigate();
     const backModal = useToggleModal();
     const subModal = useToggleModal();
-    const { formValues, handleChange, resetForm } = useForm(initialValues);
+    const { formValues, handleChange, resetForm, handleFocus } = useForm(initialValues);
     const { loading, setLoading } = useLoading.getState();
     const goBack = useGoBack();
     const { curParentId } = useParams<{ curParentId?: string, goalId?: string }>();
@@ -107,6 +107,7 @@ const GoalCreation = () => {
                 handleChange={handleChange} 
                 InputFieldData={InputFieldData} 
                 handleSubmit={localSubmit} 
+                handleFocus={handleFocus}
             />
 
             {/* Contains Modal Logic (Open & Close) */}
