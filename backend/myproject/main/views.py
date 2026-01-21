@@ -1,12 +1,10 @@
 from rest_framework.decorators import api_view
-from django.views.decorators.csrf import ensure_csrf_cookie
 from rest_framework.response import Response
 from django.contrib.auth import authenticate, login, logout
 from .models import User
-import time
+import uuid
 
 @api_view(['GET'])
-@ensure_csrf_cookie
 def get_current_user(request):
     if request.user.is_authenticated:
         return Response({
@@ -60,3 +58,11 @@ def signup_view(request):
     user = User.objects.create_user(username=username, email=email, password=password)
     login(request, user)
     return Response({"Message": "User create and logged in", "user": user.username}, status = 201)
+
+
+@api_view(['POST'])
+def guest_view(request):
+    username = f"guest_{uuid.uuid4().hex[:8]}"
+    user = User.objects.create_user(username=username)
+    login(request, user)
+    return Response({"Message": "Logged in as guest user", "user": user.username}, status=201)

@@ -1,6 +1,6 @@
 import { Card } from "@components/ui/index.js";
 import { useInput, useUser, useLoading } from "@hooks/index.js";
-import { login, signUp } from './index.js';
+import { login, signUp, demoSignUp } from './index.js';
 import { useState } from "react";
 import './auth.css';
 
@@ -50,7 +50,7 @@ const AuthScreen = () => {
 
         try {
             setLoading(true)
-            const response = await login({username: "DemoUser", password: "FVaPr7K4VNpVmkx"});
+            const response = await demoSignUp();
             globalLogin(response.user);
         } catch (error) {
             setWarning("Couldn't log demo user in.");
