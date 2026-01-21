@@ -55,3 +55,14 @@
 .sign-button:hover {
     color: blue;
 }
+
+.demo-login {
+    color: blue;
+    text-decoration: underline;
+}
+
+.demo-login:hover {
+    transform: translateY(-2px);
+    transition: transform 0.2s ease;
+    cursor: pointer;
+}

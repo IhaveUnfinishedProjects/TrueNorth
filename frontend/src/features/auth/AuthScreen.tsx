@@ -66,7 +66,7 @@ const AuthScreen = () => {
             <p className = 'mt-[0.5rem] mb-[0.5rem]'>{signup ? "Sign up to begin" : "Log in to continue"}</p>
 
             {!signup && 
-                <button type="button" onClick={handleDemo}>Demo Login</button>
+                <button className="demo-login" type="button" onClick={handleDemo}>Demo Login</button>
             }
             <form 
                 className='input-form'
