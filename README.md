@@ -1,8 +1,10 @@
 # True North
 
 ## Live Link & Description
-www.truenorthapp.org
+www.truenorthapp.org 
 True North is a goal tracking app, allowing users to create and view goals in a simple actionable manner. The user can review these goals to track progress and plan out the upcoming week.
+
+The production server is hosted off my Raspberry Pi and served through Cloudflare, so if the link isn't live there are **photos below** of my website. 
 ## Tech Stack
 **Frontend** 
 - React 
@@ -52,3 +54,10 @@ docker compose up --build
 ```
 3. Access the website
 	In your browser you can type http://localhost:3000
+
+
+## Photos
+![[Pasted image 20260123192416.png]]
+![[Pasted image 20260123192456.png]]
+![[Pasted image 20260123192528.png]]
+![[Pasted image 20260123192622.png]]

@@ -1,16 +1,10 @@
 
 /* PAGE CONTAINER STYLING */
 .goal-review-container {
-    margin-top: -5rem;
-    padding-top: 5rem;
-    padding-bottom: 5rem;
-    height: 90vh;
+    min-height: fit-content;
     overflow: auto;
 }
 
-.goal-review-container::-webkit-scrollbar {
-    display: none;
-}
 
 /* HEADER STYLING */
 .goal-review-container h1 {
@@ -30,7 +24,8 @@
     justify-content: space-between;
 
     /* Div sizing */
-    width: 50%;
+    max-width: 640px;
+    width: 95%;
 
     /* Border & Appearance */
     border-radius: 7px;
@@ -50,6 +45,17 @@
 .review-text-container .details {
     display: flex;
     flex-direction: column;
-    align-items: start;
     gap: 1rem;
+    text-align: left;
+}
+
+.progress-bar {
+    min-width: fit-content;
+}
+
+@media (max-width: 700px) {
+    .goal-review-container h1 {
+        font-size: 20px;
+        margin-bottom: 1rem;
+    }
 }

@@ -52,6 +52,7 @@ export const GoalReview = () => {
                         <p>{goal.desiredAchievement}</p>
                     </div>
                     <CircularProgressbar 
+                        className='progress-bar'
                         value={calcProgress(goal)} 
                         text={`${calcProgress(goal)}%`} 
                     />
