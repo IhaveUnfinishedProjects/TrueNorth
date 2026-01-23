@@ -99,7 +99,7 @@ const GoalCreation = () => {
 
     if (loading) {return null}
     return (
-        <Card> 
+        <Card className='creation-div'> 
             <CardHeader onBackOpen={backModal.onOpen} />
 
             <Form

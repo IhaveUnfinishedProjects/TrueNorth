@@ -16,7 +16,8 @@
     transform: translate(-50%, -50%);
     background-color: #FFFFFF;
     border-radius: 10px;
-    width: 500px;
+    max-width: 500px;
+    width: 95%;
     min-height: 200px;
     z-index: 1000;
     padding: 0.5rem;
@@ -60,4 +61,10 @@
 /* STYLE FOR THE DIV WRAPPING THE MAPPING */
 .flex-wrapper {
     display: contents;
+}
+
+@media (max-width: 700px) {
+    .button-div-styles {
+        gap: 1rem;
+    }
 }

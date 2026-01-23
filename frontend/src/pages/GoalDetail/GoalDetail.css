@@ -2,13 +2,14 @@
 .goal-section-wrapper {
     display: flex;
     flex-direction: row;
+    padding-bottom: 2rem;
 }
 
 /* Custom styling of encompassing <Card/>*/
 .goal-detail-card {
     background-color: #F5F5F5;
-    min-width: min-content;
-    width: 80%;
+    width: 95%;
+    max-width: 1100px;
     border: none;
     gap: 2rem;
 }
@@ -38,6 +39,7 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+    flex-wrap: wrap;
 }
 
 .goal-detail-header div {
@@ -65,10 +67,14 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 2rem;
+    row-gap: 2rem;
 }
 
 .goal-feature-card {
     width: 22%;
+    min-width: 200px;
     border: none;
     padding-top: 1rem;
     padding-bottom: 1rem;
@@ -79,6 +85,7 @@
     justify-content: start;
     align-items: start;
     gap: 1rem;
+    flex-grow: 1;
 }
 
 .goal-feature-card title {
@@ -181,4 +188,45 @@
 
 .goal-detail-header .bin-button {
     align-self: center;
+}
+
+
+/* SMALL DEVICE STYLING */
+@media (max-width: 700px) {
+    .goal-detail-header h1 {
+        font-size: 18px;
+        margin-bottom: 0.4rem;
+    }
+
+    .goal-detail-header {
+        width: 95%;
+    }
+
+    .goal-detail-crumb {
+        width: 95%;
+    }
+
+    .goal-detail-header button {
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
+    }
+
+    .side-review-bar {
+
+        /* Sizing */
+        max-width: none;
+        width: 90%;
+
+        /* Positioning */
+        left: 50%;
+        transform: translate(-50%, 20px);
+        position: absolute;
+        z-index: 10;
+
+        /* other */
+        padding-bottom: 2rem;
+        border: 2px solid black;
+        backdrop-filter: blur(100px);
+    }
+
 }

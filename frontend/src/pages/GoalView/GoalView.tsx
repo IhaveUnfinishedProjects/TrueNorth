@@ -38,7 +38,6 @@ export const GoalView = () => {
     }
     return (
         <>
-            <h1 className="headerGoal"> Goals Overview </h1>
             {true && <GoalCard goals={goals}/>}
         </>
     );

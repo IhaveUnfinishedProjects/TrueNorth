@@ -42,7 +42,8 @@ export const DraggableSteps = ({step, index, handleChange, remove, onRepeatOpen,
                         <RxDragHandleDots2 className="w-6 h-6"/>
                     </div>
 
-                    <input className="w-[100%] pr-[2.5rem]"
+                    <input
+                        className="mobile"
                         name={step.id} 
                         value={step.description}
                         placeholder="Add a step here!"
@@ -50,14 +51,7 @@ export const DraggableSteps = ({step, index, handleChange, remove, onRepeatOpen,
                     />
 
                     <MdEventRepeat 
-                        className="
-                            absolute 
-                            right-[4rem] 
-                            top-1/2 
-                            transform 
-                            -translate-y-1/2 
-                            h-[1.5rem] 
-                            w-[1.5rem]"
+                        className="calendar-image"
                         onClick={ () => {setStep(step); onRepeatOpen()} }
                     />
 

@@ -5,19 +5,31 @@
     font-size: 0.8rem;
 }
 
-/* HEADER STYLING */ 
-.headerGoal {
-    margin-left: 15%;
-}
-
 /* The container that holds all the cards*/
 .CardContainer {
-    width: 70%;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
+
+    /* Sizing */
+    width: 95%;
+    min-height: fit-content;
+    padding-bottom: 2rem;
+    box-sizing: border-box;
+    max-width: 900px;
+    
+    /* Spacing */
     gap: 2rem;
     margin-left: auto;
     margin-right: auto;
+
+    /* Other */
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(max(250px, 30%), 1fr));
+    gap:2rem;
+    overflow-y: auto;
+}
+
+/* Card Container Header */
+.headerGoal {
+    grid-column: 1/-1;
 }
 
 /* The individual cards */ 
@@ -28,11 +40,10 @@
     row-gap: 1rem;
 
     /* Sizing */
-    width: 100%;
-    min-width: 100%;
     border-radius: 15px;
     aspect-ratio: 1.2 / 1;
     padding: 1rem;
+    min-width: 250px;
 
     /* Text styling */
     font-weight: 400;

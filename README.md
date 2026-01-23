@@ -43,7 +43,7 @@ True North is a goal tracking app, allowing users to create and view goals in a 
 	In your command terminal move to the folder you want to place the repo. 
 ```
 	[For Bash]
-	git clone https://github.com/IhaveUnfinishedProjects/TrueNorth.git
+	git clone https://github.com/Callum-Harold/TrueNorth.git
 	cd truenorth
 ```
 2. Start the application locally:

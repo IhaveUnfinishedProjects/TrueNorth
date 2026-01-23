@@ -12,6 +12,25 @@
     position: relative;
 }
 
+.input-tags input {
+    width: 100%;
+}
+
+.input-tags .calendar-image {
+    position: absolute;
+    right: 3rem;
+    top:1/2;
+    transform: translateY(1/2);
+    height: 1.5rem;
+    width: 1.5rem;
+}
+
 .input-tags .bin-button {
-    margin-left: 1rem;
+    margin-left: 0.5rem;
+}
+
+@media (max-width: 700px) {
+    .input-tags .calendar-image {
+        right: 2.5rem;
+    }
 }

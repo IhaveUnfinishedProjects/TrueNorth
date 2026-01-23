@@ -15,6 +15,7 @@ export const GoalCard = ({goals}: GoalCardProps) => {
     const { formatISO8601 } = useFormatDate();
     return (
         <div className='CardContainer'>
+            <h1 className="headerGoal"> Goals Overview </h1>
             {goals.map((goal, index) => (
                 <div key={goal.id} onClick={() => navigate(`/GoalDetail/${goal.id}`)} className={`GoalViewCard ${getColour(index)}`}>
                     <div>
