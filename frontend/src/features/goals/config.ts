@@ -75,21 +75,21 @@ export const InputFieldData: InputFieldConfig<Goal>[] = [
         type: "text",
         name: "importance",
         placeholder: "e.g., I enjoy helping people",
-        required: false,
+        required: true,
         h3: "Why is this important to you?"
     },
     {
         type: "text",
         name: "measurement",
         placeholder: "e.g., Improve by 'x' amount weekly",
-        required: false,
+        required: true,
         h3: "How will you measure progress?"
     },
     {
         type: "date",
         name: "achievementDate",
         placeholder: "achievementDate",
-        required: false,
+        required: true,
         h3: "When do you want to achieve this by?",
     },
 ]

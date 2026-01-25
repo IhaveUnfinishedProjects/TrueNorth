@@ -68,12 +68,11 @@ export const updateGoal = async (goalId: string | undefined, newGoal: Goal) => {
     try {
         const goalToUpdate = await getGoal(goalId);
         if (goalToUpdate && goalId) {
-            await updateGoalPartial(goalId, goalToUpdate);
+            await updateGoalPartial(goalId, newGoal);
         }
     } catch (error) {
         console.warn(`Goal of ID '${goalId}' couldn't be updated.`, goalId);
     }
-
 }
 
 /**

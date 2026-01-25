@@ -1,24 +1,16 @@
 /* MAIN CONTAINER STYLING */
 .review-detail-container {
     /* sizing */
-    width: fit-content;
-    max-width: 70%;
-    height: auto;
+    width: 97%;
+    max-width: 640px;
+
     /* spacing */
-    overflow-y: scroll;
-    justify-content:flex-start;
     padding: 0;
-    padding-top: 5rem;
-    margin-top: -5rem;
     padding-bottom: 5rem;
     /* border & background */
     background-color: transparent;
     border: transparent;
     border-radius: 0;
-}
-
-.review-detail-container::-webkit-scrollbar {
-    display: none;
 }
 
 /* SECTION CARD STYLING */
@@ -107,4 +99,11 @@
     background-color: #3B82F6;
     color: white;
     border: 1px solid white;
+}
+
+@media (max-width: 700px) {
+    .review-detail-card h1 {
+        font-size: 20px;
+        padding-bottom: 1rem;
+    }
 }

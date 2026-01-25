@@ -52,6 +52,7 @@ The production server is hosted off my Raspberry Pi and served through Cloudflar
 ```
 docker compose up --build
 ```
+Make sure the docker engine is running!
 3. Access the website
 	In your browser you can type http://localhost:3000
 
