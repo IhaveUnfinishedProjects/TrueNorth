@@ -65,7 +65,7 @@ const GoalCreation = () => {
         const newGoal: Goal = {...formValues};
 
         if (isEditMode && buttonName === yesButtonName) {
-            updateGoal(curParentId, newGoal);
+            await updateGoal(curParentId, newGoal);
             goBack();
         } else if (!isEditMode){
             const goalId = await addGoal({newGoal, curParentId});
