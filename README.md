@@ -4,6 +4,8 @@
 www.truenorthapp.org 
 True North is a goal tracking app, allowing users to create and view goals in a simple actionable manner. The user can review these goals to track progress and plan out the upcoming week.
 
+I wanted to make this app so I could created goals in a nested nature. Sometimes goals can be quite far out, or involve many moving parts. This was an effort to be able to order goals, edit them, and break them down into steps for clarity moving forward.
+
 The production server is hosted off my Raspberry Pi and served through Cloudflare, so if the link isn't live there are **photos below** of my website. 
 ## Tech Stack
 **Frontend** 
@@ -35,6 +37,8 @@ The production server is hosted off my Raspberry Pi and served through Cloudflar
 - **User Profile Settings:** Profile management and settings to update details.
 - **Enhanced UX:** Native Dark/Light mode toggle and mobile-responsive layout.
 - **Refined Data Management:** Full CRUD support for deleting goals and editing historical reviews.
+- **Support Dark Mode**
+- **Add more testing for input validation**
 
 ## Local Setup (With Docker)
 
