@@ -7,6 +7,9 @@ True North is a goal tracking app, allowing users to create and view goals in a 
 I wanted to make this app so I could created goals in a nested nature. Sometimes goals can be quite far out, or involve many moving parts. This was an effort to be able to order goals, edit them, and break them down into steps for clarity moving forward.
 
 The production server is hosted off my Raspberry Pi and served through Cloudflare, so if the link isn't live there are **photos below** of my website. 
+
+## System Architecture
+![[Architecture-27-01-26 1.png]]
 ## Tech Stack
 **Frontend** 
 - React 
