@@ -9,7 +9,7 @@ I wanted to make this app so I could created goals in a nested nature. Sometimes
 The production server is hosted off my Raspberry Pi and served through Cloudflare, so if the link isn't live there are **photos below** of my website. 
 
 ## System Architecture
-![[Architecture-27-01-26 1.png]]
+![System Architecture Diagram](./project_images/Architecture-27-01-26.png)
 ## Tech Stack
 **Frontend** 
 - React 
@@ -65,7 +65,8 @@ Make sure the docker engine is running!
 
 
 ## Photos
-![[Pasted image 20260123192416.png]]
-![[Pasted image 20260123192456.png]]
-![[Pasted image 20260123192528.png]]
-![[Pasted image 20260123192622.png]]
+![Home Screen Png](./project_images/HomeScreen.png)
+
+![Home Screen Mobile](./project_images/HomeMobile.png)
+
+![Goal View Png](./project_images/GoalView.png)
