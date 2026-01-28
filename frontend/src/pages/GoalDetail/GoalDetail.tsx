@@ -112,12 +112,12 @@ export const GoalDetail = () => {
     if (goal) {return (
         <div className='goal-section-wrapper'>
             <Card className={`goal-detail-card  ${displayReview ? 'showing-sidebar': ''}`}>
-                <p className='goal-detail-crumb'> {breadCrumb}</p>
+                <p className='goal-detail-crumb break-words'> {breadCrumb}</p>
 
                 {/* This contains the header section */}
                 <div className='goal-detail-header'>
-                    <h1>{goal.goalName}</h1>
-                    <div>
+                    <h1 className="break-words break-all">{goal.goalName}</h1>
+                    <div className="flex-wrap">
                         <button className="" onClick={() => navigate(`/EditGoal/${goal.id}`)}>Edit</button>
                         <button className="" onClick={() => navigate(`/PlanGoal/${goal.id}`)}>+ Add Steps</button>
                         {reviews && reviews.length > 0 && <button className="" onClick={() => setDisplayReview(!displayReview)}>Reviews</button>}
@@ -157,8 +157,8 @@ export const GoalDetail = () => {
             {reviewModal && 
                 <GeneralModal onClose={() => setReviewModal(undefined)}>
                     <h2 className='mt-[-0.5rem]'>{OPTION_MAPPING[reviewModal.reviewType as keyof typeof OPTION_MAPPING]}</h2>
-                    <p className="review-inputs">{reviewModal.firstInput}</p>
-                    <p className="review-inputs">{reviewModal.secondInput}</p>
+                    <p className="review-inputs break-words">{reviewModal.firstInput}</p>
+                    <p className="review-inputs break-words">{reviewModal.secondInput}</p>
                 </GeneralModal>
             }
 

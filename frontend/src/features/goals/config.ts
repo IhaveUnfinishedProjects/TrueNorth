@@ -8,18 +8,18 @@ import type { ModalButtonProps } from "@root/library/types/index.js";
 
     It includes the content for the models, the modals buttons,
     and the content for the <input/> tags. 
-*/ 
+*/
 
 /**
  * Initial Values for Goal Creation
  */
 export const initialValues: Goal = {
-    goalName:'',
-    desiredAchievement:'',
-    importance:'',
-    measurement:'',
-    achievementDate:'',
-    parent:''
+    goalName: '',
+    desiredAchievement: '',
+    importance: '',
+    measurement: '',
+    achievementDate: '',
+    parent: ''
 };
 
 export const yesButtonName = "yesButton";
@@ -62,28 +62,36 @@ export const InputFieldData: InputFieldConfig<Goal>[] = [
         name: "goalName",
         placeholder: "e.g., Job Promotion",
         required: true,
-        h3: "Goal Name"
+        h3: "Goal Name",
+        maxLength: 50,
+        warningMessage: "Character limit reached"
     },
     {
         type: "text",
         name: "desiredAchievement",
         placeholder: "e.g., Learn first aid",
         required: true,
-        h3: "What do you want to achieve?"
+        h3: "What do you want to achieve?",
+        maxLength: 500,
+        warningMessage: "Character limit reached"
     },
     {
         type: "text",
         name: "importance",
         placeholder: "e.g., I enjoy helping people",
         required: true,
-        h3: "Why is this important to you?"
+        h3: "Why is this important to you?",
+        maxLength: 500,
+        warningMessage: "Character limit reached"
     },
     {
         type: "text",
         name: "measurement",
         placeholder: "e.g., Improve by 'x' amount weekly",
         required: true,
-        h3: "How will you measure progress?"
+        h3: "How will you measure progress?",
+        maxLength: 500,
+        warningMessage: "Character limit reached"
     },
     {
         type: "date",

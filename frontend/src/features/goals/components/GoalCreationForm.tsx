@@ -29,18 +29,28 @@ export const Form = <T extends Record<string, string>> ({ formValues, handleChan
         <>
             <form onSubmit={handleSubmit}>
                 {InputFieldData.map((data, index) => {
-                    const { name, ...inputProps } = data;
+                    const { name, warningMessage, ...inputProps } = data;
+                    const currentValue = String(formValues[data.name] || '');
+                    const isAtLimit = data.maxLength && currentValue.length >= data.maxLength;
+
                     return(
                         <div key={index} className="flex-wrapper">
                             <h3>{data.h3}</h3>
                             <input 
-                                className="mb-[3rem]"
-                                {...data}
+                                className="mb-[0.5rem]"
+                                {...inputProps}
                                 name = {name.toString()}
-                                value={String(formValues[data.name])}
+                                value={currentValue}
                                 onChange={handleChange}
                                 onBlur={handleFocus}
+                                maxLength={data.maxLength}
                             />
+                            {isAtLimit && warningMessage && (
+                                <span className="text-red-500 text-sm mb-[2.5rem] block">
+                                    {warningMessage}
+                                </span>
+                            )}
+                            {(!isAtLimit || !warningMessage) && <div className="mb-[3rem]"></div>}
                         </div>
                     )
                 })}

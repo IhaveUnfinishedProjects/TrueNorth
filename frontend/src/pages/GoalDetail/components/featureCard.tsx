@@ -9,7 +9,7 @@ export const FeatureCard = ({title, content}: featureCardProps ) => {
     return (
         <Card className="goal-feature-card">
             <h3 className="title">{title}</h3>
-            <p className="content">{content}</p>
+            <p className="content break-words">{content}</p>
         </Card>
     );
 }
