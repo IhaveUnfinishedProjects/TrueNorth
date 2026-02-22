@@ -9,8 +9,6 @@ describe('useFormatDate', () => {
 
     it('formats a date string correctly for different styles', () => {
         // Formats might vary based on the environment locale, but we can check if it returns a non-empty string
-        // or mock the locale if we need strict equality. For now, basic output check.
-        // Assuming en-US default for many environments, but resilient checks are better.
 
         const shortDate = formatISO8601({ dateObj: testDateString, dateStyle: 'short' });
         expect(shortDate).toBeDefined();
